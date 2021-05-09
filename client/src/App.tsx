@@ -1,8 +1,11 @@
 import * as React from 'react';
+import Drawer from './Drawer';
 
 const App: React.FC = () => {
     return (
-        <button>分離</button>
+        <div>
+            <Drawer />
+        </div>
     )
 }
 
