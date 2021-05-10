@@ -17,10 +17,10 @@ const Drawer: React.FC = () => {
             <AppIcon />
             <DrawerMenu value={selectedItem} onChange={handleChange}>
                 <DrawerMenuButton value="home" className="drawer-menu-item" icon={faHome}>ホーム</DrawerMenuButton>
-                <DrawerMenuButton value="home" className="drawer-menu-item" icon={faCalendar}>カレンダー</DrawerMenuButton>
-                <DrawerMenuButton value="home" className="drawer-menu-item" icon={faChartBar}>分析</DrawerMenuButton>
-                <DrawerMenuButton value="home" className="drawer-menu-item" icon={faBox}>冷蔵庫</DrawerMenuButton>
-                <DrawerMenuButton value="home" className="drawer-menu-item" icon={faTools}>設定</DrawerMenuButton>
+                <DrawerMenuButton value="calendar" className="drawer-menu-item" icon={faCalendar}>カレンダー</DrawerMenuButton>
+                <DrawerMenuButton value="analyze" className="drawer-menu-item" icon={faChartBar}>分析</DrawerMenuButton>
+                <DrawerMenuButton value="fridge" className="drawer-menu-item" icon={faBox}>冷蔵庫</DrawerMenuButton>
+                <DrawerMenuButton value="setting" className="drawer-menu-item" icon={faTools}>設定</DrawerMenuButton>
             </DrawerMenu>
         </div>
     )

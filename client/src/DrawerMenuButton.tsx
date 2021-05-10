@@ -28,7 +28,7 @@ const DrawerMenuButton: React.FC<DrawerMenuButtonProps> = (props) => {
             size="large"
             variant="contained"
             disableElevation
-            startIcon={<FontAwesomeIcon icon={props.icon} />}
+            startIcon={<FontAwesomeIcon className="menu-item-icon" icon={props.icon} />}
         >
             { props.children }
         </Button>

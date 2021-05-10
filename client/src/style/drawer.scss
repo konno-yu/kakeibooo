@@ -1,4 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap");
+
 .root {
+  font-family: "M PLUS Rounded 1c", sans-serif;
   height: 100vh;
   width: 15%;
   border-right: 1px solid #eeeeee;
@@ -6,7 +9,7 @@
   .root--icon {
     text-align: center;
     font-size: 36px;
-    color: #009688;
+    color: #4db6ac;
     height: 15%;
     display: flex;
     flex-direction: column;
@@ -16,10 +19,38 @@
     border-bottom: 1px solid #eeeeee;
 
     .title {
-      color: #455a64;
+      color: #546e7a;
       font-weight: 900;
       font-size: 14px;
       margin: 4px 0 0 0;
+    }
+  }
+
+  .root--drawer-menu {
+    height: auto;
+    padding: 10px 10px;
+    border-bottom: 1px solid #eeeeee;
+    display: flex;
+    flex-direction: column;
+
+    .drawer-menu-item {
+      font-family: "M PLUS Rounded 1c", sans-serif;
+      width: 100%;
+      background: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #546e7a;
+      justify-content: left !important;
+      margin-bottom: 16px;
+      .menu-item-icon {
+        font-size: 16px;
+        margin-right: 4px;
+      }
+    }
+
+    .selected {
+      background: #4db6ac;
+      color: #ffffff;
     }
   }
 }

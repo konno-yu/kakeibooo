@@ -12,11 +12,11 @@ const DrawerMenu: React.FC<DrawerMenuProps> = (props) => {
         props.onChange(newValue);
     }
     return (
-        <div className="root--drawer">
+        <div className="root--drawer-menu">
             {
                 props.children.map(menuButton => {
                     if (menuButton.props.value === props.value) {
-                        return React.cloneElement(menuButton, { className: "menu-item selected", onChange: handleChange });
+                        return React.cloneElement(menuButton, { className: "drawer-menu-item selected", onChange: handleChange });
                     }
                     return React.cloneElement(menuButton, { onChange: handleChange });
                 })
