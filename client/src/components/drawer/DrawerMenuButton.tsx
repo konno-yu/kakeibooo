@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export interface DrawerMenuButtonProps {
     children: string;
     className: string;
-    icon: IconDefinition;
-    value: string;
+    icon: JSX.Element;
+    value: Drawer.MenuItem;
     onChange?: (newValue: string) => void;
 }
 
@@ -20,16 +20,8 @@ const DrawerMenuButton: React.FC<DrawerMenuButtonProps> = (props) => {
         }
         return {};
     }
-
     return (
-        <Button
-            onClick={handleChange}
-            className={props.className}
-            size="large"
-            variant="contained"
-            disableElevation
-            startIcon={<FontAwesomeIcon className="menu-item-icon" icon={props.icon} />}
-        >
+        <Button onClick={handleChange} className={props.className} size="large" variant="contained" disableElevation startIcon={props.icon}>
             { props.children }
         </Button>
     )

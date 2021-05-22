@@ -3,7 +3,7 @@ import { DrawerMenuButtonProps } from './DrawerMenuButton';
 
 interface DrawerMenuProps {
     children: React.ReactElement<DrawerMenuButtonProps>[];
-    value: string;  //TODO ここはあとで型定義する
+    value: Drawer.MenuItem;
     onChange: (newValue: string) => void;
 }
 

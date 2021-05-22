@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Drawer from './Drawer';
+import Drawer from './components/drawer/Drawer';
 
 const App: React.FC = () => {
     return (
