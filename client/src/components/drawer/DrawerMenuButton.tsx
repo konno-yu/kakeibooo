@@ -1,9 +1,8 @@
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import * as React from 'react';
 import {
     Button
 } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 export interface DrawerMenuButtonProps {
     children: string;
@@ -21,9 +20,11 @@ const DrawerMenuButton: React.FC<DrawerMenuButtonProps> = (props) => {
         return {};
     }
     return (
-        <Button onClick={handleChange} className={props.className} size="large" variant="contained" disableElevation startIcon={props.icon}>
-            { props.children }
-        </Button>
+        <Link to={`/${props.value}`} className="link-text">
+            <Button onClick={handleChange} className={props.className} size="large" variant="contained" disableElevation startIcon={props.icon}>
+                { props.children }
+            </Button>
+        </Link>
     )
 }
 
