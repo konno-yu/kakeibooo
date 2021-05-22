@@ -3,7 +3,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
     template: './src/index.html',
-    filename: './index.html'
+    filename: './index.html',
+    favicon: './src/favicon.ico'
 });
 
 module.exports = {
@@ -14,6 +15,13 @@ module.exports = {
             test: /\.tsx?$/,
             use: 'ts-loader',
             exclude: /node_modules/
+        }, {
+            test: /\.s?css$/,
+            use: ['style-loader', 'css-loader', 'sass-loader'],
+            exclude: /node_modules/
+        }, {
+            test: /\.(png|jpe?g|gif|svg)$/i,
+            use: 'file-loader'
         }],
     },
     resolve: {
