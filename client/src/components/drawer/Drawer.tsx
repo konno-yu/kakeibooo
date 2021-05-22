@@ -16,7 +16,7 @@ const Drawer: React.FC = () => {
         setValue(newValue);
     }
     return (
-        <div className="root">
+        <>
             <AppIcon />
             <DrawerAccount />
             <DrawerMenu value={value} onChange={handleChange}>
@@ -27,7 +27,7 @@ const Drawer: React.FC = () => {
                 <DrawerMenuButton value="setting" className="drawer-menu-item" icon={<SettingIcon />}>設定</DrawerMenuButton>
             </DrawerMenu>
             <DrawerBanner />
-        </div>
+        </>
     )
 }
 
