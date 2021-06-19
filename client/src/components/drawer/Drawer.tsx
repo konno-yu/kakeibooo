@@ -10,7 +10,7 @@ import { EditIcon, FridgeIcon, GraphIcon, HomeIcon, SettingIcon } from './Drawer
 import DrawerAccount from './DrawerAccount';
 
 const Drawer: React.FC = () => {
-    const [value, setValue] = React.useState<Drawer.MenuItem>('calendar');
+    const [value, setValue] = React.useState<Drawer.MenuItem>('home');
 
     const handleChange = (newValue: Drawer.MenuItem) => {
         setValue(newValue);
@@ -21,7 +21,7 @@ const Drawer: React.FC = () => {
             <DrawerAccount />
             <DrawerMenu value={value} onChange={handleChange}>
                 <DrawerMenuButton value="home" className="drawer-menu-item" icon={<HomeIcon />}>ホーム</DrawerMenuButton>
-                <DrawerMenuButton value="calendar" className="drawer-menu-item" icon={<EditIcon />}>家計簿</DrawerMenuButton>
+                <DrawerMenuButton value="finance" className="drawer-menu-item" icon={<EditIcon />}>家計簿</DrawerMenuButton>
                 <DrawerMenuButton value="analyze" className="drawer-menu-item" icon={<GraphIcon />}>分析</DrawerMenuButton>
                 <DrawerMenuButton value="fridge" className="drawer-menu-item" icon={<FridgeIcon />}>冷蔵庫</DrawerMenuButton>
                 <DrawerMenuButton value="setting" className="drawer-menu-item" icon={<SettingIcon />}>設定</DrawerMenuButton>
