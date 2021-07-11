@@ -7,7 +7,6 @@ import ReceiptHeader from './ReceiptHeader';
 
 const Receipt: React.FC = () => {
     const context = useReceipt();
-    console.log(context);
     return (
         <div className="root--receipt">
             <receiptContext.Provider value={context}>
