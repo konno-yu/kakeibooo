@@ -11,7 +11,7 @@ const ReceiptBody: React.FC = () => {
 
     const addReceiptTag = () => {
         const current = context.dailyReceipt;
-        current.add(new ReceiptModel("", 0));
+        current.add(new ReceiptModel(new Date(), "", 0));
         context.setDailyReceipt(new DailyReceiptModel(current.receipts));
     }
 

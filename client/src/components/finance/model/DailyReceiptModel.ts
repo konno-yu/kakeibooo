@@ -38,4 +38,8 @@ export default class DailyReceiptModel {
             return accumulator + receipt.cost;
         }, 0);
     }
+
+    public getDate = () => {
+        return this._receipts[0].date.getDate();
+    }
 }
