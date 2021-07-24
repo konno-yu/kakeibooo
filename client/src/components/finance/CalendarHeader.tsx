@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import * as dfns from 'date-fns';
 import { useContext } from 'react';
 import { financeContext, useFinance } from './FinanceContext';
-import { LeftArrowIcon, RightArrowIcon } from './FinanceSvgIcons';
+import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import MonthlyReceiptModel from './model/MonthlyReceiptModel';
 const CalendarHeader: React.FC = () => {
     const dayOfWeekLabel = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -30,10 +30,10 @@ const CalendarHeader: React.FC = () => {
                 </div>
                 <div>
                     <Button onClick={getPreviousMonth}>
-                        <LeftArrowIcon width={32} height={32} color="#546e7a" />
+                        <HiArrowCircleLeft size={28} color="#546e7a" />
                     </Button>
                     <Button onClick={getNextMonth}>
-                        <RightArrowIcon width={32} height={32} color="#546e7a" />
+                        <HiArrowCircleRight size={28} color="#546e7a" />
                     </Button>
                 </div>
             </div>
