@@ -1,12 +1,14 @@
 import MonthlyReceiptModel from "./model/MonthlyReceiptModel";
 import CalendarBodyWeek from "./CalendarBodyWeek";
+import { useContext } from "react";
+import { financeContext } from "./FinanceContext";
 
 const CalendarBody: React.FC = () => {
-    const mockModel = new MonthlyReceiptModel();
+    const context = useContext(financeContext);
     return (
         <div className="root--body">
             {
-                Object.values(mockModel.monthlyReceipt).map(week => {
+                Object.values((context.monthlyReceipt).monthlyReceipt).map(week => {
                     return <CalendarBodyWeek value={ week }/>
                 })
             }
