@@ -10,9 +10,9 @@ type MonthlyReceipt = {
 export default class MonthlyReceiptModel {
     private _monthlyReceipt: MonthlyReceipt;
 
-    constructor() {
+    constructor(year: number, month: number) {
         this.initialize();
-        this.setWeeklyReceipt();
+        this.setWeeklyReceipt(year, month);
     }
 
     get monthlyReceipt() {
@@ -34,11 +34,10 @@ export default class MonthlyReceiptModel {
         }
     }
 
-    private setWeeklyReceipt() {
-        const targetMonth = 7;
-        const endDate = endOfMonth(new Date(2021, targetMonth - 1, 1)).getDate();
+    private setWeeklyReceipt(year: number, month: number) {
+        const endDate = endOfMonth(new Date(year, month, 1)).getDate();
         for (let i = 1; i <= endDate; i++) {
-            const targetDate = new Date(2021, targetMonth - 1, i);
+            const targetDate = new Date(year, month, i);
             // TODO とりあえずのモック
             this._monthlyReceipt[getWeekOfMonth(targetDate) as WeekIndex][getDay(targetDate)]
                 = new DailyReceiptModel([
