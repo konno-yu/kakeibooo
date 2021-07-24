@@ -6,7 +6,7 @@ declare module "*.svg" {
 
 declare module Drawer {
 
-  export type MenuItem = 'home' | 'calendar' | 'analyze' | 'fridge' | 'setting';
+  export type MenuItem = 'home' | 'finance' | 'analyze' | 'fridge' | 'setting';
 
   export interface SvgIconProps {
     color?: string;
