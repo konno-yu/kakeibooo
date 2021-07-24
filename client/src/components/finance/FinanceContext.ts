@@ -1,4 +1,3 @@
-import { setMonth } from "date-fns";
 import React from "react";
 import MonthlyReceiptModel from "./model/MonthlyReceiptModel";
 import { getYear, getMonth } from 'date-fns';

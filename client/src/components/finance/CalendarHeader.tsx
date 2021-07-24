@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import { getMonth, setMonth, getYear } from 'date-fns';
 import { useContext } from 'react';
-import { financeContext, useFinance } from './FinanceContext';
+import { financeContext } from './FinanceContext';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import MonthlyReceiptModel from './model/MonthlyReceiptModel';
 const CalendarHeader: React.FC = () => {

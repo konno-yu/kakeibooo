@@ -1,4 +1,3 @@
-import MonthlyReceiptModel from "./model/MonthlyReceiptModel";
 import CalendarBodyWeek from "./CalendarBodyWeek";
 import { useContext } from "react";
 import { financeContext } from "./FinanceContext";
