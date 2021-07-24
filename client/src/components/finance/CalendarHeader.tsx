@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import * as dfns from 'date-fns';
+import { getMonth, setMonth, getYear } from 'date-fns';
 import { useContext } from 'react';
 import { financeContext, useFinance } from './FinanceContext';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
@@ -9,15 +9,15 @@ const CalendarHeader: React.FC = () => {
     const context = useContext(financeContext);
 
     const getPreviousMonth = () => {
-        const targetDate = dfns.setMonth(context.targetDate, dfns.getMonth(context.targetDate) - 1);
-        const monthlyReceipt = new MonthlyReceiptModel(dfns.getYear(targetDate), dfns.getMonth(targetDate));
+        const targetDate = setMonth(context.targetDate, getMonth(context.targetDate) - 1);
+        const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
         context.setMonthlyReceipt(monthlyReceipt);
         context.setTargetDate(targetDate);
     }
 
     const getNextMonth = () => {
-        const targetDate = dfns.setMonth(context.targetDate, dfns.getMonth(context.targetDate) + 1);
-        const monthlyReceipt = new MonthlyReceiptModel(dfns.getYear(targetDate), dfns.getMonth(targetDate));
+        const targetDate = setMonth(context.targetDate, getMonth(context.targetDate) + 1);
+        const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
         context.setMonthlyReceipt(monthlyReceipt);
         context.setTargetDate(targetDate);
     }
@@ -26,7 +26,7 @@ const CalendarHeader: React.FC = () => {
         <div className="root--header">
             <div className="year-and-month">
                 <div>
-                    {(context.targetDate).toLocaleDateString('en-US', { month: 'long' })} {dfns.getYear(context.targetDate)}
+                    {(context.targetDate).toLocaleDateString('en-US', { month: 'long' })} {getYear(context.targetDate)}
                 </div>
                 <div>
                     <Button onClick={getPreviousMonth}>

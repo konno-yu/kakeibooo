@@ -1,7 +1,7 @@
 import { setMonth } from "date-fns";
 import React from "react";
 import MonthlyReceiptModel from "./model/MonthlyReceiptModel";
-import * as dfns from 'date-fns';
+import { getYear, getMonth } from 'date-fns';
 
 type FinanceContext = {
     targetDate: Date;
@@ -12,7 +12,7 @@ type FinanceContext = {
 
 const defaultFinanceContext: FinanceContext = {
     targetDate: new Date(),
-    monthlyReceipt: new MonthlyReceiptModel(dfns.getYear(new Date()), dfns.getMonth(new Date())),
+    monthlyReceipt: new MonthlyReceiptModel(getYear(new Date()), getMonth(new Date())),
     setTargetDate: () => { },
     setMonthlyReceipt: () => { }
 };
@@ -24,7 +24,7 @@ export const useFinance = (): FinanceContext => {
     const setTargetDate = React.useCallback((current: Date) => {
         setDate(current);
     }, []);
-    const [monthlyReceipt, setReceipt] = React.useState<MonthlyReceiptModel>(new MonthlyReceiptModel(dfns.getYear(new Date()), dfns.getMonth(new Date())));
+    const [monthlyReceipt, setReceipt] = React.useState<MonthlyReceiptModel>(new MonthlyReceiptModel(getYear(new Date()), getMonth(new Date())));
     const setMonthlyReceipt = React.useCallback((current: MonthlyReceiptModel) => {
         setReceipt(current);
     }, []);
