@@ -1,23 +1,23 @@
 import { Button } from '@material-ui/core';
-import * as dfns from 'date-fns';
+import { getMonth, setMonth, getYear } from 'date-fns';
 import { useContext } from 'react';
-import { financeContext, useFinance } from './FinanceContext';
-import { LeftArrowIcon, RightArrowIcon } from './FinanceSvgIcons';
+import { financeContext } from './FinanceContext';
+import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import MonthlyReceiptModel from './model/MonthlyReceiptModel';
 const CalendarHeader: React.FC = () => {
     const dayOfWeekLabel = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     const context = useContext(financeContext);
 
     const getPreviousMonth = () => {
-        const targetDate = dfns.setMonth(context.targetDate, dfns.getMonth(context.targetDate) - 1);
-        const monthlyReceipt = new MonthlyReceiptModel(dfns.getYear(targetDate), dfns.getMonth(targetDate));
+        const targetDate = setMonth(context.targetDate, getMonth(context.targetDate) - 1);
+        const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
         context.setMonthlyReceipt(monthlyReceipt);
         context.setTargetDate(targetDate);
     }
 
     const getNextMonth = () => {
-        const targetDate = dfns.setMonth(context.targetDate, dfns.getMonth(context.targetDate) + 1);
-        const monthlyReceipt = new MonthlyReceiptModel(dfns.getYear(targetDate), dfns.getMonth(targetDate));
+        const targetDate = setMonth(context.targetDate, getMonth(context.targetDate) + 1);
+        const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
         context.setMonthlyReceipt(monthlyReceipt);
         context.setTargetDate(targetDate);
     }
@@ -26,14 +26,14 @@ const CalendarHeader: React.FC = () => {
         <div className="root--header">
             <div className="year-and-month">
                 <div>
-                    {(context.targetDate).toLocaleDateString('en-US', { month: 'long' })} {dfns.getYear(context.targetDate)}
+                    {(context.targetDate).toLocaleDateString('en-US', { month: 'long' })} {getYear(context.targetDate)}
                 </div>
                 <div>
                     <Button onClick={getPreviousMonth}>
-                        <LeftArrowIcon width={32} height={32} color="#546e7a" />
+                        <HiArrowCircleLeft size={28} color="#546e7a" />
                     </Button>
                     <Button onClick={getNextMonth}>
-                        <RightArrowIcon width={32} height={32} color="#546e7a" />
+                        <HiArrowCircleRight size={28} color="#546e7a" />
                     </Button>
                 </div>
             </div>
