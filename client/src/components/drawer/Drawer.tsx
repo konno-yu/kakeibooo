@@ -1,4 +1,3 @@
-import { faBox, faCalculator, faCalendar, faChartBar, faHome, faToolbox, faTools } from '@fortawesome/free-solid-svg-icons';
 import * as React from 'react';
 import AppIcon from './AppIcon';
 import DrawerMenu from './DrawerMenu';
