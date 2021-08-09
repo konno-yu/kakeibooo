@@ -13,7 +13,7 @@ const CalendarBodyWeek: React.FC<CalendarBodyWeekProps> = (props) => {
                 if (dailyReceipt) {
                     return <CalendarBodyDay value={dailyReceipt.getDailyTotalCost()}>{dailyReceipt.getDate()}</CalendarBodyDay>
                 } else {
-                    return <CalendarBodyDay/>
+                    return <CalendarBodyDay value={null} />
                 }
             })}
         </div>

@@ -62,6 +62,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            font-weight: 800;
             .label--today {
               font-family: "Fredoka One", cursive;
               color: #4db6ac;
@@ -86,6 +87,13 @@
         }
         .low {
           background: #b2dfdb;
+        }
+        .no-money {
+          background: #fff9c4;
+          background-image: url("../images/medal.svg");
+          background-size: 50% auto;
+          background-position: center center;
+          background-repeat: no-repeat;
         }
         .selected {
           border: 2px dashed #546e7a;
