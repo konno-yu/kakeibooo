@@ -34,6 +34,7 @@ export default class DailyReceiptModel {
     }
 
     public getDailyTotalCost = (): number => {
+        if (this._receipts.filter(receipt => receipt.cost === null).length > 0) return null;
         return this._receipts.reduce((accumulator: number, receipt: ReceiptModel): number => {
             return accumulator + receipt.cost;
         }, 0);

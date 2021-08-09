@@ -32,4 +32,8 @@ export default class ReceiptModel {
     set cost(cost: number) {
         this._cost = cost;
     }
+
+    public getDailyCost() {
+        return { storeName: this._storeName, cost: this._cost };
+    }
 }

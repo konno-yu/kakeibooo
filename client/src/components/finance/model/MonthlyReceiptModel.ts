@@ -1,8 +1,10 @@
 import DailyReceiptModel from "./DailyReceiptModel";
 import ReceiptModel from "./ReceiptModel";
-import { getDay, getWeekOfMonth, endOfMonth } from 'date-fns';
+import { getDay, getWeekOfMonth, endOfMonth, isEqual, getMonth, getDate, getYear, setMonth } from 'date-fns';
+import { GetResponse } from "../../../rest/financeRest";
+import Receipt from "../Receipt";
 
-type WeekIndex = 1 | 2 | 3 | 4 | 5 | 6;
+export type WeekIndex = 1 | 2 | 3 | 4 | 5 | 6;
 type MonthlyReceipt = {
     [key in WeekIndex]: [DailyReceiptModel | null, DailyReceiptModel | null, DailyReceiptModel | null, DailyReceiptModel | null, DailyReceiptModel | null, DailyReceiptModel | null, DailyReceiptModel | null];
 }
@@ -10,9 +12,9 @@ type MonthlyReceipt = {
 export default class MonthlyReceiptModel {
     private _monthlyReceipt: MonthlyReceipt;
 
-    constructor(year: number, month: number) {
+    constructor(year: number, month: number, data?: GetResponse[]) {
         this.initialize();
-        this.setWeeklyReceipt(year, month);
+        this.setMonthlyReceipt(year, month, data);
     }
 
     get monthlyReceipt() {
@@ -34,17 +36,19 @@ export default class MonthlyReceiptModel {
         }
     }
 
-    private setWeeklyReceipt(year: number, month: number) {
-        const endDate = endOfMonth(new Date(year, month, 1)).getDate();
-        for (let i = 1; i <= endDate; i++) {
-            const targetDate = new Date(year, month, i);
-            // TODO とりあえずのモック
-            this._monthlyReceipt[getWeekOfMonth(targetDate) as WeekIndex][getDay(targetDate)]
-                = new DailyReceiptModel([
-                    new ReceiptModel(targetDate, "", (Math.floor(Math.random() * 1000) + Math.floor((Math.random() * 100) + 100))),
-                    new ReceiptModel(targetDate, "", (Math.floor(Math.random() * 1000) + Math.floor((Math.random() * 100) + 100))),
-                    new ReceiptModel(targetDate, "", (Math.floor(Math.random() * 1000) + Math.floor((Math.random() * 100) + 100)))
-                ]);
+    private setMonthlyReceipt(year: number, month: number, receipts?: GetResponse[]) {
+        const endDate = getDate(endOfMonth(new Date(year, month, 1)));  // 指定された年・月の最終日を取得
+        for (let date = 1; date <= endDate; date++) {
+            const targetDate = new Date(year, month, date);
+            const correspondingReceipt = receipts ? receipts.find(r => isEqual(new Date(r.purchaseDate), targetDate)) : null;
+            const weekIndex = getWeekOfMonth(targetDate) as WeekIndex;
+            if (correspondingReceipt) {
+                const dailyReceiptModel: Array<ReceiptModel> = (correspondingReceipt.dailyCost.length > 0) ?
+                    correspondingReceipt.dailyCost.map(receipt => new ReceiptModel(targetDate, receipt.storeName, receipt.cost)) : [new ReceiptModel(targetDate, '', 0)];
+                this._monthlyReceipt[weekIndex][getDay(targetDate)] = new DailyReceiptModel(dailyReceiptModel);
+            } else {
+                this._monthlyReceipt[weekIndex][getDay(targetDate)] = new DailyReceiptModel([new ReceiptModel(targetDate, '', null)]);
+            }
         }
     }
 }
