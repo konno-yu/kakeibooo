@@ -12,7 +12,7 @@ export interface DrawerMenuButtonProps {
     onChange?: (newValue: string) => void;
 }
 
-const DrawerMenuButton: React.FC<DrawerMenuButtonProps> = (props) => {
+export const DrawerMenuButton: React.FC<DrawerMenuButtonProps> = (props) => {
     const handleChange = () => {
         if (props.onChange) {
             return props.onChange(props.value);
@@ -28,5 +28,3 @@ const DrawerMenuButton: React.FC<DrawerMenuButtonProps> = (props) => {
     )
 }
 
-
-export default DrawerMenuButton;

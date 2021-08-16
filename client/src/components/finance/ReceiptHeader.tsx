@@ -2,7 +2,7 @@ import * as React from 'react';
 import { financeContext } from './FinanceContext';
 import {getYear, getMonth, getDate, getDay} from 'date-fns';
 
-const ReceiptHeader: React.FC = () => {
+export const ReceiptHeader: React.FC = () => {
     const dayOfWeekLabel = ['日', '月', '火', '水', '木', '金', '土'];
     const getDisplayYMDD = (targetDate: Date) => {
         const zeroPadding = (val: number) => ('000' + val).slice(-2);
@@ -25,4 +25,3 @@ const ReceiptHeader: React.FC = () => {
     )
 }
 
-export default ReceiptHeader;

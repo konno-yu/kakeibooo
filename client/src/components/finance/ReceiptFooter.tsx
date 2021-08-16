@@ -3,13 +3,13 @@ import { useContext } from 'react';
 import * as ReceiptRest from '../../rest/financeRest';
 import { receiptContext } from './ReceiptContext';
 import { financeContext } from './FinanceContext';
-import ReceiptErrorDialog from './ReceiptErrorDialog';
+import { ReceiptErrorDialog } from './ReceiptErrorDialog';
 import { useState } from 'react';
-import ReceiptSnackbar from './ReceiptSnackbar';
+import { ReceiptSnackbar } from './ReceiptSnackbar';
 import { getDay, getWeekOfMonth } from 'date-fns';
 import { WeekIndex } from './model/MonthlyReceiptModel';
 
-const ReceiptFooter: React.FC = () => {
+export const ReceiptFooter: React.FC = () => {
     const rContext = useContext(receiptContext);
     const fContext = useContext(financeContext);
     const isRegisterButtonDisabled = rContext.dailyReceipt.getCount() === 0;
@@ -100,4 +100,3 @@ const ReceiptFooter: React.FC = () => {
     )
 }
 
-export default ReceiptFooter;

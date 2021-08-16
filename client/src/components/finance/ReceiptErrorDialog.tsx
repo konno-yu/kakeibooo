@@ -41,7 +41,7 @@ const ErrorDetails: { [P in ErrorType]: ErrorMessages } = {
     }
 }
 
-const ReceiptErrorDialog: React.FC<ReceiptErrorDlgProps> = (props) => {
+export const ReceiptErrorDialog: React.FC<ReceiptErrorDlgProps> = (props) => {
     const context = useContext(receiptContext);
     const paperPropsStyle = {
         borderRadius: 8,
@@ -72,4 +72,3 @@ const ReceiptErrorDialog: React.FC<ReceiptErrorDlgProps> = (props) => {
     )
 }
 
-export default ReceiptErrorDialog;

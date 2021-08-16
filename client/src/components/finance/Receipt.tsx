@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useReceipt, receiptContext } from './ReceiptContext';
-import ReceiptBody from './ReceiptBody';
-import ReceiptFooter from './ReceiptFooter';
-import ReceiptHeader from './ReceiptHeader';
+import { ReceiptBody } from './ReceiptBody';
+import { ReceiptFooter } from './ReceiptFooter';
+import { ReceiptHeader } from './ReceiptHeader';
 
 
-const Receipt: React.FC = () => {
+export const Receipt: React.FC = () => {
     const context = useReceipt();
     return (
         <div className="root--receipt">
@@ -18,4 +18,3 @@ const Receipt: React.FC = () => {
     )
 }
 
-export default Receipt;

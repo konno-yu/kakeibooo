@@ -1,7 +1,7 @@
-import CalendarBody from "./CalendarBody"
-import CalendarHeader from "./CalendarHeader"
+import { CalendarBody } from "./CalendarBody"
+import { CalendarHeader } from "./CalendarHeader"
 
-const Calendar: React.FC = () => {
+export const Calendar: React.FC = () => {
     return (
         <div className="root--calendar">
             <CalendarHeader />
@@ -10,4 +10,3 @@ const Calendar: React.FC = () => {
     )
 }
 
-export default Calendar;

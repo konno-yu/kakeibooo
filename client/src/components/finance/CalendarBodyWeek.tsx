@@ -1,11 +1,11 @@
 import DailyReceiptModel from "./model/DailyReceiptModel";
-import CalendarBodyDay from './CalendarBodyDay';
+import { CalendarBodyDay } from './CalendarBodyDay';
 
 interface CalendarBodyWeekProps {
     value: [DailyReceiptModel, DailyReceiptModel,DailyReceiptModel,DailyReceiptModel,DailyReceiptModel,DailyReceiptModel,DailyReceiptModel]
 }
 
-const CalendarBodyWeek: React.FC<CalendarBodyWeekProps> = (props) => {
+export const CalendarBodyWeek: React.FC<CalendarBodyWeekProps> = (props) => {
 
     return (
         <div className="week">
@@ -20,4 +20,3 @@ const CalendarBodyWeek: React.FC<CalendarBodyWeekProps> = (props) => {
     )
 }
 
-export default CalendarBodyWeek;

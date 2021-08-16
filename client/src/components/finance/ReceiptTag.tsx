@@ -12,7 +12,7 @@ interface ReceiptTagProps {
     ordinary: number;
 }
 
-const ReceiptTag: React.FC<ReceiptTagProps> = (props) => {
+export const ReceiptTag: React.FC<ReceiptTagProps> = (props) => {
     const context = useContext(receiptContext);
 
     const getCurrentDailyReceipt = () => context.dailyReceipt;
@@ -59,4 +59,3 @@ const ReceiptTag: React.FC<ReceiptTagProps> = (props) => {
     )
 }
 
-export default ReceiptTag;

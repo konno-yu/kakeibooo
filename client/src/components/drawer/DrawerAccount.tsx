@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FaceIcon } from './DrawerSvgIcons';
 
-const DrawerAccount: React.FC = () => {
+export const DrawerAccount: React.FC = () => {
     return (
         <div className="root--account">
             <div className="image">
@@ -13,4 +13,3 @@ const DrawerAccount: React.FC = () => {
     )
 }
 
-export default DrawerAccount;

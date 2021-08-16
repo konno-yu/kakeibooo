@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import bannerImg from '../../images/banner.svg';
 
-const DrawerBanner: React.FC = () => {
+export const DrawerBanner: React.FC = () => {
     return (
         <div className="root--banner">
             <img src={bannerImg} width="70%" />
@@ -11,4 +11,3 @@ const DrawerBanner: React.FC = () => {
     )
 }
 
-export default DrawerBanner;

@@ -1,17 +1,17 @@
 import * as React from 'react';
-import AppIcon from './AppIcon';
-import DrawerMenu from './DrawerMenu';
-import DrawerMenuButton from './DrawerMenuButton';
-import DrawerBanner from './DrawerBanner';
 import '../../style/drawer.scss';
+import { AppIcon } from './AppIcon';
+import { DrawerMenu } from './DrawerMenu';
+import { DrawerMenuButton } from './DrawerMenuButton';
+import { DrawerBanner } from './DrawerBanner';
 import { AiFillAccountBook } from 'react-icons/ai';
 import { TiHome } from 'react-icons/ti';
 import { BsFillBarChartFill } from 'react-icons/bs';
 import { RiFridgeFill } from 'react-icons/ri';
 import { IoSettingsSharp } from 'react-icons/io5';
-import DrawerAccount from './DrawerAccount';
+import { DrawerAccount } from './DrawerAccount';
 
-const Drawer: React.FC = () => {
+export const Drawer: React.FC = () => {
     const [value, setValue] = React.useState<Drawer.MenuItem>('home');
 
     const handleChange = (newValue: Drawer.MenuItem) => {
@@ -33,4 +33,3 @@ const Drawer: React.FC = () => {
     )
 }
 
-export default Drawer;

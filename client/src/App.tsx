@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Drawer from './components/drawer/Drawer';
-import FinanceView from './view/FinanceView';
+import { Drawer } from './components/drawer/Drawer';
+import { FinanceView } from './view/FinanceView';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
     return (
         <Router>
             <div className="drawer">
@@ -22,4 +22,3 @@ const App: React.FC = () => {
     )
 }
 
-export default App;

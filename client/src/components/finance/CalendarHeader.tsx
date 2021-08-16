@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { financeContext } from './FinanceContext';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import MonthlyReceiptModel from './model/MonthlyReceiptModel';
-const CalendarHeader: React.FC = () => {
+export const CalendarHeader: React.FC = () => {
     const dayOfWeekLabel = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     const context = useContext(financeContext);
 
@@ -46,4 +46,3 @@ const CalendarHeader: React.FC = () => {
     )
 }
 
-export default CalendarHeader;

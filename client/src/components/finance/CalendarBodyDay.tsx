@@ -9,7 +9,7 @@ interface CalendarBodyDayProps {
     value: number | null;
 }
 
-const CalendarBodyDay: React.FC<CalendarBodyDayProps> = (props) => {
+export const CalendarBodyDay: React.FC<CalendarBodyDayProps> = (props) => {
     const context = useContext(financeContext);
     const today = new Date();
 
@@ -65,4 +65,3 @@ const CalendarBodyDay: React.FC<CalendarBodyDayProps> = (props) => {
 }
 
 
-export default CalendarBodyDay;

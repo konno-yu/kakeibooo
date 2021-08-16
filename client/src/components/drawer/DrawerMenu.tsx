@@ -7,7 +7,7 @@ interface DrawerMenuProps {
     onChange: (newValue: string) => void;
 }
 
-const DrawerMenu: React.FC<DrawerMenuProps> = (props) => {
+export const DrawerMenu: React.FC<DrawerMenuProps> = (props) => {
     const handleChange = (newValue: string) => {
         props.onChange(newValue);
     }
@@ -25,4 +25,3 @@ const DrawerMenu: React.FC<DrawerMenuProps> = (props) => {
     );
 }
 
-export default DrawerMenu;

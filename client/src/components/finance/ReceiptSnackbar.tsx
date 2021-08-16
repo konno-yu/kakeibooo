@@ -6,7 +6,7 @@ interface SnackbarProps {
     message: string;
 }
 
-const ReceiptSnackbar: React.FC<SnackbarProps> = (props) => {
+export const ReceiptSnackbar: React.FC<SnackbarProps> = (props) => {
     return (
         <Snackbar
             open={true}
@@ -21,4 +21,3 @@ const ReceiptSnackbar: React.FC<SnackbarProps> = (props) => {
     )
 }
 
-export default ReceiptSnackbar;

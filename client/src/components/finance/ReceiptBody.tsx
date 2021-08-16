@@ -5,12 +5,12 @@ import DailyReceiptModel from './model/DailyReceiptModel';
 import { WeekIndex } from './model/MonthlyReceiptModel';
 import ReceiptModel from './model/ReceiptModel';
 import { receiptContext } from './ReceiptContext';
-import ReceiptTag from './ReceiptTag';
 import { getDate, getDay, getMonth, getWeekOfMonth } from 'date-fns';
+import { ReceiptTag } from './ReceiptTag';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 
-const ReceiptBody: React.FC = () => {
+export const ReceiptBody: React.FC = () => {
     const rContext = useContext(receiptContext);
     const fContext = useContext(financeContext);
     const isAddButtonDisabled = rContext.dailyReceipt.isReachDailyMax();
@@ -48,4 +48,3 @@ const ReceiptBody: React.FC = () => {
     )
 }
 
-export default ReceiptBody;

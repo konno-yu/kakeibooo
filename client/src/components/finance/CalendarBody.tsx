@@ -1,4 +1,4 @@
-import CalendarBodyWeek from "./CalendarBodyWeek";
+import { CalendarBodyWeek } from "./CalendarBodyWeek";
 import { useContext } from "react";
 import { financeContext } from "./FinanceContext";
 import { useEffect } from "react";
@@ -8,7 +8,7 @@ import { getYear, getMonth } from 'date-fns';
 import { useRef } from "react";
 import { receiptContext } from "./ReceiptContext";
 
-const CalendarBody: React.FC = () => {
+export const CalendarBody: React.FC = () => {
     const context = useContext(financeContext);
     const rContext = useContext(receiptContext);
     const prevTargetDate = useRef<Date>();
@@ -35,4 +35,3 @@ const CalendarBody: React.FC = () => {
     )
 }
 
-export default CalendarBody;
