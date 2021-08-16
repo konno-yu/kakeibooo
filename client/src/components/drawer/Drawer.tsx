@@ -1,5 +1,4 @@
 import * as React from 'react';
-import '../../style/drawer.scss';
 import { AppIcon } from './AppIcon';
 import { DrawerMenu } from './DrawerMenu';
 import { DrawerMenuButton } from './DrawerMenuButton';
@@ -22,14 +21,13 @@ export const Drawer: React.FC = () => {
             <AppIcon />
             <DrawerAccount />
             <DrawerMenu value={value} onChange={handleChange}>
-                <DrawerMenuButton value="home" className="drawer-menu-item" icon={<TiHome/>}>ホーム</DrawerMenuButton>
-                <DrawerMenuButton value="finance" className="drawer-menu-item" icon={<AiFillAccountBook />}>家計簿</DrawerMenuButton>
-                <DrawerMenuButton value="analyze" className="drawer-menu-item" icon={<BsFillBarChartFill />}>分析</DrawerMenuButton>
-                <DrawerMenuButton value="fridge" className="drawer-menu-item" icon={<RiFridgeFill />}>冷蔵庫</DrawerMenuButton>
-                <DrawerMenuButton value="setting" className="drawer-menu-item" icon={<IoSettingsSharp />}>設定</DrawerMenuButton>
+                <DrawerMenuButton value="home" icon={<TiHome/>}>ホーム</DrawerMenuButton>
+                <DrawerMenuButton value="finance" icon={<AiFillAccountBook />}>家計簿</DrawerMenuButton>
+                <DrawerMenuButton value="analyze" icon={<BsFillBarChartFill />}>分析</DrawerMenuButton>
+                <DrawerMenuButton value="fridge" icon={<RiFridgeFill />}>冷蔵庫</DrawerMenuButton>
+                <DrawerMenuButton value="setting" icon={<IoSettingsSharp />}>設定</DrawerMenuButton>
             </DrawerMenu>
             <DrawerBanner />
         </>
     )
 }
-
