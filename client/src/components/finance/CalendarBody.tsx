@@ -7,6 +7,7 @@ import MonthlyReceiptModel from "./model/MonthlyReceiptModel";
 import { getYear, getMonth } from 'date-fns';
 import { useRef } from "react";
 import { receiptContext } from "./ReceiptContext";
+import styled from "styled-components";
 
 export const CalendarBody: React.FC = () => {
     const context = useContext(financeContext);
@@ -25,13 +26,19 @@ export const CalendarBody: React.FC = () => {
     }, [context.targetDate]);
 
     return (
-        <div className="root--body">
+        <SC.CalendarBody>
             {
                 Object.values((context.monthlyReceipt).monthlyReceipt).map(week => {
                     return <CalendarBodyWeek value={ week }/>
                 })
             }
-        </div>
+        </SC.CalendarBody>
     )
 }
 
+const SC = {
+    CalendarBody: styled.div`
+        height: 90%;
+        padding-top: 12px;
+    `
+};

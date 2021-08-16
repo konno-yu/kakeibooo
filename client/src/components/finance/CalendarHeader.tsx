@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import { financeContext } from './FinanceContext';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import MonthlyReceiptModel from './model/MonthlyReceiptModel';
+import styled from 'styled-components';
+
 export const CalendarHeader: React.FC = () => {
     const dayOfWeekLabel = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     const context = useContext(financeContext);
@@ -23,8 +25,8 @@ export const CalendarHeader: React.FC = () => {
     }
 
     return (
-        <div className="root--header">
-            <div className="year-and-month">
+        <SC.CalendarHeader>
+            <SC.MonthSelector>
                 <div>
                     {(context.targetDate).toLocaleDateString('en-US', { month: 'long' })} {getYear(context.targetDate)}
                 </div>
@@ -36,13 +38,42 @@ export const CalendarHeader: React.FC = () => {
                         <HiArrowCircleRight size={28} color="#546e7a" />
                     </Button>
                 </div>
-            </div>
-            <div className="day-of-week">
+            </SC.MonthSelector>
+            <SC.DayOfWeek>
                 {
-                    dayOfWeekLabel.map(str => <div className="element">{str}</div>)
+                    dayOfWeekLabel.map(str => <SC.DayOfWeekElm>{str}</SC.DayOfWeekElm>)
                 }
-            </div>
-        </div>
+            </SC.DayOfWeek>
+        </SC.CalendarHeader>
     )
 }
 
+const SC = {
+    CalendarHeader: styled.div`
+        height: 10%;
+        display: flex;
+        flex-direction: column;
+    `,
+    MonthSelector: styled.div`
+        height: 50%;
+        font-size: 24px;
+        color: #546E7A;
+        font-weight: 900;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    `,
+    DayOfWeek: styled.div`
+        height: 50%;
+        display: flex;
+        align-items: flex-end;
+    `,
+    DayOfWeekElm: styled.div`
+        width: calc(100% / 7);
+        padding-bottom: 2px;
+        font-size: 14px;
+        font-weight: 800;
+        color: #546E7A;
+        border-bottom: 1.5px solid #546E7A;
+    `
+};

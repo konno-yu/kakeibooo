@@ -1,6 +1,7 @@
 import { Slide, Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { FiCheckCircle } from 'react-icons/fi';
+import styled from "styled-components";
 
 interface SnackbarProps {
     message: string;
@@ -14,10 +15,16 @@ export const ReceiptSnackbar: React.FC<SnackbarProps> = (props) => {
             TransitionComponent={Slide}
             autoHideDuration={1200}
         >
-            <Alert style={{background:"#546e7a", fontWeight:700}} icon={ <FiCheckCircle />} severity="success" variant="filled">
+            <SC.Alert icon={ <FiCheckCircle />} severity="success" variant="filled">
                 {props.message}
-            </Alert>
+            </SC.Alert>
         </Snackbar>
     )
 }
 
+const SC = {
+    Alert: styled(Alert)`
+        background: #546E7A;
+        font-weight: 700;
+    `
+};
