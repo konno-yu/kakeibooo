@@ -2,7 +2,6 @@ import DailyReceiptModel from "./DailyReceiptModel";
 import ReceiptModel from "./ReceiptModel";
 import { getDay, getWeekOfMonth, endOfMonth, isEqual, getMonth, getDate, getYear, setMonth } from 'date-fns';
 import { GetResponse } from "../../../rest/financeRest";
-import Receipt from "../Receipt";
 
 export type WeekIndex = 1 | 2 | 3 | 4 | 5 | 6;
 type MonthlyReceipt = {

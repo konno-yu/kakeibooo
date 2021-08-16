@@ -3,13 +3,14 @@ import { useContext } from 'react';
 import * as ReceiptRest from '../../rest/financeRest';
 import { receiptContext } from './ReceiptContext';
 import { financeContext } from './FinanceContext';
-import ReceiptErrorDialog from './ReceiptErrorDialog';
+import { ReceiptErrorDialog } from './ReceiptErrorDialog';
 import { useState } from 'react';
-import ReceiptSnackbar from './ReceiptSnackbar';
+import { ReceiptSnackbar } from './ReceiptSnackbar';
 import { getDay, getWeekOfMonth } from 'date-fns';
 import { WeekIndex } from './model/MonthlyReceiptModel';
+import styled from 'styled-components';
 
-const ReceiptFooter: React.FC = () => {
+export const ReceiptFooter: React.FC = () => {
     const rContext = useContext(receiptContext);
     const fContext = useContext(financeContext);
     const isRegisterButtonDisabled = rContext.dailyReceipt.getCount() === 0;
@@ -51,8 +52,7 @@ const ReceiptFooter: React.FC = () => {
         if (!validate(dailyCost)) {
             return;
         }
-        const isPost = !!fContext.monthlyReceipt.monthlyReceipt[getWeekOfMonth(purchaseDate) as WeekIndex][getDay(purchaseDate)]
-        console.log(isPost);
+        const isPost = !!fContext.monthlyReceipt.monthlyReceipt[getWeekOfMonth(purchaseDate) as WeekIndex][getDay(purchaseDate)];
         if (isPost) {
             ReceiptRest.post({ purchaseDate, dailyCost }).then(res => {
                 if (res.status === 201) {
@@ -87,17 +87,54 @@ const ReceiptFooter: React.FC = () => {
         });
     }
     return (
-        <div className="root--footer">
+        <SC.ReceiptFooter>
             {
                 rContext.errorStatus.isError &&  <ReceiptErrorDialog isOpen={rContext.errorStatus.isError} type={rContext.errorStatus.type}/>
             }
             {
                 isShowSnackbar && <ReceiptSnackbar message="登録が完了しました" />
             }
-            <Button className={isRegisterButtonDisabled ? "button--register disabled" : "button--register"} disabled={isRegisterButtonDisabled} fullWidth onClick={registerDailyReceipt}>食費を確定</Button>
-            <Button className={isNMDayButtonDisabled ? "button--nomoney disabled" : "button--nomoney"} disabled={isNMDayButtonDisabled} fullWidth onClick={registerNoMoneyDay}>NOマネーデイとして登録</Button>
-        </div>
+            <SC.RegisterButton disabled={isRegisterButtonDisabled} fullWidth onClick={registerDailyReceipt}>食費を確定</SC.RegisterButton>
+            <SC.NoMoneyButton disabled={isNMDayButtonDisabled} fullWidth onClick={registerNoMoneyDay}>NOマネーデイとして登録</SC.NoMoneyButton>
+        </SC.ReceiptFooter>
     )
 }
 
-export default ReceiptFooter;
+const SC = {
+    ReceiptFooter: styled.div`
+        height: 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        border-top: 2px dashed #CFD8DC;
+    `,
+    RegisterButton: styled(Button) <{ disabled: boolean }>`
+        width: 80%;
+        background: ${(props) => props.disabled ? '#F5F5F5' : '#546E7A'};
+        color: ${(props) => props.disabled ? '#BDBDBD' : '#FFFFFF'};
+        border: ${(props) => props.disabled ? '1px solid #BDBDBD' : '1px solid #546E7A'};
+        border-radius: 100px;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: "M PLUS Rounded 1c", sans-serif;
+        &:hover {
+            background: ${(props) => props.disabled ? '#F5F5F5' : '#546E7A'};
+            opacity: 0.7;
+        }
+    `,
+    NoMoneyButton: styled(Button)`
+        width: 80%;
+        background: ${(props) => props.disabled ? '#F5F5F5' : '#FFB74D'};
+        color: ${(props) => props.disabled ? '#BDBDBD' : '#FFFFFF'};
+        border: ${(props) => props.disabled ? '1px solid #BDBDBD' : '1px solid #FFB74D'};
+        border-radius: 100px;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: "M PLUS Rounded 1c", sans-serif;
+        &:hover {
+            background: ${(props) => props.disabled ? '#F5F5F5' : '#FFB74D'};
+            opacity: 0.7;
+        }
+    `,
+};

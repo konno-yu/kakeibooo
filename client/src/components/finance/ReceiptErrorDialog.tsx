@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import { IoAlertCircle } from 'react-icons/io5';
-import '../../style/dialog.scss';
 import { useContext } from 'react';
 import { receiptContext } from './ReceiptContext';
+import styled from 'styled-components';
 
 
 interface ReceiptErrorDlgProps {
@@ -41,7 +41,7 @@ const ErrorDetails: { [P in ErrorType]: ErrorMessages } = {
     }
 }
 
-const ReceiptErrorDialog: React.FC<ReceiptErrorDlgProps> = (props) => {
+export const ReceiptErrorDialog: React.FC<ReceiptErrorDlgProps> = (props) => {
     const context = useContext(receiptContext);
     const paperPropsStyle = {
         borderRadius: 8,
@@ -54,22 +54,54 @@ const ReceiptErrorDialog: React.FC<ReceiptErrorDlgProps> = (props) => {
 
     return (
         <Dialog open={props.isOpen} PaperProps={{ style: paperPropsStyle }}>
-            <DialogTitle disableTypography>
+            <SC.DialogTitle disableTypography>
                 <IoAlertCircle size={24} color="#FF5252" fontWeight={800} />
-                <div className="title-label">エラー</div>
-            </DialogTitle>
-            <DialogContent>
-                <div className="notice">{ErrorDetails[props.type].message}</div>
+                <SC.DialogTitleLabel>エラー</SC.DialogTitleLabel>
+            </SC.DialogTitle>
+            <SC.DialogContent>
+                <SC.ContentNotice>{ErrorDetails[props.type].message}</SC.ContentNotice>
                 {
                     ErrorDetails[props.type].subMessage &&
-                    <div className="notice--sub">※{ErrorDetails[props.type].subMessage}</div>
+                    <SC.ContentSubNotice>※{ErrorDetails[props.type].subMessage}</SC.ContentSubNotice>
                 }
-            </DialogContent>
+            </SC.DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} className="close-btn">閉じる</Button>
+                <SC.CloseButton onClick={handleClose}>閉じる</SC.CloseButton>
             </DialogActions>
         </Dialog>
     )
 }
 
-export default ReceiptErrorDialog;
+const SC = {
+    DialogTitle: styled(DialogTitle)`
+        display: flex;
+        align-items: center;
+        padding: 16px 24px 12px 4px !important;
+    `,
+    DialogTitleLabel: styled.div`
+        color: #FF5252;
+        font-size: 18px;
+        font-weight: 800;
+        margin-left: 4px;
+    `,
+    DialogContent: styled(DialogContent)`
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    `,
+    ContentNotice: styled.div`
+        color: #333333;
+        font-weight: 700;
+    `,
+    ContentSubNotice: styled.div`
+        color: #9e9e9e;
+        font-size: 0.9rem;
+        margin-top: 2px;
+    `,
+    CloseButton: styled(Button)`
+        font-family: "M PLUS Rounded 1c", sans-serif;
+        color: #333333;
+        font-weight: 600;
+    `
+};
