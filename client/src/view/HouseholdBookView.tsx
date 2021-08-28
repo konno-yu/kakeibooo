@@ -1,17 +1,13 @@
 import * as React from 'react';
 import { Calendar } from '../components/finance/Calendar';
 import { Receipt } from '../components/finance/Receipt';
-import { financeContext, useFinance } from '../components/finance/FinanceContext';
 import styled from 'styled-components';
 
-export const FinanceView: React.FC = () => {
-    const context = useFinance();
+export const HouseholdBookView: React.FC = () => {
     return (
         <SC.FinanceView>
-            <financeContext.Provider value={context}>
                 <Calendar />
                 <Receipt />
-            </financeContext.Provider>
         </SC.FinanceView>
     )
 }

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useReceipt, receiptContext } from './ReceiptContext';
 import { ReceiptBody } from './ReceiptBody';
 import { ReceiptFooter } from './ReceiptFooter';
 import { ReceiptHeader } from './ReceiptHeader';
@@ -7,14 +6,11 @@ import styled from 'styled-components';
 
 
 export const Receipt: React.FC = () => {
-    const context = useReceipt();
     return (
         <SC.ReceiptRoot>
-            <receiptContext.Provider value={context}>
-                <ReceiptHeader />
-                <ReceiptBody />
-                <ReceiptFooter />
-            </receiptContext.Provider>
+            <ReceiptHeader />
+            <ReceiptBody />
+            <ReceiptFooter />
         </SC.ReceiptRoot>
     )
 }

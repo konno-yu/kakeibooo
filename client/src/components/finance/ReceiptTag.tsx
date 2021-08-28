@@ -3,10 +3,10 @@ import { ChangeEvent, useContext } from "react";
 import { AiFillShopping } from "react-icons/ai";
 import { HiCurrencyYen } from "react-icons/hi";
 import { FaTrashAlt, FaCircle } from "react-icons/fa";
-import DailyReceiptModel from "./model/DailyReceiptModel";
 import ReceiptModel from "./model/ReceiptModel";
-import { receiptContext } from "./ReceiptContext";
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { updateDailyReceipt } from "../../reducer/householdBookSlice";
 
 interface ReceiptTagProps {
     model: ReceiptModel;
@@ -14,13 +14,15 @@ interface ReceiptTagProps {
 }
 
 export const ReceiptTag: React.FC<ReceiptTagProps> = (props) => {
-    const context = useContext(receiptContext);
+    const dailyReceipt = useAppSelector(state => state.householdBook.dailyReceipt);
+    const dispatch = useAppDispatch();
 
-    const getCurrentDailyReceipt = () => context.dailyReceipt;
-    const setNewDailyReceipt = (newDailyReceipt: ReceiptModel[]) => context.setDailyReceipt(new DailyReceiptModel(newDailyReceipt));
+    const setNewDailyReceipt = (newDailyReceipt: ReceiptModel[]) => {
+        dispatch(updateDailyReceipt(newDailyReceipt));
+    };
 
     const onDetectInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, target: 'storeName' | 'cost') => {
-        const current = getCurrentDailyReceipt();
+        const current = dailyReceipt;
         const inputText = (event.target as HTMLInputElement).value;
         if (target === "storeName") {
             current.receipts[props.ordinary].storeName = inputText;
@@ -31,7 +33,7 @@ export const ReceiptTag: React.FC<ReceiptTagProps> = (props) => {
     }
 
     const onDeleteClick = () => {
-        const current = getCurrentDailyReceipt();
+        const current = dailyReceipt;
         current.delete(props.ordinary);
         setNewDailyReceipt(current.receipts);
     }

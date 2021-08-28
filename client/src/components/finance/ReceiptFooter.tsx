@@ -1,20 +1,23 @@
 import { Button } from '@material-ui/core';
-import { useContext } from 'react';
 import * as ReceiptRest from '../../rest/financeRest';
-import { receiptContext } from './ReceiptContext';
-import { financeContext } from './FinanceContext';
 import { ReceiptErrorDialog } from './ReceiptErrorDialog';
 import { useState } from 'react';
 import { ReceiptSnackbar } from './ReceiptSnackbar';
 import { getDay, getWeekOfMonth } from 'date-fns';
 import { WeekIndex } from './model/MonthlyReceiptModel';
 import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { causeError } from '../../reducer/householdBookSlice';
 
 export const ReceiptFooter: React.FC = () => {
-    const rContext = useContext(receiptContext);
-    const fContext = useContext(financeContext);
-    const isRegisterButtonDisabled = rContext.dailyReceipt.getCount() === 0;
-    const isNMDayButtonDisabled = rContext.dailyReceipt.getCount() > 0;
+    const targetDate = useAppSelector(state => state.householdBook.targetDate);
+    const dailyReceipt = useAppSelector(state => state.householdBook.dailyReceipt);
+    const monthlyReceipt = useAppSelector(state => state.householdBook.monthlyReceipt);
+    const errorStatus = useAppSelector(state => state.householdBook.errorStatus);
+    const dispatch = useAppDispatch();
+
+    const isRegisterButtonDisabled = dailyReceipt.getCount() === 0;
+    const isNMDayButtonDisabled = dailyReceipt.getCount() > 0;
     const [isShowSnackbar, setIsShowSnackbar] = useState<boolean>(false);
 
     const validate = (dailyCost: Array<{ storeName: string, cost: number }>) => {
@@ -24,35 +27,35 @@ export const ReceiptFooter: React.FC = () => {
         const existSameStoreReceipt = dailyCost.filter((dCost, index, self) => self.findIndex(e => e.storeName === dCost.storeName) === index).length !== dailyCost.length;
         const existSameReceipt = dailyCost.filter((dCost, index, self) => self.findIndex(e => e.cost === dCost.cost && e.storeName === dCost.storeName) === index).length !== dailyCost.length;
         if (existEmptyStoreName) {
-            rContext.setErrorStatus({ isError: true, type: 'exists_empty_store_name' });
+            dispatch(causeError('exists_empty_store_name'));
             return false;
         }
         if (existZeroCost) {
-            rContext.setErrorStatus({ isError: true, type: 'exists_zero_receipt' });
+            dispatch(causeError('exists_invalid_receipt'));
             return false;
         }
         if (existInvalidReceipt) {
-            rContext.setErrorStatus({ isError: true, type: 'exists_invalid_receipt' });
+            dispatch(causeError('exists_invalid_receipt'));
             return false;
         }
         if (existSameReceipt) {
-            rContext.setErrorStatus({ isError: true, type: 'exists_duplicate_receipt' });
+            dispatch(causeError('exists_duplicate_receipt'));
             return false;
         }
         if (existSameStoreReceipt) {
-            rContext.setErrorStatus({ isError: true, type: 'exists_same_store_receipt' });
+            dispatch(causeError('exists_same_store_receipt'));
             return false;
         }
         return true;
     }
 
     const registerDailyReceipt = () => {
-        const purchaseDate = fContext.targetDate;
-        const dailyCost: Array<{ storeName: string, cost: number }> = [...rContext.dailyReceipt.receipts.map(receipt => receipt.getDailyCost())];
+        const purchaseDate = targetDate;
+        const dailyCost: Array<{ storeName: string, cost: number }> = [...dailyReceipt.receipts.map(receipt => receipt.getDailyCost())];
         if (!validate(dailyCost)) {
             return;
         }
-        const isPost = !!fContext.monthlyReceipt.monthlyReceipt[getWeekOfMonth(purchaseDate) as WeekIndex][getDay(purchaseDate)];
+        const isPost = !!monthlyReceipt.monthlyReceipt[getWeekOfMonth(purchaseDate) as WeekIndex][getDay(purchaseDate)];
         if (isPost) {
             ReceiptRest.post({ purchaseDate, dailyCost }).then(res => {
                 if (res.status === 201) {
@@ -75,7 +78,7 @@ export const ReceiptFooter: React.FC = () => {
     }
 
     const registerNoMoneyDay = () => {
-        const purchaseDate = fContext.targetDate;
+        const purchaseDate = targetDate;
         const dailyCost: Array<{ storeName: string, cost: number }> = [];
         ReceiptRest.post({ purchaseDate, dailyCost }).then((res) => {
             if (res.status === 201) {
@@ -89,7 +92,7 @@ export const ReceiptFooter: React.FC = () => {
     return (
         <SC.ReceiptFooter>
             {
-                rContext.errorStatus.isError &&  <ReceiptErrorDialog isOpen={rContext.errorStatus.isError} type={rContext.errorStatus.type}/>
+                errorStatus.isError &&  <ReceiptErrorDialog isOpen={errorStatus.isError} type={errorStatus.type}/>
             }
             {
                 isShowSnackbar && <ReceiptSnackbar message="登録が完了しました" />

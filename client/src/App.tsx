@@ -1,27 +1,31 @@
 import { StylesProvider } from '@material-ui/styles';
 import * as React from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { Drawer } from './components/drawer/Drawer';
-import { FinanceView } from './view/FinanceView';
+import { store } from './store';
+import { HouseholdBookView } from './view/HouseholdBookView';
 
 export const App: React.FC = () => {
     return (
         <StylesProvider injectFirst>
-            <Router>
-                <SC.Drawer>
-                    <Drawer />
-                </SC.Drawer>
-                <SC.Content>
-                    <Switch>
-                        <Route path="/home" />
-                        <Route path="/finance" component={FinanceView} />
-                        <Route path="/analyze" />
-                        <Route path="/fridge" />
-                        <Route path="/setting" />
-                    </Switch>
-                </SC.Content>
-            </Router>
+            <Provider store={store}>
+                <Router>
+                    <SC.Drawer>
+                        <Drawer />
+                    </SC.Drawer>
+                    <SC.Content>
+                        <Switch>
+                            <Route path="/home" />
+                            <Route path="/finance" component={HouseholdBookView} />
+                            <Route path="/analyze" />
+                            <Route path="/fridge" />
+                            <Route path="/setting" />
+                        </Switch>
+                    </SC.Content>
+                </Router>
+            </Provider>
         </StylesProvider>
     )
 }
