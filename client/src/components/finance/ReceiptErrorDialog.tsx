@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import { IoAlertCircle } from 'react-icons/io5';
-import { useContext } from 'react';
-import { receiptContext } from './ReceiptContext';
 import styled from 'styled-components';
+import { useAppDispatch } from '../../store';
+import { resolveError } from '../../reducer/householdBookSlice';
 
 
 interface ReceiptErrorDlgProps {
@@ -42,15 +42,14 @@ const ErrorDetails: { [P in ErrorType]: ErrorMessages } = {
 }
 
 export const ReceiptErrorDialog: React.FC<ReceiptErrorDlgProps> = (props) => {
-    const context = useContext(receiptContext);
+    const dispatch = useAppDispatch();
+
     const paperPropsStyle = {
         borderRadius: 8,
         padding: "8px 16px 8px 16px"
     };
 
-    const handleClose = () => {
-        context.setErrorStatus({ isError: false });
-    }
+    const handleClose = () => dispatch(resolveError());
 
     return (
         <Dialog open={props.isOpen} PaperProps={{ style: paperPropsStyle }}>

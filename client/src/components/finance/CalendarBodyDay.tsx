@@ -1,9 +1,10 @@
 import { Button } from "@material-ui/core";
 import { useContext } from "react";
-import { financeContext } from "./FinanceContext";
-import { getDate, setDate, set, getYear, getMonth, isEqual } from 'date-fns';
+import { getDate, set, getYear, getMonth, isEqual } from 'date-fns';
 import styled, { css } from "styled-components";
 import ImgPath from '../../images/medal.svg';
+import { useAppDispatch, useAppSelector } from "../../store";
+import { showSpecifyDate } from "../../reducer/householdBookSlice";
 
 interface CalendarBodyDayProps {
     children?: number;
@@ -11,7 +12,8 @@ interface CalendarBodyDayProps {
 }
 
 export const CalendarBodyDay: React.FC<CalendarBodyDayProps> = (props) => {
-    const context = useContext(financeContext);
+    const targetDate = useAppSelector(state => state.householdBook.targetDate);
+    const dispatch = useAppDispatch();
     const today = new Date();
 
     const getDailyCost = (cost: number) => {
@@ -22,18 +24,18 @@ export const CalendarBodyDay: React.FC<CalendarBodyDayProps> = (props) => {
     }
 
     const isSelected = () => {
-        return props.children === getDate(context.targetDate);
+        return props.children === getDate(targetDate);
     }
 
     const onClickDay = () => {
-        context.setTargetDate(setDate(context.targetDate, props.children));
+        dispatch(showSpecifyDate(props.children));
     }
 
     const isToday = () => {
         if (!props.children) {
             return false;
         }
-        const displayDate = set(new Date(), { year: getYear(context.targetDate), month: getMonth(context.targetDate), date: props.children });
+        const displayDate = set(new Date(), { year: getYear(targetDate), month: getMonth(targetDate), date: props.children });
         return isEqual(displayDate, today);
     }
 

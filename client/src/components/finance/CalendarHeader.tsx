@@ -5,30 +5,31 @@ import { financeContext } from './FinanceContext';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import MonthlyReceiptModel from './model/MonthlyReceiptModel';
 import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { showNextMonth, showPrevMonth, updateMonthlyReceipt } from '../../reducer/householdBookSlice';
 
 export const CalendarHeader: React.FC = () => {
+    const targetDate = useAppSelector(state => state.householdBook.targetDate);
+    const dispatch = useAppDispatch();
     const dayOfWeekLabel = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-    const context = useContext(financeContext);
 
     const getPreviousMonth = () => {
-        const targetDate = setMonth(context.targetDate, getMonth(context.targetDate) - 1);
+        dispatch(showPrevMonth());
         const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
-        context.setMonthlyReceipt(monthlyReceipt);
-        context.setTargetDate(targetDate);
+        dispatch(updateMonthlyReceipt(monthlyReceipt));
     }
 
     const getNextMonth = () => {
-        const targetDate = setMonth(context.targetDate, getMonth(context.targetDate) + 1);
+        dispatch(showNextMonth());
         const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
-        context.setMonthlyReceipt(monthlyReceipt);
-        context.setTargetDate(targetDate);
+        dispatch(updateMonthlyReceipt(monthlyReceipt));
     }
 
     return (
         <SC.CalendarHeader>
             <SC.MonthSelector>
                 <div>
-                    {(context.targetDate).toLocaleDateString('en-US', { month: 'long' })} {getYear(context.targetDate)}
+                    {(targetDate).toLocaleDateString('en-US', { month: 'long' })} {getYear(targetDate)}
                 </div>
                 <div>
                     <Button onClick={getPreviousMonth}>

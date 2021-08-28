@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { financeContext } from './FinanceContext';
 import { getYear, getMonth, getDate, getDay } from 'date-fns';
 import styled from 'styled-components';
+import { useAppSelector } from '../../store';
 
 export const ReceiptHeader: React.FC = () => {
+    const targetDate = useAppSelector(state => state.householdBook.targetDate);
     const dayOfWeekLabel = ['日', '月', '火', '水', '木', '金', '土'];
     const getDisplayYMDD = (targetDate: Date) => {
         const zeroPadding = (val: number) => ('000' + val).slice(-2);
@@ -14,8 +15,7 @@ export const ReceiptHeader: React.FC = () => {
             dayOfWeekLabel[getDay(targetDate)]
         ]
     }
-    const context = React.useContext(financeContext);
-    const [dispYear, dispMonth, dispDate, dispDay] = getDisplayYMDD(context.targetDate);
+    const [dispYear, dispMonth, dispDate, dispDay] = getDisplayYMDD(targetDate);
 
     return (
         <SC.ReceiptHeader>
