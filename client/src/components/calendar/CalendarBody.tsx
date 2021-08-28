@@ -1,7 +1,7 @@
 import { CalendarBodyWeek } from "./CalendarBodyWeek";
 import { useEffect } from "react";
 import * as FinanceRest from '../../rest/financeRest';
-import MonthlyReceiptModel from "./model/MonthlyReceiptModel";
+import MonthlyReceiptModel from "../receipt/model/MonthlyReceiptModel";
 import { getYear, getMonth } from 'date-fns';
 import { useRef } from "react";
 import styled from "styled-components";

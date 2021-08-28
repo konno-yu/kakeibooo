@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getMonth, getYear, setDate, setMonth } from "date-fns";
-import DailyReceiptModel from "../components/finance/model/DailyReceiptModel";
-import MonthlyReceiptModel from "../components/finance/model/MonthlyReceiptModel";
-import ReceiptModel from "../components/finance/model/ReceiptModel";
-import { ErrorType } from "../components/finance/ReceiptErrorDialog";
+import DailyReceiptModel from "../components/receipt/model/DailyReceiptModel";
+import MonthlyReceiptModel from "../components/receipt/model/MonthlyReceiptModel";
+import ReceiptModel from "../components/receipt/model/ReceiptModel";
+import { ErrorType } from "../components/receipt/ReceiptErrorDialog";
 
 type ErrorStatus = {
     isError: boolean,

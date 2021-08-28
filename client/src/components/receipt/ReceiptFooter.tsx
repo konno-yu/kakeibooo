@@ -4,10 +4,10 @@ import { ReceiptErrorDialog } from './ReceiptErrorDialog';
 import { useState } from 'react';
 import { ReceiptSnackbar } from './ReceiptSnackbar';
 import { getDay, getWeekOfMonth } from 'date-fns';
-import { WeekIndex } from './model/MonthlyReceiptModel';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { causeError } from '../../reducer/householdBookSlice';
+import { WeekIndex } from './model/MonthlyReceiptModel';
 
 export const ReceiptFooter: React.FC = () => {
     const targetDate = useAppSelector(state => state.householdBook.targetDate);

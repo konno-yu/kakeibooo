@@ -1,4 +1,4 @@
-import DailyReceiptModel from "./model/DailyReceiptModel";
+import DailyReceiptModel from "../receipt/model/DailyReceiptModel";
 import { CalendarBodyDay } from './CalendarBodyDay';
 import styled from "styled-components";
 
