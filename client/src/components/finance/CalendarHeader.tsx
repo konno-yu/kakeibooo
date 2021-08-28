@@ -1,7 +1,5 @@
 import { Button } from '@material-ui/core';
-import { getMonth, setMonth, getYear } from 'date-fns';
-import { useContext } from 'react';
-import { financeContext } from './FinanceContext';
+import { getMonth, getYear } from 'date-fns';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import MonthlyReceiptModel from './model/MonthlyReceiptModel';
 import styled from 'styled-components';
