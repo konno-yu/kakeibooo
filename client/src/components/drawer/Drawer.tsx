@@ -2,7 +2,6 @@ import * as React from 'react';
 import { AppIcon } from './AppIcon';
 import { DrawerMenu } from './DrawerMenu';
 import { DrawerMenuButton } from './DrawerMenuButton';
-import { DrawerBanner } from './DrawerBanner';
 import { AiFillAccountBook } from 'react-icons/ai';
 import { TiHome } from 'react-icons/ti';
 import { BsFillBarChartFill } from 'react-icons/bs';
@@ -27,7 +26,6 @@ export const Drawer: React.FC = () => {
                 <DrawerMenuButton value="fridge" icon={<RiFridgeFill />}>冷蔵庫</DrawerMenuButton>
                 <DrawerMenuButton value="setting" icon={<IoSettingsSharp />}>設定</DrawerMenuButton>
             </DrawerMenu>
-            <DrawerBanner />
         </>
     )
 }
