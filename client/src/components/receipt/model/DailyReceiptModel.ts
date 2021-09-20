@@ -43,4 +43,9 @@ export default class DailyReceiptModel {
     public getDate = () => {
         return this._receipts[0].date.getDate();
     }
+    public isExistEmptyStore = this._receipts.filter(r => r.storeName === '').length > 0;
+    public isExistZeroCost = this._receipts.filter(r => r.cost === 0 || r.cost === null).length > 0;
+    public isExistNaNCost = this._receipts.filter(r => isNaN(r.cost)).length > 0;
+    public isExistSameStore = this._receipts.filter((r, i, s) => s.findIndex(s => s.storeName === r.storeName) === i).length !== this.getCount();
+    public isDuplicate = this._receipts.filter((r, i, s) => s.findIndex(s => s.cost === r.cost && s.storeName === r.storeName) === i).length !== this.getCount();
 }

@@ -1,50 +1,40 @@
 import { Button } from '@material-ui/core';
-import { WeekIndex } from './model/MonthlyReceiptModel';
-import ReceiptModel from './model/ReceiptModel';
 import { ReceiptTag } from './ReceiptTag';
-import { getDay, getMonth, getWeekOfMonth } from 'date-fns';
-import { useEffect } from 'react';
-import { useRef } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { updateDailyReceipt } from '../../reducer/householdBookSlice';
+import DailyReceiptModel from './model/DailyReceiptModel';
+import { ChangeEvent } from 'react';
 
-export const ReceiptBody: React.FC = () => {
-    const dailyReceipt = useAppSelector(state => state.householdBook.dailyReceipt);
-    const monthlyReceipt = useAppSelector(state => state.householdBook.monthlyReceipt);
-    const targetDate = useAppSelector(state => state.householdBook.targetDate);
-    const dispatch = useAppDispatch();
+interface ReceiptBodyProps {
+    dailyReceipt: DailyReceiptModel;
+    onAddReceipt: () => void;
+    onDeleteReceipt: (ordinary: number) => void;
+    onChangeReceipt: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, target: 'store' | 'cost', ordinary: number) => void;
+}
 
-    const isAddButtonDisabled = dailyReceipt.isReachDailyMax();
-    const prevTargetDate = useRef<Date>();
-
-    useEffect(() => {
-        if (prevTargetDate.current && (getMonth(prevTargetDate.current) !== getMonth(targetDate))) return;
-        const targetDateReceipt = monthlyReceipt.monthlyReceipt[getWeekOfMonth(targetDate) as WeekIndex][getDay(targetDate)];
-        if (targetDateReceipt && targetDateReceipt.getDailyTotalCost() > 0) {
-            dispatch(updateDailyReceipt(targetDateReceipt.receipts));
-        } else {
-            dispatch(updateDailyReceipt([]));
-        }
-    }, [targetDate]);
-
-    const addReceiptTag = () => {
-        const current = dailyReceipt;
-        current.add(new ReceiptModel(new Date(), "", 0));
-        dispatch(updateDailyReceipt(current.receipts));
-    }
+export const ReceiptBody: React.FC<ReceiptBodyProps> = (props: ReceiptBodyProps) => {
+    const isAddButtonDisabled = props.dailyReceipt.isReachDailyMax();
 
     return (
         <SC.ReceiptBody>
             <SC.ReceiptPart>
                 {
-                    (dailyReceipt.receipts).map((receipt, ordinary) => <ReceiptTag model={receipt} ordinary={ordinary}></ReceiptTag>)
+                    (props.dailyReceipt.receipts).map((receipt, ordinary) => {
+                        return (
+                            <ReceiptTag
+                                model={receipt}
+                                ordinary={ordinary}
+                                onDeleteReceipt={props.onDeleteReceipt}
+                                onChangeReceipt={props.onChangeReceipt}
+                            />
+                        );
+                    })
                 }
-                <SC.AddReceiptButton fullWidth variant="outlined" onClick={addReceiptTag} disabled={isAddButtonDisabled}>+ レシートを追加</SC.AddReceiptButton>
+                <SC.AddReceiptButton fullWidth variant="outlined" onClick={props.onAddReceipt} disabled={isAddButtonDisabled}>+ レシートを追加</SC.AddReceiptButton>
             </SC.ReceiptPart>
             <SC.SummartionPart>
                 <div>合計</div>
-                <div>￥{dailyReceipt.getDailyTotalCost()}</div>
+                <div>￥{props.dailyReceipt.getDailyTotalCost()}</div>
             </SC.SummartionPart>
         </SC.ReceiptBody>
     )
