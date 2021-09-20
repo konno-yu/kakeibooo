@@ -12,7 +12,7 @@ export const CalendarBodyWeek: React.FC<CalendarBodyWeekProps> = (props) => {
         <SC.CalendarBodyWeek>
             {props.value.map(dailyReceipt => {
                 if (dailyReceipt) {
-                    return <CalendarBodyDay value={dailyReceipt.getDailyTotalCost()}>{dailyReceipt.getDate()}</CalendarBodyDay>
+                    return <CalendarBodyDay value={dailyReceipt.getDailyTotalCost()}>{dailyReceipt.date.getDate()}</CalendarBodyDay>
                 } else {
                     return <CalendarBodyDay value={null} />
                 }

@@ -1,6 +1,6 @@
 import DailyReceiptModel from "./DailyReceiptModel";
 import ReceiptModel from "./ReceiptModel";
-import { getDay, getWeekOfMonth, endOfMonth, isEqual, getMonth, getDate, getYear, setMonth } from 'date-fns';
+import { getDay, getWeekOfMonth, endOfMonth, isEqual, getDate } from 'date-fns';
 import { GetResponse } from "../../../rest/financeRest";
 
 export type WeekIndex = 1 | 2 | 3 | 4 | 5 | 6;
@@ -43,10 +43,10 @@ export default class MonthlyReceiptModel {
             const weekIndex = getWeekOfMonth(targetDate) as WeekIndex;
             if (correspondingReceipt) {
                 const dailyReceiptModel: Array<ReceiptModel> = (correspondingReceipt.dailyCost.length > 0) ?
-                    correspondingReceipt.dailyCost.map(receipt => new ReceiptModel(targetDate, receipt.storeName, receipt.cost)) : [new ReceiptModel(targetDate, '', 0)];
-                this._monthlyReceipt[weekIndex][getDay(targetDate)] = new DailyReceiptModel(dailyReceiptModel);
+                    correspondingReceipt.dailyCost.map(receipt => new ReceiptModel(receipt.storeName, receipt.cost)) : [new ReceiptModel('', 0)];
+                this._monthlyReceipt[weekIndex][getDay(targetDate)] = new DailyReceiptModel(targetDate, dailyReceiptModel);
             } else {
-                this._monthlyReceipt[weekIndex][getDay(targetDate)] = new DailyReceiptModel([new ReceiptModel(targetDate, '', null)]);
+                this._monthlyReceipt[weekIndex][getDay(targetDate)] = new DailyReceiptModel(targetDate, [new ReceiptModel('', null)]);
             }
         }
     }

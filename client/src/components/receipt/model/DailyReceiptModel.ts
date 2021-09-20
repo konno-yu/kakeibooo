@@ -3,10 +3,16 @@ import ReceiptModel from "./ReceiptModel";
 export default class DailyReceiptModel {
     private static DAILY_MAX_RECEIPT = 4;
 
+    private _date: Date;
     private _receipts: ReceiptModel[] = [];
 
-    constructor(receipts: ReceiptModel[]) {
+    constructor(date: Date, receipts: ReceiptModel[]) {
+        this._date = date;
         this._receipts = receipts;
+    }
+
+    get date() {
+        return this._date;
     }
 
     get receipts() {
@@ -40,9 +46,6 @@ export default class DailyReceiptModel {
         }, 0);
     }
 
-    public getDate = () => {
-        return this._receipts[0].date.getDate();
-    }
     public isExistEmptyStore = this._receipts.filter(r => r.storeName === '').length > 0;
     public isExistZeroCost = this._receipts.filter(r => r.cost === 0 || r.cost === null).length > 0;
     public isExistNaNCost = this._receipts.filter(r => isNaN(r.cost)).length > 0;
