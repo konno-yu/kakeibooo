@@ -13,13 +13,13 @@ export const CalendarHeader: React.FC = () => {
 
     const getPreviousMonth = () => {
         dispatch(showPrevMonth());
-        const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
+        const monthlyReceipt = new MonthlyReceiptModel(targetDate, undefined);
         dispatch(updateMonthlyReceipt(monthlyReceipt));
     }
 
     const getNextMonth = () => {
         dispatch(showNextMonth());
-        const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
+        const monthlyReceipt = new MonthlyReceiptModel(targetDate, undefined);
         dispatch(updateMonthlyReceipt(monthlyReceipt));
     }
 

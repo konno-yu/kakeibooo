@@ -12,6 +12,20 @@ export type PostRequest = {
     dailyCost?: { storeName: string, cost: number }[];
 }
 
+export type PostResponse = Response & {
+    data: {
+        purchaseDate: Date,
+        dailyCost?: { storeName: string, cost: number }[];
+    }
+}
+
+export type PutResponse = Response & {
+    data: {
+        purchaseDate: Date,
+        dailyCost?: { storeName: string, cost: number }[];
+    }
+}
+
 export type PutRequest = PostRequest;
 
 export async function get() {
@@ -23,9 +37,9 @@ export async function getByMonth(year: number, month: number) {
 }
 
 export async function post(body: PostRequest) {
-    return axios.post<PostRequest, Response>(BASE_URL, body);
+    return axios.post<PostRequest, PostResponse>(BASE_URL, body);
 }
 
 export async function update(body: PutRequest) {
-    return axios.put<PutRequest, Response>(BASE_URL, body);
+    return axios.put<PutRequest, PutResponse>(BASE_URL, body);
 }

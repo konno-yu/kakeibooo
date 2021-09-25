@@ -10,9 +10,9 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { ChangeEvent } from 'react';
 import { useEffect } from 'react';
 import { getDay, getWeekOfMonth } from 'date-fns';
-import { WeekIndex } from './model/MonthlyReceiptModel';
+import MonthlyReceiptModel, { WeekIndex } from './model/MonthlyReceiptModel';
 import * as ReceiptRest from '../../rest/financeRest';
-import { causeError } from '../../reducer/householdBookSlice';
+import { updateMonthlyReceipt } from '../../reducer/householdBookSlice';
 import { CommonSnackbar } from '../common/CommonSnackbar';
 import { FiCheckCircle } from 'react-icons/fi';
 import { ErrorType, ReceiptErrorDialog } from './ReceiptErrorDialog';
@@ -93,9 +93,7 @@ export const Receipt: React.FC = () => {
         if (isPost) {
             ReceiptRest.post({ purchaseDate: targetDate, dailyCost }).then(res => {
                 if (res.status === 201) {
-                    setIsShowSnackbar(true);
-                    setTimeout(() => setIsShowSnackbar(false), 1500);
-                    const hoge: ReceiptModel[] = res.data.dailyCost.map(d => new ReceiptModel(d.storeName, d.cost));
+                    AfterPost(res.data.dailyCost);
                 } else {
                     alert('追加時に予期しないエラーが発生しました');
                 }
@@ -103,8 +101,7 @@ export const Receipt: React.FC = () => {
         } else {
             ReceiptRest.update({ purchaseDate: targetDate, dailyCost }).then(res => {
                 if (res.status === 200) {
-                    setIsShowSnackbar(true);
-                    setTimeout(() => setIsShowSnackbar(false), 1500);
+                    AfterPut(res.data.dailyCost);
                 } else {
                     alert('更新時に予期しないエラーが発生しました');
                 }
@@ -113,14 +110,44 @@ export const Receipt: React.FC = () => {
     }
 
     const onClickNoMoneyDay = () => {
-        ReceiptRest.post({ purchaseDate: targetDate, dailyCost: [] }).then(res => {
-            if (res.status === 201) {
-                setIsShowSnackbar(true);
-                setTimeout(() => setIsShowSnackbar(false), 2000);
-            } else {
-                alert("予期しないエラーが発生しました");
-            }
-        });
+        const isPost = monthlyReceipt.receipts[getWeekOfMonth(targetDate) as WeekIndex][getDay(targetDate)].receipts[0].cost === null;
+        if (isPost) {
+            ReceiptRest.post({ purchaseDate: targetDate, dailyCost: [] }).then(res => {
+                if (res.status === 201) {
+                    AfterPost(res.data.dailyCost);
+                } else {
+                    alert('予期しないエラーが発生しました');
+                }
+            });
+        } else {
+            ReceiptRest.update({ purchaseDate: targetDate, dailyCost: [] }).then(res => {
+                if (res.status === 200) {
+                    AfterPut(res.data.dailyCost);
+                } else {
+                    alert(('予期しないエラーが発生しました'));
+                }
+            })
+        }
+    }
+
+    const AfterPost = (dailyCost?: { storeName: string, cost: number }[]) => {
+        setSnackbarStatus({ isShow: true, message: '登録が完了しました' });
+        setTimeout(() => setSnackbarStatus({ isShow: false }), 1500);
+        const receiptModel: ReceiptModel[] = dailyCost.map(d => new ReceiptModel(d.storeName, d.cost));
+        setDailyReceipt(new DailyReceiptModel(targetDate, receiptModel));
+        monthlyReceipt.setSpecifyDateReceipt(targetDate, receiptModel);
+        dispatch(updateMonthlyReceipt(new MonthlyReceiptModel(targetDate, monthlyReceipt.receipts)));
+    }
+
+    const AfterPut = (dailyCost?: { storeName: string, cost: number }[]) => {
+        setSnackbarStatus({ isShow: true, message: '更新が完了しました' });
+        setTimeout(() => setSnackbarStatus({ isShow: false }), 1500);
+        const receiptModel: ReceiptModel[] = dailyCost.map(d => new ReceiptModel(d.storeName, d.cost));
+        setDailyReceipt(new DailyReceiptModel(targetDate, receiptModel));
+        monthlyReceipt.setSpecifyDateReceipt(targetDate, receiptModel);
+        dispatch(updateMonthlyReceipt(new MonthlyReceiptModel(targetDate, monthlyReceipt.receipts)));
+    }
+
     const onDialogClose = () => {
         setErrorDialogStatus({ isShow: false });
     }

@@ -11,7 +11,7 @@ interface HouseholdBookState {
 
 const initialState: HouseholdBookState = {
     targetDate: new Date(),
-    monthlyReceipt: new MonthlyReceiptModel(getYear(new Date()), getMonth(new Date())),
+    monthlyReceipt: new MonthlyReceiptModel(new Date(), undefined),
 }
 
 export const householdBookSlice = createSlice({

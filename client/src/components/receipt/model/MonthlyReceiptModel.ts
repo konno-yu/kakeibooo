@@ -1,6 +1,6 @@
 import DailyReceiptModel from "./DailyReceiptModel";
 import ReceiptModel from "./ReceiptModel";
-import { getDay, getWeekOfMonth, endOfMonth, isEqual, getDate } from 'date-fns';
+import { getDay, getWeekOfMonth, endOfMonth, isEqual, getDate, getYear, getMonth } from 'date-fns';
 import { GetResponse } from "../../../rest/financeRest";
 
 export type WeekIndex = 1 | 2 | 3 | 4 | 5 | 6;
@@ -11,9 +11,14 @@ type MonthlyReceipt = {
 export default class MonthlyReceiptModel {
     private _receipts: MonthlyReceipt;
 
-    constructor(year: number, month: number, data?: GetResponse[]) {
-        this.initialize();
-        this.setMonthlyReceipt(year, month, data);
+    constructor(targetDate: Date, monthlyReceipt?: MonthlyReceipt, data?: GetResponse[]) {
+        if (monthlyReceipt) {
+            console.log(monthlyReceipt);
+            this._receipts = monthlyReceipt;
+        } else {
+            this.initialize();
+            this.setMonthlyReceipt(targetDate, data);
+        }
     }
 
     get receipts() {
@@ -35,10 +40,16 @@ export default class MonthlyReceiptModel {
         }
     }
 
-    private setMonthlyReceipt(year: number, month: number, receipts?: GetResponse[]) {
-        const endDate = getDate(endOfMonth(new Date(year, month, 1)));  // 指定された年・月の最終日を取得
-        for (let date = 1; date <= endDate; date++) {
-            const targetDate = new Date(year, month, date);
+    public setSpecifyDateReceipt = (date: Date, dailyRecept: ReceiptModel[]) => {
+        const weekIndex = getWeekOfMonth(new Date(date)) as WeekIndex;
+        const dateIndex = getDay(new Date(date));
+        this._receipts[weekIndex][dateIndex] = new DailyReceiptModel(new Date(date), dailyRecept);
+    }
+
+    private setMonthlyReceipt(date: Date, receipts?: GetResponse[]) {
+        const endDate = getDate(endOfMonth(date));  // 指定された年・月の最終日を取得
+        for (let d = 1; d <= endDate; d++) {
+            const targetDate = new Date(getYear(date), getMonth(date), d);
             const correspondingReceipt = receipts ? receipts.find(r => isEqual(new Date(r.purchaseDate), targetDate)) : null;
             const weekIndex = getWeekOfMonth(targetDate) as WeekIndex;
             if (correspondingReceipt) {
