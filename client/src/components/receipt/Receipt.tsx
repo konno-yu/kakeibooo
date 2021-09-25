@@ -57,24 +57,24 @@ export const Receipt: React.FC = () => {
     }
 
     const validate = () => {
-        if (dailyReceipt.isExistEmptyStore) {
             dispatch(causeError('exists_empty_store_name'));
+        if (dailyReceipt.isExistEmptyStore()) {
             return false;
         }
-        if (dailyReceipt.isExistZeroCost) {
             dispatch(causeError('exists_invalid_receipt'));
+        if (dailyReceipt.isExistZeroCost()) {
             return false;
         }
-        if (dailyReceipt.isExistNaNCost) {
             dispatch(causeError('exists_invalid_receipt'));
+        if (dailyReceipt.isExistNaNCost()) {
             return false;
         }
-        if (dailyReceipt.isDuplicate) {
             dispatch(causeError('exists_duplicate_receipt'));
+        if (dailyReceipt.isDuplicate()) {
             return false;
         }
-        if (dailyReceipt.isExistSameStore) {
             dispatch(causeError('exists_same_store_receipt'));
+        if (dailyReceipt.isExistSameStore()) {
             return false;
         }
         return true;
