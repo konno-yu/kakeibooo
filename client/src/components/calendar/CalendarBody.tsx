@@ -21,7 +21,7 @@ export const CalendarBody: React.FC = () => {
             const thisYear = getYear(targetDate);
             const thisMonth = getMonth(targetDate)
             const res = await FinanceRest.getByMonth(thisYear, thisMonth);
-            dispatch(updateMonthlyReceipt(new MonthlyReceiptModel(thisYear, thisMonth, res.data)));
+            dispatch(updateMonthlyReceipt(new MonthlyReceiptModel(targetDate, undefined, res.data)));
         }
         fetch();
     }, [targetDate]);
@@ -29,7 +29,7 @@ export const CalendarBody: React.FC = () => {
     return (
         <SC.CalendarBody>
             {
-                Object.values((monthlyReceipt).monthlyReceipt).map(week => {
+                Object.values((monthlyReceipt).receipts).map(week => {
                     return <CalendarBodyWeek value={ week }/>
                 })
             }

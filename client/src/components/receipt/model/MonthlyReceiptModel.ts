@@ -9,23 +9,23 @@ type MonthlyReceipt = {
 }
 
 export default class MonthlyReceiptModel {
-    private _monthlyReceipt: MonthlyReceipt;
+    private _receipts: MonthlyReceipt;
 
     constructor(year: number, month: number, data?: GetResponse[]) {
         this.initialize();
         this.setMonthlyReceipt(year, month, data);
     }
 
-    get monthlyReceipt() {
-        return this._monthlyReceipt;
+    get receipts() {
+        return this._receipts;
     }
 
-    set monthlyReceipt(monthlyReceipt: MonthlyReceipt) {
-        this._monthlyReceipt = monthlyReceipt;
+    set receipts(receipts: MonthlyReceipt) {
+        this._receipts = receipts;
     }
 
     private initialize() {
-        this._monthlyReceipt = {
+        this._receipts = {
             1: [null, null, null, null, null, null, null],
             2: [null, null, null, null, null, null, null],
             3: [null, null, null, null, null, null, null],
@@ -44,9 +44,9 @@ export default class MonthlyReceiptModel {
             if (correspondingReceipt) {
                 const dailyReceiptModel: Array<ReceiptModel> = (correspondingReceipt.dailyCost.length > 0) ?
                     correspondingReceipt.dailyCost.map(receipt => new ReceiptModel(receipt.storeName, receipt.cost)) : [new ReceiptModel('', 0)];
-                this._monthlyReceipt[weekIndex][getDay(targetDate)] = new DailyReceiptModel(targetDate, dailyReceiptModel);
+                this._receipts[weekIndex][getDay(targetDate)] = new DailyReceiptModel(targetDate, dailyReceiptModel);
             } else {
-                this._monthlyReceipt[weekIndex][getDay(targetDate)] = new DailyReceiptModel(targetDate, [new ReceiptModel('', null)]);
+                this._receipts[weekIndex][getDay(targetDate)] = new DailyReceiptModel(targetDate, [new ReceiptModel('', null)]);
             }
         }
     }

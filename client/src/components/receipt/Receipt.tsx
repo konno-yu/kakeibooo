@@ -25,7 +25,7 @@ export const Receipt: React.FC = () => {
     useEffect(() => {
         const weekIndex = getWeekOfMonth(targetDate) as WeekIndex;
         const dayIndex = getDay(targetDate);
-        const targetDateReceipt = monthlyReceipt.monthlyReceipt[weekIndex][dayIndex];
+        const targetDateReceipt = monthlyReceipt.receipts[weekIndex][dayIndex];
         if (targetDateReceipt && targetDateReceipt.getDailyTotalCost() > 0) {
             setDailyReceipt(new DailyReceiptModel(targetDate, targetDateReceipt.receipts));
         } else {
@@ -84,7 +84,7 @@ export const Receipt: React.FC = () => {
         if (!validate()) {
             return;
         }
-        const isPost = monthlyReceipt.monthlyReceipt[getWeekOfMonth(targetDate) as WeekIndex][getDay(targetDate)].receipts[0].cost === null;
+        const isPost = monthlyReceipt.receipts[getWeekOfMonth(targetDate) as WeekIndex][getDay(targetDate)].receipts[0].cost === null;
         const dailyCost: { storeName: string, cost: number }[] = [...dailyReceipt.receipts.map(r => r.getDailyCost())];
         if (isPost) {
             ReceiptRest.post({ purchaseDate: targetDate, dailyCost }).then(res => {
