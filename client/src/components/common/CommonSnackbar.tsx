@@ -1,30 +1,33 @@
-import { Slide, Snackbar } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import { FiCheckCircle } from 'react-icons/fi';
+import { ReactNode } from "react";
+import { Snackbar, Slide } from '@material-ui/core';
 import styled from "styled-components";
+import { Alert } from "@material-ui/lab";
 
 interface SnackbarProps {
     message: string;
+    icon: ReactNode
 }
 
-export const ReceiptSnackbar: React.FC<SnackbarProps> = (props) => {
+export const CommonSnackbar: React.FC<SnackbarProps> = (props) => {
     return (
         <Snackbar
             open={true}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             TransitionComponent={Slide}
-            autoHideDuration={1200}
+            autoHideDuration={1000}
         >
-            <SC.Alert icon={ <FiCheckCircle />} severity="success" variant="filled">
+            <S.Alert icon={props.icon} variant='filled'>
                 {props.message}
-            </SC.Alert>
+            </S.Alert>
+
         </Snackbar>
+
     )
 }
 
-const SC = {
+const S = {
     Alert: styled(Alert)`
         background: #546E7A;
         font-weight: 700;
     `
-};
+}
