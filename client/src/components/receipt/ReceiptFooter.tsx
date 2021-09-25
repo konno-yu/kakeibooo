@@ -1,13 +1,5 @@
 import { Button } from '@material-ui/core';
-import * as ReceiptRest from '../../rest/financeRest';
-import { ReceiptErrorDialog } from './ReceiptErrorDialog';
-import { useState } from 'react';
-import { ReceiptSnackbar } from './ReceiptSnackbar';
-import { getDay, getWeekOfMonth, getWeeksInMonth } from 'date-fns';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { causeError } from '../../reducer/householdBookSlice';
-import { WeekIndex } from './model/MonthlyReceiptModel';
 import DailyReceiptModel from './model/DailyReceiptModel';
 
 interface ReceiptFooterProps {
@@ -17,23 +9,11 @@ interface ReceiptFooterProps {
 }
 
 export const ReceiptFooter: React.FC<ReceiptFooterProps> = (props) => {
-    const targetDate = useAppSelector(state => state.householdBook.targetDate);
-    const monthlyReceipt = useAppSelector(state => state.householdBook.monthlyReceipt);
-    const errorStatus = useAppSelector(state => state.householdBook.errorStatus);
-    const dispatch = useAppDispatch();
-
     const isRegisterButtonDisabled = props.dailyReceipt.getCount() === 0;
     const isNMDayButtonDisabled = props.dailyReceipt.getCount() > 0;
-    const [isShowSnackbar, setIsShowSnackbar] = useState<boolean>(false);
 
     return (
         <SC.ReceiptFooter>
-            {
-                errorStatus.isError &&  <ReceiptErrorDialog isOpen={errorStatus.isError} type={errorStatus.type}/>
-            }
-            {
-                isShowSnackbar && <ReceiptSnackbar message="登録が完了しました" />
-            }
             <SC.RegisterButton disabled={isRegisterButtonDisabled} fullWidth onClick={props.onClickRegister}>食費を確定</SC.RegisterButton>
             <SC.NoMoneyButton disabled={isNMDayButtonDisabled} fullWidth onClick={props.onClickNoMoneyDay}>NOマネーデイとして登録</SC.NoMoneyButton>
         </SC.ReceiptFooter>

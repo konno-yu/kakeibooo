@@ -13,6 +13,9 @@ import { getDay, getWeekOfMonth } from 'date-fns';
 import { WeekIndex } from './model/MonthlyReceiptModel';
 import * as ReceiptRest from '../../rest/financeRest';
 import { causeError } from '../../reducer/householdBookSlice';
+import { CommonSnackbar } from '../common/CommonSnackbar';
+import { FiCheckCircle } from 'react-icons/fi';
+import { ErrorType, ReceiptErrorDialog } from './ReceiptErrorDialog';
 
 
 export const Receipt: React.FC = () => {
@@ -20,7 +23,8 @@ export const Receipt: React.FC = () => {
     const targetDate = useAppSelector(state => state.householdBook.targetDate);
     const monthlyReceipt = useAppSelector(state => state.householdBook.monthlyReceipt);
     const [dailyReceipt, setDailyReceipt] = useState<DailyReceiptModel>(new DailyReceiptModel(targetDate, []));
-    const [isShowSnackbar, setIsShowSnackbar] = useState<boolean>(false);
+    const [snackbarStatus, setSnackbarStatus] = useState<{isShow: boolean, message?: string}>({ isShow: false });
+    const [errorDialogStatus, setErrorDialogStatus] = useState<{isShow: boolean, type?: ErrorType}>({ isShow: false });
 
     useEffect(() => {
         const weekIndex = getWeekOfMonth(targetDate) as WeekIndex;
@@ -117,10 +121,19 @@ export const Receipt: React.FC = () => {
                 alert("予期しないエラーが発生しました");
             }
         });
+    const onDialogClose = () => {
+        setErrorDialogStatus({ isShow: false });
     }
 
     return (
         <SC.ReceiptRoot>
+            {
+                errorDialogStatus.isShow &&
+                    <ReceiptErrorDialog onDialogClose={onDialogClose} type={errorDialogStatus.type}/>
+            }
+            {
+                snackbarStatus.isShow && <CommonSnackbar message={snackbarStatus.message} icon={<FiCheckCircle />}/>
+            }
             <ReceiptHeader />
             <ReceiptBody
                 dailyReceipt={dailyReceipt}
