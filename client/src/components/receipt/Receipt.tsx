@@ -57,24 +57,24 @@ export const Receipt: React.FC = () => {
     }
 
     const validate = () => {
-            dispatch(causeError('exists_empty_store_name'));
         if (dailyReceipt.isExistEmptyStore()) {
+            setErrorDialogStatus({ isShow: true, type: 'exists_empty_store_name' });
             return false;
         }
-            dispatch(causeError('exists_invalid_receipt'));
         if (dailyReceipt.isExistZeroCost()) {
+            setErrorDialogStatus({ isShow: true, type: 'exists_zero_receipt' });
             return false;
         }
-            dispatch(causeError('exists_invalid_receipt'));
         if (dailyReceipt.isExistNaNCost()) {
+            setErrorDialogStatus({ isShow: true, type: 'exists_invalid_receipt' });
             return false;
         }
-            dispatch(causeError('exists_duplicate_receipt'));
         if (dailyReceipt.isDuplicate()) {
+            setErrorDialogStatus({ isShow: true, type: 'exists_duplicate_receipt' });
             return false;
         }
-            dispatch(causeError('exists_same_store_receipt'));
         if (dailyReceipt.isExistSameStore()) {
+            setErrorDialogStatus({ isShow: true, type: 'exists_same_store_receipt' });
             return false;
         }
         return true;

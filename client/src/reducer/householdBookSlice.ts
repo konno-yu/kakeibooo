@@ -1,26 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getMonth, getYear, setDate, setMonth } from "date-fns";
 import MonthlyReceiptModel from "../components/receipt/model/MonthlyReceiptModel";
-import { ErrorType } from "../components/receipt/ReceiptErrorDialog";
-
-type ErrorStatus = {
-    isError: boolean,
-    type?: ErrorType
-};
 
 interface HouseholdBookState {
     // 表示対象の年月日
     targetDate: Date;
     // 表示対象月における日別の食費
     monthlyReceipt: MonthlyReceiptModel;
-    // 食費登録時のエラー状況
-    errorStatus: ErrorStatus
 }
 
 const initialState: HouseholdBookState = {
     targetDate: new Date(),
     monthlyReceipt: new MonthlyReceiptModel(getYear(new Date()), getMonth(new Date())),
-    errorStatus: { isError: false }
 }
 
 export const householdBookSlice = createSlice({
@@ -39,15 +30,6 @@ export const householdBookSlice = createSlice({
         updateMonthlyReceipt: (state: HouseholdBookState, action: PayloadAction<MonthlyReceiptModel>) => {
             state.monthlyReceipt = action.payload;
         },
-        causeError: (state: HouseholdBookState, action: PayloadAction<string>) => {
-            state.errorStatus = {
-                isError: true,
-                type: action.payload as ErrorType
-            }
-        },
-        resolveError: (state: HouseholdBookState) => {
-            state.errorStatus = { isError: false };
-        }
     }
 })
 
@@ -56,6 +38,4 @@ export const {
     showPrevMonth,
     showSpecifyDate,
     updateMonthlyReceipt,
-    causeError,
-    resolveError,
 } = householdBookSlice.actions;
