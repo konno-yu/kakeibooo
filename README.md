@@ -1,4 +1,7 @@
 
-# kakeibooo-next
-<img width="1439" alt="126855489-dacdae8f-6a29-442d-8bfa-7fb07b4ce86c" src="https://user-images.githubusercontent.com/51043054/126855593-fd618b84-b39a-478b-8b09-28cb4f473c9d.png">
+# Kakeibooo
 
+[![CodeFactor](https://www.codefactor.io/repository/github/konno-yu/kakeibooo-next/badge)](https://www.codefactor.io/repository/github/konno-yu/kakeibooo-next)
+
+
+![localhost_8080_finance (1)](https://user-images.githubusercontent.com/51043054/134810372-31b3e7e5-00e8-467b-a3f8-34afedfd3f01.png)
