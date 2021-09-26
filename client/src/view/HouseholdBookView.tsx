@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Calendar } from '../components/finance/Calendar';
-import { Receipt } from '../components/finance/Receipt';
+import { Calendar } from '../components/calendar/Calendar';
+import { Receipt } from '../components/receipt/Receipt';
 import styled from 'styled-components';
 
 export const HouseholdBookView: React.FC = () => {

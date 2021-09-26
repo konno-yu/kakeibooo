@@ -1,14 +1,14 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity } from "typeorm";
 
 export type DailyCost = {
     storeName: string,
-    const: number
+    cost: number
 };
 
 @Entity('receipts')
 export class ReceiptEntity {
     @CreateDateColumn({ primary: true, nullable: false })
     purchaseDate: Date;
-    @Column({type: "jsonb", nullable: true, array: true })
+    @Column({type: 'jsonb', nullable: true, default: () => "'[]'" })
     dailyCost?: Array<DailyCost>;
 }

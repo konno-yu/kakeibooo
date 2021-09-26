@@ -45,10 +45,17 @@ export class ReceiptService {
     }
 
     async update(body: Partial<ReceiptDto>) {
+        const updateTarget = await this.receiptRepository.findOne({ where: { purchaseDate: body.purchaseDate } });
+        updateTarget.dailyCost = body.dailyCost;
+        const queryStrForSql: string = JSON.stringify(body.dailyCost).replace(/{/g, "$$$${").replace(/}/g, "}$$$$");
         await getConnection()
             .createQueryBuilder()
             .update(ReceiptEntity)
-            .set({ dailyCost: body.dailyCost }).where({ purchase_date: body.purchase_date }).execute();
+            .set({
+                dailyCost: () => `ARRAY${queryStrForSql}::JSONB[]`
+            })
+            .where({ purchaseDate: body.purchaseDate })
+            .execute();
         return body;
     }
 }

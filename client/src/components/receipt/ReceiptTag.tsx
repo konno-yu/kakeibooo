@@ -5,39 +5,15 @@ import { HiCurrencyYen } from "react-icons/hi";
 import { FaTrashAlt, FaCircle } from "react-icons/fa";
 import ReceiptModel from "./model/ReceiptModel";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { updateDailyReceipt } from "../../reducer/householdBookSlice";
 
 interface ReceiptTagProps {
     model: ReceiptModel;
     ordinary: number;
+    onDeleteReceipt: (ordinary: number) => void;
+    onChangeReceipt: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, target: 'store' | 'cost', ordinary: number) => void;
 }
 
 export const ReceiptTag: React.FC<ReceiptTagProps> = (props) => {
-    const dailyReceipt = useAppSelector(state => state.householdBook.dailyReceipt);
-    const dispatch = useAppDispatch();
-
-    const setNewDailyReceipt = (newDailyReceipt: ReceiptModel[]) => {
-        dispatch(updateDailyReceipt(newDailyReceipt));
-    };
-
-    const onDetectInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, target: 'storeName' | 'cost') => {
-        const current = dailyReceipt;
-        const inputText = (event.target as HTMLInputElement).value;
-        if (target === "storeName") {
-            current.receipts[props.ordinary].storeName = inputText;
-        } else {
-            current.receipts[props.ordinary].cost = +inputText;
-        }
-        setNewDailyReceipt(current.receipts);
-    }
-
-    const onDeleteClick = () => {
-        const current = dailyReceipt;
-        current.delete(props.ordinary);
-        setNewDailyReceipt(current.receipts);
-    }
-
     return (
         <SC.ReceiptTag>
             <SC.TagLeftPart>
@@ -46,15 +22,15 @@ export const ReceiptTag: React.FC<ReceiptTagProps> = (props) => {
             <SC.TagCenterPart>
                 <SC.TagInputPart>
                     <AiFillShopping className="icona" size={24} color="#546e7a"/>
-                    <InputBase margin="dense" value={props.model.storeName} onChange={(event) => onDetectInputChange(event, 'storeName')}/>
+                    <InputBase margin="dense" value={props.model.storeName} onChange={(event) => props.onChangeReceipt(event, 'store', props.ordinary)}/>
                 </SC.TagInputPart>
                 <SC.TagInputPart>
                     <HiCurrencyYen size={24} color="#546e7a" />
-                    <InputBase margin="dense" value={props.model.cost === 0 ? null : props.model.cost} onChange={(event) => onDetectInputChange(event, 'cost')} />
+                    <InputBase margin="dense" value={props.model.cost === 0 ? null : props.model.cost} onChange={(event) => props.onChangeReceipt(event, 'cost', props.ordinary)} />
                 </SC.TagInputPart>
             </SC.TagCenterPart>
             <SC.TagRightPart>
-                <SC.TagTrashButton onClick={onDeleteClick}>
+                <SC.TagTrashButton onClick={() => props.onDeleteReceipt(props.ordinary)}>
                     <FaTrashAlt size={20} color="#546e7a" />
                 </SC.TagTrashButton>
             </SC.TagRightPart>

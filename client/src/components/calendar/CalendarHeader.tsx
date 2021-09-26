@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import { getMonth, getYear } from 'date-fns';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
-import MonthlyReceiptModel from './model/MonthlyReceiptModel';
+import MonthlyReceiptModel from '../receipt/model/MonthlyReceiptModel';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { showNextMonth, showPrevMonth, updateMonthlyReceipt } from '../../reducer/householdBookSlice';
@@ -13,13 +13,13 @@ export const CalendarHeader: React.FC = () => {
 
     const getPreviousMonth = () => {
         dispatch(showPrevMonth());
-        const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
+        const monthlyReceipt = new MonthlyReceiptModel(targetDate, undefined);
         dispatch(updateMonthlyReceipt(monthlyReceipt));
     }
 
     const getNextMonth = () => {
         dispatch(showNextMonth());
-        const monthlyReceipt = new MonthlyReceiptModel(getYear(targetDate), getMonth(targetDate));
+        const monthlyReceipt = new MonthlyReceiptModel(targetDate, undefined);
         dispatch(updateMonthlyReceipt(monthlyReceipt));
     }
 

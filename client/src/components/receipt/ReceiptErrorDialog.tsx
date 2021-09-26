@@ -2,12 +2,10 @@ import * as React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import { IoAlertCircle } from 'react-icons/io5';
 import styled from 'styled-components';
-import { useAppDispatch } from '../../store';
-import { resolveError } from '../../reducer/householdBookSlice';
 
 
 interface ReceiptErrorDlgProps {
-    isOpen: boolean;
+    onDialogClose: () => void;
     type: ErrorType;
 }
 
@@ -42,17 +40,14 @@ const ErrorDetails: { [P in ErrorType]: ErrorMessages } = {
 }
 
 export const ReceiptErrorDialog: React.FC<ReceiptErrorDlgProps> = (props) => {
-    const dispatch = useAppDispatch();
 
     const paperPropsStyle = {
         borderRadius: 8,
         padding: "8px 16px 8px 16px"
     };
 
-    const handleClose = () => dispatch(resolveError());
-
     return (
-        <Dialog open={props.isOpen} PaperProps={{ style: paperPropsStyle }}>
+        <Dialog open={true} PaperProps={{ style: paperPropsStyle }}>
             <SC.DialogTitle disableTypography>
                 <IoAlertCircle size={24} color="#FF5252" fontWeight={800} />
                 <SC.DialogTitleLabel>エラー</SC.DialogTitleLabel>
@@ -65,7 +60,7 @@ export const ReceiptErrorDialog: React.FC<ReceiptErrorDlgProps> = (props) => {
                 }
             </SC.DialogContent>
             <DialogActions>
-                <SC.CloseButton onClick={handleClose}>閉じる</SC.CloseButton>
+                <SC.CloseButton onClick={props.onDialogClose}>閉じる</SC.CloseButton>
             </DialogActions>
         </Dialog>
     )
