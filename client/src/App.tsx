@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { Drawer } from './components/drawer/Drawer';
 import { store } from './store';
+import { HomeView } from './view/HomeView';
 import { HouseholdBookView } from './view/HouseholdBookView';
 
 export const App: React.FC = () => {
@@ -17,7 +18,7 @@ export const App: React.FC = () => {
                     </SC.Drawer>
                     <SC.Content>
                         <Switch>
-                            <Route path="/home" />
+                            <Route path="/home" component={HomeView} />
                             <Route path="/finance" component={HouseholdBookView} />
                             <Route path="/analyze" />
                             <Route path="/fridge" />
