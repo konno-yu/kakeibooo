@@ -2,6 +2,7 @@ import DailyReceiptModel from "./DailyReceiptModel";
 import ReceiptModel from "./ReceiptModel";
 import { getDay, getWeekOfMonth, endOfMonth, isEqual, getDate, getYear, getMonth } from 'date-fns';
 import { GetResponse } from "../../../rest/financeRest";
+import createMixins from "@material-ui/core/styles/createMixins";
 
 export type WeekIndex = 1 | 2 | 3 | 4 | 5 | 6;
 type MonthlyReceipt = {
@@ -13,7 +14,6 @@ export default class MonthlyReceiptModel {
 
     constructor(targetDate: Date, monthlyReceipt?: MonthlyReceipt, data?: GetResponse[]) {
         if (monthlyReceipt) {
-            console.log(monthlyReceipt);
             this._receipts = monthlyReceipt;
         } else {
             this.initialize();
@@ -47,7 +47,7 @@ export default class MonthlyReceiptModel {
     }
 
     private setMonthlyReceipt(date: Date, receipts?: GetResponse[]) {
-        const endDate = getDate(endOfMonth(date));  // 指定された年・月の最終日を取得
+        const endDate = this.getLastDateOfMonth(date);  // 指定された年・月の最終日を取得
         for (let d = 1; d <= endDate; d++) {
             const targetDate = new Date(getYear(date), getMonth(date), d);
             const correspondingReceipt = receipts ? receipts.find(r => isEqual(new Date(r.purchaseDate), targetDate)) : null;
@@ -60,5 +60,36 @@ export default class MonthlyReceiptModel {
                 this._receipts[weekIndex][getDay(targetDate)] = new DailyReceiptModel(targetDate, [new ReceiptModel('', null)]);
             }
         }
+    }
+
+    public getFlattenMonthlyReceipt = (): DailyReceiptModel[] => {
+        return [].concat(...Object.values(this._receipts).map(receipt => receipt.filter(r => r !== null)));
+    };
+
+    public getMonthlyTotalCost = () => {
+        return this.getFlattenMonthlyReceipt().reduce((accumulator: number, receipt: DailyReceiptModel) => {
+            return accumulator + receipt.getDailyTotalCost();
+        }, 0);
+    };
+
+    public getMonthlyAverageCost = () => {
+        const dayCount = this.getFlattenMonthlyReceipt().filter(r => r.getDailyTotalCost() !== null).length;
+        return Math.ceil(this.getMonthlyTotalCost() / dayCount);
+    }
+
+    public getConsumptionDegrees = (): { [key in 'zero' | 'low' | 'normal' | 'high']: number } => {
+        const degrees: { [key in 'zero' | 'low' | 'normal' | 'high']: number } = { 'zero': 0, 'low': 0, 'normal': 0, 'high': 0 };
+        this.getFlattenMonthlyReceipt().forEach(r => {
+            const dailyTotalCost = r.getDailyTotalCost();
+            if (dailyTotalCost === 0) degrees['zero']++;
+            if (dailyTotalCost > 0 && dailyTotalCost <= 1000) degrees['low']++;
+            if (dailyTotalCost > 1000 && dailyTotalCost <= 2500) degrees['normal']++;
+            if (dailyTotalCost > 2500) degrees['high']++;
+        })
+        return degrees;
+    }
+
+    public getLastDateOfMonth = (date: Date): 30 | 31 => {
+        return getDate(endOfMonth(date)) as 30 | 31;
     }
 }
