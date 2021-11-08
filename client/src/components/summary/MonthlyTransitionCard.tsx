@@ -1,0 +1,145 @@
+import styled from "styled-components";
+import { Bar } from 'react-chartjs-2';
+import { ChartData, ChartOptions, CoreChartOptions } from 'chart.js';
+import MonthlyReceiptModel from "../receipt/model/MonthlyReceiptModel";
+import DailyReceiptModel from "../receipt/model/DailyReceiptModel";
+import { getDate, getMonth } from "date-fns";
+import { _DeepPartialObject } from "chart.js/types/utils";
+
+interface Props {
+    receipt: DailyReceiptModel[];
+}
+export const MonthlyTransitionCard: React.FC<Props> = (props) => {
+
+    const getRest = (receipt: DailyReceiptModel[]) => {
+        let max = 40000;
+        let partialSum = 0;
+        const rest: number[] = [];
+        receipt.forEach(r => {
+            if (r.getDailyTotalCost() === null) {
+                rest.push(null);
+                return;
+            }
+            partialSum += r.getDailyTotalCost();
+            rest.push(max - partialSum);
+        });
+        return rest;
+
+    }
+
+    const createGraphData = (): ChartData => {
+        const labels = props.receipt.map(r => `${String(getMonth(r.date) + 1).padStart(2, '0')}/${String(getDate(r.date)).padStart(2, '0')}`);
+        const data = props.receipt.map(r => r.getDailyTotalCost());
+        const color = props.receipt.map(r => {
+            const dailyTotalCost = r.getDailyTotalCost();
+            if (dailyTotalCost === 0) return "#FFF176";
+            if (dailyTotalCost > 0 && dailyTotalCost <= 1000) return '#4db6ac';
+            if (dailyTotalCost > 1000 && dailyTotalCost <= 2500) return "#e0e0e0";
+            if (dailyTotalCost > 2500) return "#E57373";
+        });
+        const rest = getRest(props.receipt);
+
+        return {
+            labels,
+            datasets: [{
+                label: "食費",
+                data,
+                borderColor: color,
+                backgroundColor: color,
+                borderWidth: 1,
+                yAxisID: "cost",
+                order: 2
+            }, {
+                label: "残金",
+                data: rest,
+                type: "line",
+                yAxisID: "rest",
+                borderColor: '#546E7A',
+                backgroundColor: '#546E7A',
+                order: 1
+            }],
+        }
+    };
+
+    const createGraphOption: ChartOptions = {
+        scales: {
+            'x': {
+                ticks: {
+                    color: '#546E7A',
+                    font: {
+                        family: "'M PLUS Rounded 1c', sans-serif",
+                        size: 10,
+                        weight: '700'
+                    }
+                },
+            },
+            'cost': {
+                ticks: {
+                    callback: (v) => `¥${v.toLocaleString()}`,
+                    color: '#546E7A',
+                    font: {
+                        family: "'M PLUS Rounded 1c', sans-serif",
+                        size: 10,
+                        weight: '700'
+                    }
+                },
+                type: 'linear',
+                position: 'left',
+                title: {
+                    display: true,
+                    text: '1日の食費[円]',
+                    color: '#546E7A',
+                    font: {
+                        family: "'M PLUS Rounded 1c', sans-serif",
+                        size: 12,
+                        weight: '700'
+                    }
+                }
+            },
+            'rest': {
+                ticks: {
+                    callback: (v) => `¥${v.toLocaleString()}`,
+                    color: '#546E7A',
+                    font: {
+                        family: "'M PLUS Rounded 1c', sans-serif",
+                        size: 10,
+                        weight: '700'
+                    }
+                },
+                type: 'linear',
+                position: 'right',
+                title: {
+                    display: true,
+                    text: "残金[円]",
+                    color: '#546E7A',
+                    font: {
+                        family: "'M PLUS Rounded 1c', sans-serif",
+                        size: 12,
+                        weight: '700'
+                    }
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+
+    return (
+        <S.Card>
+            <Bar data={createGraphData} options={createGraphOption} height={110}/>
+        </S.Card>
+    );
+}
+
+const S = {
+    Card: styled.div`
+        width: calc(100% - 36px);
+        height: 300;
+        background: #FFFFFF;
+        padding: 12px;
+        border-radius: 8px;
+    `
+}
