@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { Summary } from '../components/summary/summary';
+import { WeeklyReport } from '../report/WeeklyReport';
 
 export const HomeView: React.FC = () => {
     return (
         <S.HomeView>
-            <Summary/>
+            <Summary />
+            <WeeklyReport/>
         </S.HomeView>
     )
 }
