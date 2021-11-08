@@ -33,6 +33,17 @@ export class ReceiptService {
         });
     }
 
+    async getByDuration(from: Date, to: Date) {
+        return await this.receiptRepository.find({
+            where: {
+                purchaseDate: Between(from, to)
+            },
+            order: {
+                purchaseDate: 'ASC'
+            }
+        })
+    }
+
     async post(body: Partial<ReceiptDto>) {
         const receipt = this.receiptRepository.create(body);
         await getConnection()
