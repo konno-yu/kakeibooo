@@ -1,10 +1,29 @@
 import { Button } from "@material-ui/core";
 import { getYear } from "date-fns";
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
+import { showPrevMonth, showNextMonth, updateMonthlyReceipt } from "../../reducer/householdBookSlice";
+import { useAppSelector } from "../../store";
+import MonthlyReceiptModel from '../receipt/model/MonthlyReceiptModel';
 
 export const SummaryHeader: React.FC = () => {
-    const targetMonth = new Date();
+    const targetMonth = useAppSelector(state => state.householdBook.targetDate);
+    const dispatch = useDispatch();
+
+    const getPreviousMonth = () => {
+        dispatch(showPrevMonth());
+        const monthlyReceipt = new MonthlyReceiptModel(targetMonth, undefined);
+        dispatch(updateMonthlyReceipt(monthlyReceipt));
+    }
+
+    const getNextMonth = () => {
+        dispatch(showNextMonth());
+        const monthlyReceipt = new MonthlyReceiptModel(targetMonth, undefined);
+        dispatch(updateMonthlyReceipt(monthlyReceipt));
+    }
+
+
     return (
         <S.SummaryHeader>
             <S.MonthSelector>
@@ -12,10 +31,10 @@ export const SummaryHeader: React.FC = () => {
                     {(targetMonth).toLocaleDateString('en-US', { month: 'long' })} {getYear(targetMonth)}
                 </div>
                 <div>
-                    <Button>
+                    <Button onClick={getPreviousMonth}>
                         <HiArrowCircleLeft size={28} color="#546e7a"/>
                     </Button>
-                    <Button>
+                    <Button onClick={getNextMonth}>
                         <HiArrowCircleRight size={28} color="#546e7a"/>
                     </Button>
                 </div>

@@ -9,7 +9,39 @@ import { CardHeader } from './CardHeader';
 import { CardSubText } from './CardSubText';
 import { CardText } from './CardText';
 import { SummaryHeader } from './SummaryHeader';
+import { useAppDispatch, useAppSelector } from '../../store';
+import React, { ReactElement, useEffect } from 'react';
+import * as FinanceRest from '../../rest/financeRest';
+import { getMonth, getYear } from 'date-fns';
+import { updateMonthlyReceipt } from '../../reducer/householdBookSlice';
+import MonthlyReceiptModel from '../receipt/model/MonthlyReceiptModel';
+import { MonthlyTransitionCard } from './MonthlyTransitionCard';
+import { IconType } from 'react-icons';
+
+const COLOR_AND_ICONS: { [key in 'zero' | 'low' | 'normal' | 'high']: {color: string, icon: ReactElement} } = {
+    zero: { color: '#FFF59D', icon: <FaRegGrinSquint size={20}/> },
+    low: { color: '#80CBC4', icon: <FaRegSmile size={20} /> },
+    normal: { color: '#E0E0E0', icon: <FaRegMeh size={20}/> },
+    high: { color: '#EF9A9A', icon: <FaRegFrownOpen size={20}/> }
+};
+
 export const Summary: React.FC = () => {
+    const monthlyReceipt = useAppSelector(state => state.householdBook.monthlyReceipt);
+    const dispatch = useAppDispatch();
+    const m = useAppSelector(state => state.householdBook.targetDate);
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await FinanceRest.getByMonth(getYear(m), getMonth(m));
+            dispatch(updateMonthlyReceipt(new MonthlyReceiptModel(m, undefined, res.data)));
+        }
+        fetch();
+    }, [m]);
+
+    const monthlyTotalCost = monthlyReceipt.getMonthlyTotalCost();
+    const monthlyAverageCost = monthlyReceipt.getMonthlyAverageCost();
+    const consumptionDegrees = monthlyReceipt.getConsumptionDegrees();
+
     return (
         <S.Summary>
             <SummaryHeader/>
@@ -17,48 +49,40 @@ export const Summary: React.FC = () => {
                 <Card width={45}>
                     <CardHeader title="今月の食費" icon={<AiOutlineShoppingCart color="#FFF" size={24} />} color="#546E7A" />
                     <CardBody>
-                        <CardText unit={{ type: "prefix", name: "¥" }}>12,000</CardText>
-                        <CardSubText>（１日あたり¥1,200）</CardSubText>
+                        <CardText unit={{ type: "prefix", name: "¥" }}>{monthlyTotalCost.toLocaleString()}</CardText>
+                        <CardSubText>{`（１日あたり ¥${monthlyAverageCost.toLocaleString()}）`}</CardSubText>
                     </CardBody>
                     <CardFooter>
-                        <Indicator range={[0, 40000]} value={[3650]} color={["#546E7A"]} withLabel />
+                        <Indicator range={[0, 40000]} value={[monthlyTotalCost]} color={["#546E7A"]} withLabel />
                     </CardFooter>
                 </Card>
                 <Card width={45}>
                     <CardHeader title="今月の内訳" icon={<AiOutlineCalendar color="#FFF" size={24} />} color="#546E7A" />
                     <CardBody>
                         <S.BreakdownContainer>
-                            <S.BreakdownCard color="#fff59d">
-                                <FaRegGrinSquint size={20}/>
-                                <S.BreakdownCardText>
-                                    7<S.BreakdownCardUnit>日</S.BreakdownCardUnit>
-                                </S.BreakdownCardText>
-                            </S.BreakdownCard>
-                            <S.BreakdownCard color='#80cbc4'>
-                                <FaRegSmile size={20} />
-                                <S.BreakdownCardText>
-                                    8<S.BreakdownCardUnit>日</S.BreakdownCardUnit>
-                                </S.BreakdownCardText>
-                            </S.BreakdownCard>
-                            <S.BreakdownCard color='#E0E0E0'>
-                                <FaRegMeh size={20}/>
-                                <S.BreakdownCardText>
-                                    9<S.BreakdownCardUnit>日</S.BreakdownCardUnit>
-                                </S.BreakdownCardText>
-                            </S.BreakdownCard>
-                            <S.BreakdownCard color='#EF9A9A'>
-                                <FaRegFrownOpen size={20}/>
-                                <S.BreakdownCardText>
-                                    10<S.BreakdownCardUnit>日</S.BreakdownCardUnit>
-                                </S.BreakdownCardText>
-                            </S.BreakdownCard>
+                            {
+                                Object.keys(consumptionDegrees).map((d: 'zero' | 'low' | 'normal' | 'high') => {
+                                    return (
+                                        <S.BreakdownCard color={COLOR_AND_ICONS[d].color}>
+                                            {COLOR_AND_ICONS[d].icon}
+                                            <S.BreakdownCardText>
+                                                {consumptionDegrees[d]}<S.BreakdownCardUnit>日</S.BreakdownCardUnit>
+                                            </S.BreakdownCardText>
+                                        </S.BreakdownCard>
+
+                                    )
+                                })
+                            }
                         </S.BreakdownContainer>
                     </CardBody>
                     <CardFooter>
-                        <Indicator range={[0, 31]} value={[5, 6, 7, 8]} color={["#fff176", "#4db6ac", "#e0e0e0", "#e57373"]} withLabel />
+                        <Indicator range={[0, monthlyReceipt.getLastDateOfMonth(m)]} value={Object.values(consumptionDegrees)} color={["#fff176", "#4db6ac", "#e0e0e0", "#e57373"]} withLabel />
                     </CardFooter>
                 </Card>
             </S.MonthlyReport>
+            <S.MonthlyTransition>
+                <MonthlyTransitionCard receipt={monthlyReceipt.getFlattenMonthlyReceipt()} />
+            </S.MonthlyTransition>
         </S.Summary>
     )
 }
@@ -73,14 +97,21 @@ const S = {
         flex-direction: column;
     `,
     MonthlyReport: styled.div`
-        height: 100%;
+        height: 40%;
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        align-content: flex-start;
+        align-content: center;
         flex-wrap: wrap;
         gap: 10px 0;
+    `,
+    MonthlyTransition: styled.div`
+        width: 100%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     `,
     BreakdownContainer: styled.div`
         width: 100%;
