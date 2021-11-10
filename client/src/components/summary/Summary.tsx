@@ -28,15 +28,15 @@ const COLOR_AND_ICONS: { [key in 'zero' | 'low' | 'normal' | 'high']: {color: st
 export const Summary: React.FC = () => {
     const monthlyReceipt = useAppSelector(state => state.householdBook.monthlyReceipt);
     const dispatch = useAppDispatch();
-    const m = useAppSelector(state => state.householdBook.targetDate);
+    const targetDate = useAppSelector(state => state.householdBook.targetDate);
 
     useEffect(() => {
         const fetch = async () => {
-            const res = await FinanceRest.getByMonth(getYear(m), getMonth(m));
-            dispatch(updateMonthlyReceipt(new MonthlyReceiptModel(m, undefined, res.data)));
+            const res = await FinanceRest.getByMonth(getYear(targetDate), getMonth(targetDate));
+            dispatch(updateMonthlyReceipt(new MonthlyReceiptModel(targetDate, undefined, res.data)));
         }
         fetch();
-    }, [m]);
+    }, [targetDate]);
 
     const monthlyTotalCost = monthlyReceipt.getMonthlyTotalCost();
     const monthlyAverageCost = monthlyReceipt.getMonthlyAverageCost();
@@ -76,12 +76,12 @@ export const Summary: React.FC = () => {
                         </S.BreakdownContainer>
                     </CardBody>
                     <CardFooter>
-                        <Indicator range={[0, monthlyReceipt.getLastDateOfMonth(m)]} value={Object.values(consumptionDegrees)} color={["#fff176", "#4db6ac", "#e0e0e0", "#e57373"]} withLabel />
+                        <Indicator range={[0, monthlyReceipt.getLastDateOfMonth(targetDate)]} value={Object.values(consumptionDegrees)} color={["#fff176", "#4db6ac", "#e0e0e0", "#e57373"]} withLabel />
                     </CardFooter>
                 </Card>
             </S.MonthlyReport>
             <S.MonthlyTransition>
-                <MonthlyTransitionCard receipt={monthlyReceipt.getFlattenMonthlyReceipt()} />
+                <MonthlyTransitionCard receipts={monthlyReceipt.getFlattenMonthlyReceipt()} />
             </S.MonthlyTransition>
         </S.Summary>
     )
