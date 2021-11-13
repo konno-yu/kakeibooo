@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { Bar } from 'react-chartjs-2';
-import { ChartData, ChartOptions, CoreChartOptions } from 'chart.js';
-import MonthlyReceiptModel from "../receipt/model/MonthlyReceiptModel";
+import { ChartData } from 'chart.js';
 import DailyReceiptModel from "../receipt/model/DailyReceiptModel";
 import { getDate, getMonth } from "date-fns";
-import { _DeepPartialObject } from "chart.js/types/utils";
 import { chartOptions } from "./ChartOptions";
 
 interface Props {
@@ -28,21 +26,44 @@ export const MonthlyTransitionCard: React.FC<Props> = (props) => {
 
     }
 
+    /**
+     * 月次での食費/残金の推移を返す
+     * x軸のラベル、グラフ内のデータ、グラフ色を生成する
+     * @returns chartjsのフォーマットにしたがう
+     */
     const createGraphData = (): ChartData => {
-        const labels = props.receipts.map(r => `${String(getMonth(r.date) + 1).padStart(2, '0')}/${String(getDate(r.date)).padStart(2, '0')}`);
-        const data = props.receipts.map(r => r.getDailyTotalCost());
-        const color = props.receipts.map(r => {
+        const labels: string[] = [];
+        const data: number[] = [];
+        const color: string[] = [];
+
+        const getColor = (cost: number) => {
+            if (cost === 0) return '#FFF176';
+            if (cost <= 1000) return '#4db6ac';
+            if (cost <= 2500) return '#E0E0E0';
+            return '#E57373';
+        }
+
+        props.receipts.forEach(r => {
             const dailyTotalCost = r.getDailyTotalCost();
-            if (dailyTotalCost === 0) return "#FFF176";
-            if (dailyTotalCost > 0 && dailyTotalCost <= 1000) return '#4db6ac';
-            if (dailyTotalCost > 1000 && dailyTotalCost <= 2500) return "#e0e0e0";
-            if (dailyTotalCost > 2500) return "#E57373";
-        });
-        const rest = calculateBalance(props.receipts);
+            labels.push(`${String(getMonth(r.date) + 1).padStart(2, '0')}/${String(getDate(r.date)).padStart(2, '0')}}`);
+            data.push(dailyTotalCost);
+            color.push(getColor(dailyTotalCost));
+        })
+
+        const balance = calculateBalance(props.receipts);
 
         return {
             labels,
             datasets: [{
+                label: "残金",
+                data: balance,
+                type: "line",
+                yAxisID: "balance",
+                borderColor: '#546E7A',
+                backgroundColor: '#546E7A',
+                order: 1
+            },
+            {
                 label: "食費",
                 data,
                 borderColor: color,
@@ -50,14 +71,6 @@ export const MonthlyTransitionCard: React.FC<Props> = (props) => {
                 borderWidth: 1,
                 yAxisID: "cost",
                 order: 2
-            }, {
-                label: "残金",
-                data: rest,
-                type: "line",
-                yAxisID: "rest",
-                borderColor: '#546E7A',
-                backgroundColor: '#546E7A',
-                order: 1
             }],
         }
     };
