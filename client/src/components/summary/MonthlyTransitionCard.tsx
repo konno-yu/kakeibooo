@@ -5,6 +5,7 @@ import MonthlyReceiptModel from "../receipt/model/MonthlyReceiptModel";
 import DailyReceiptModel from "../receipt/model/DailyReceiptModel";
 import { getDate, getMonth } from "date-fns";
 import { _DeepPartialObject } from "chart.js/types/utils";
+import { chartOptions } from "./ChartOptions";
 
 interface Props {
     receipts: DailyReceiptModel[];
@@ -61,75 +62,9 @@ export const MonthlyTransitionCard: React.FC<Props> = (props) => {
         }
     };
 
-    const createGraphOption: ChartOptions = {
-        scales: {
-            'x': {
-                ticks: {
-                    color: '#546E7A',
-                    font: {
-                        family: "'M PLUS Rounded 1c', sans-serif",
-                        size: 10,
-                        weight: '700'
-                    }
-                },
-            },
-            'cost': {
-                ticks: {
-                    callback: (v) => `¥${v.toLocaleString()}`,
-                    color: '#546E7A',
-                    font: {
-                        family: "'M PLUS Rounded 1c', sans-serif",
-                        size: 10,
-                        weight: '700'
-                    }
-                },
-                type: 'linear',
-                position: 'left',
-                title: {
-                    display: true,
-                    text: '1日の食費[円]',
-                    color: '#546E7A',
-                    font: {
-                        family: "'M PLUS Rounded 1c', sans-serif",
-                        size: 12,
-                        weight: '700'
-                    }
-                }
-            },
-            'rest': {
-                ticks: {
-                    callback: (v) => `¥${v.toLocaleString()}`,
-                    color: '#546E7A',
-                    font: {
-                        family: "'M PLUS Rounded 1c', sans-serif",
-                        size: 10,
-                        weight: '700'
-                    }
-                },
-                type: 'linear',
-                position: 'right',
-                title: {
-                    display: true,
-                    text: "残金[円]",
-                    color: '#546E7A',
-                    font: {
-                        family: "'M PLUS Rounded 1c', sans-serif",
-                        size: 12,
-                        weight: '700'
-                    }
-                }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false
-            }
-        }
-    }
-
     return (
         <S.Card>
-            <Bar data={createGraphData} options={createGraphOption} height={110}/>
+            <Bar data={createGraphData} options={chartOptions} height={110}/>
         </S.Card>
     );
 }
