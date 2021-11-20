@@ -11,7 +11,7 @@ interface Props {
     onClickNext: () => void;
 }
 
-export const WeeklyCostCard: React.FC<Props> = (props) => {
+export const WeeklySummary: React.FC<Props> = (props) => {
     return (
         <S.Root>
             <S.ChevronButton onClick={props.onClickPrev}>

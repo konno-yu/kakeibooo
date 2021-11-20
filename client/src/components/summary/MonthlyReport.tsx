@@ -25,7 +25,7 @@ const COLOR_AND_ICONS: { [key in 'zero' | 'low' | 'normal' | 'high']: {color: st
     high: { color: '#EF9A9A', icon: <FaRegFrownOpen size={20}/> }
 };
 
-export const Summary: React.FC = () => {
+export const MonthlyReport: React.FC = () => {
     const monthlyReceipt = useAppSelector(state => state.householdBook.monthlyReceipt);
     const dispatch = useAppDispatch();
     const targetDate = useAppSelector(state => state.householdBook.targetDate);

@@ -6,7 +6,7 @@ import { MemoEditor } from "./MemoEditor";
 import * as ReceiptRest from '../rest/financeRest';
 import DailyReceiptModel from "../components/receipt/model/DailyReceiptModel";
 import ReceiptModel from "../components/receipt/model/ReceiptModel";
-import { WeeklyCostCard } from "./WeeklyCostCard";
+import { WeeklySummary } from "./WeeklySummary";
 
 export const WeeklyReport: React.FC = () => {
     const setInitDuration = (): { from: Date, to: Date } => {
@@ -47,7 +47,7 @@ export const WeeklyReport: React.FC = () => {
 
     return (
         <S.Root>
-            <WeeklyCostCard duration={duration} totalCost={getWeeklyTotalCost()} onClickPrev={prevWeek} onClickNext={nextWeek}/>
+            <WeeklySummary duration={duration} totalCost={getWeeklyTotalCost()} onClickPrev={prevWeek} onClickNext={nextWeek}/>
             <WeeklyTransition duration={duration} weeklyCost={weeklyReceipt} />
             <MemoEditor/>
         </S.Root>
