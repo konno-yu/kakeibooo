@@ -45,7 +45,7 @@ export const MonthlyTransitionCard: React.FC<Props> = (props) => {
 
         props.receipts.forEach(r => {
             const dailyTotalCost = r.getDailyTotalCost();
-            labels.push(`${String(getMonth(r.date) + 1).padStart(2, '0')}/${String(getDate(r.date)).padStart(2, '0')}}`);
+            labels.push(`${String(getMonth(r.date) + 1).padStart(2, '0')}/${String(getDate(r.date)).padStart(2, '0')}`);
             data.push(dailyTotalCost);
             color.push(getColor(dailyTotalCost));
         })
