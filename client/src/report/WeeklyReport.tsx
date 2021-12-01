@@ -17,6 +17,7 @@ export const WeeklyReport: React.FC = () => {
     }
     const [duration, setDuration] = useState<{ from: Date, to: Date }>(setInitDuration());
     const [weeklyReceipt, setWeeklyReceipt] = useState<DailyReceiptModel[]>([]);
+    const [memoText, setMemoText] = useState('');
 
     useEffect(() => {
         const fetch = async () => {
@@ -45,11 +46,19 @@ export const WeeklyReport: React.FC = () => {
         }, 0);
     }
 
+    const onSaveMemo = () => {
+        MemoRest.post({ fromDate: duration.from, toDate: duration.to, memoText }).then(res => {
+            alert("OK");
+        })
+    }
+
+    const setMemo = (text: string) => setMemoText(() => text);
+
     return (
         <S.Root>
             <WeeklySummary duration={duration} totalCost={getWeeklyTotalCost()} onClickPrev={prevWeek} onClickNext={nextWeek}/>
             <WeeklyTransition duration={duration} weeklyCost={weeklyReceipt} />
-            <MemoEditor/>
+            <MemoEditor memoText={memoText} onChange={setMemo} onSave={onSaveMemo}/>
         </S.Root>
     )
 };
