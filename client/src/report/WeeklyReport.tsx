@@ -7,6 +7,7 @@ import * as ReceiptRest from '../rest/financeRest';
 import DailyReceiptModel from "../components/receipt/model/DailyReceiptModel";
 import ReceiptModel from "../components/receipt/model/ReceiptModel";
 import { WeeklySummary } from "./WeeklySummary";
+import * as MemoRest from '../rest/memoRest';
 
 export const WeeklyReport: React.FC = () => {
     const setInitDuration = (): { from: Date, to: Date } => {
@@ -20,7 +21,7 @@ export const WeeklyReport: React.FC = () => {
     const [memoText, setMemoText] = useState('');
 
     useEffect(() => {
-        const fetch = async () => {
+        const fetchReceipt = async () => {
             const res = await ReceiptRest.getByDuration(duration.from, duration.to);
             const wr: DailyReceiptModel[] = [];
             res.data.forEach(r => {
@@ -28,8 +29,14 @@ export const WeeklyReport: React.FC = () => {
                 wr.push(new DailyReceiptModel(r.purchaseDate, rr));
             });
             setWeeklyReceipt(() => wr);
-        }
-        fetch();
+        };
+        const fetchMemo = async () => {
+            const res = await MemoRest.getByDuration(duration.from, duration.to);
+            const mt: string = res.data[0] ? res.data[0].memoText : '';
+            setMemoText(() => mt);
+        };
+        fetchReceipt();
+        fetchMemo();
     }, [duration])
 
     const prevWeek = () => {
