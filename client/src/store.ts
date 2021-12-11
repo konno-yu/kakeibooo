@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { homeSlice } from './reducer/homeSlice';
 import { householdBookSlice } from './reducer/householdBookSlice';
 
 export const store = configureStore({
     reducer: {
+        home: homeSlice.reducer,
         householdBook: householdBookSlice.reducer
     }
 });
