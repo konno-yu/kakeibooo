@@ -12,7 +12,7 @@ export class MemoService {
     ) { }
 
     async get() {
-        return await this.memoRepository.find({
+        return this.memoRepository.find({
             order: {
                 fromDate: 'ASC'
             }
@@ -22,11 +22,11 @@ export class MemoService {
     async getByYear(year: number) {
         const sqlString = 'EXTRACT(YEAR FROM from_date) = :target_year';
         const condition = { target_year: year };
-        return await getConnection().createQueryBuilder(MemoEntity, "memo").where(sqlString, condition).getMany();
+        return getConnection().createQueryBuilder(MemoEntity, "memo").where(sqlString, condition).getMany();
     }
 
     async getByDuration(from: Date, to: Date) {
-        return await this.memoRepository.find({
+        return this.memoRepository.find({
             where: {
                 fromDate: from
             }
@@ -46,6 +46,6 @@ export class MemoService {
 
     async deleteMemo(from: string) {
         await this.memoRepository.delete({ fromDate: from });
-        return await this.memoRepository.count({ where: { fromDate: from } });
+        return this.memoRepository.count({ where: { fromDate: from } });
     }
 }
