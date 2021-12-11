@@ -1,4 +1,4 @@
-import { isSaturday, nextSaturday, nextSunday, subDays } from "date-fns";
+import { getYear, isEqual, isSaturday, nextSaturday, nextSunday, subDays } from "date-fns";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { WeeklyTransition } from "./WeeklyTransition";
@@ -8,6 +8,8 @@ import DailyReceiptModel from "../components/receipt/model/DailyReceiptModel";
 import ReceiptModel from "../components/receipt/model/ReceiptModel";
 import { WeeklySummary } from "./WeeklySummary";
 import * as MemoRest from '../rest/memoRest';
+import { useAppDispatch, useAppSelector } from "../store";
+import { updateMemo } from "../reducer/homeSlice";
 import { Button } from "@material-ui/core";
 import { FaSave, FaTrash } from "react-icons/fa";
 
@@ -20,7 +22,9 @@ export const WeeklyReport: React.FC = () => {
     }
     const [duration, setDuration] = useState<{ from: Date, to: Date }>(setInitDuration());
     const [weeklyReceipt, setWeeklyReceipt] = useState<DailyReceiptModel[]>([]);
-    const [memoText, setMemoText] = useState('');
+    const memo = useAppSelector(state => state.home.memo);
+    const [memoText, setMemoText] = useState<string>('');
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const fetchReceipt = async () => {
@@ -33,9 +37,18 @@ export const WeeklyReport: React.FC = () => {
             setWeeklyReceipt(() => wr);
         };
         const fetchMemo = async () => {
-            const res = await MemoRest.getByDuration(duration.from, duration.to);
-            const mt: string = res.data[0] ? res.data[0].memoText : '';
-            setMemoText(() => mt);
+            const res = await MemoRest.getByYear(getYear(duration.from));
+            const mm: { from: Date, to: Date, text: string }[] = [];
+            res.data.forEach(d => {
+                mm.push({ from: new Date(d.fromDate), to: new Date(d.toDate), text: d.memoText });
+            });
+            dispatch(updateMemo(mm));
+            const target = mm.find(m => {
+                // TODO ここの判定イケてない
+                return m.from.getDate() === duration.from.getDate() &&
+                m.from.getMonth() === duration.from.getMonth()
+            });
+            setMemoText(target === undefined ? '' : target.text);
         };
         fetchReceipt();
         fetchMemo();
@@ -56,12 +69,37 @@ export const WeeklyReport: React.FC = () => {
     }
 
     const onSaveMemo = () => {
-        MemoRest.post({ fromDate: duration.from, toDate: duration.to, memoText }).then(res => {
-            alert("OK");
+        if (memo.filter(m => (m.from.getMonth() === duration.from.getMonth()) && (m.from.getDate() === duration.from.getDate())).length === 0) {
+            MemoRest.post({ fromDate: duration.from, toDate: duration.to, memoText }).then(res => {
+                const m = memo.push({ from: res.fromDate, to: res.toDate, text: res.memoText});
+                dispatch(updateMemo(m));
+            });
+        } else {
+            MemoRest.update({ fromDate: duration.from, toDate: duration.to, memoText }).then(res => {
+                const m = memo.map(m => m.from === res.fromDate ? m.text = res.memoText : m);
+                dispatch(updateMemo(m));
+            });
+        }
+    }
+
+    const onDeleteMemo = () => {
+        MemoRest.deleteMemo(duration.from).then(res => {
+            if (res.status === 200) {
+                const m = memo.filter(m => m.from === duration.from);
+                dispatch(updateMemo(m));
+            }
         })
     }
 
-    const setMemo = (text: string) => setMemoText(() => text);
+    const setMemo = (text: string) => {
+        setMemoText(() => text);
+    }
+
+    const trimHtmlString = (text: string) => {
+        const str = /<\/?p>|<br>/g;
+        const trimmedText = text.replace(str, '');
+        return trimmedText;
+    }
 
     return (
         <S.Root>
