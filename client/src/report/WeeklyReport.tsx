@@ -8,6 +8,8 @@ import DailyReceiptModel from "../components/receipt/model/DailyReceiptModel";
 import ReceiptModel from "../components/receipt/model/ReceiptModel";
 import { WeeklySummary } from "./WeeklySummary";
 import * as MemoRest from '../rest/memoRest';
+import { Button } from "@material-ui/core";
+import { FaSave, FaTrash } from "react-icons/fa";
 
 export const WeeklyReport: React.FC = () => {
     const setInitDuration = (): { from: Date, to: Date } => {
@@ -65,7 +67,15 @@ export const WeeklyReport: React.FC = () => {
         <S.Root>
             <WeeklySummary duration={duration} totalCost={getWeeklyTotalCost()} onClickPrev={prevWeek} onClickNext={nextWeek}/>
             <WeeklyTransition duration={duration} weeklyCost={weeklyReceipt} />
-            <MemoEditor memoText={memoText} onChange={setMemo} onSave={onSaveMemo}/>
+            <MemoEditor memoText={memoText} onChange={setMemo} onSave={onSaveMemo} />
+            <S.Buttons>
+                <S.SaveButton onClick={onSaveMemo} disabled={trimHtmlString(memoText).length === 0}>
+                    <S.SaveIcon/>保存
+                </S.SaveButton>
+                <S.DeleteButton onClick={onDeleteMemo} disabled={memo.filter(m => (m.from.getMonth() === duration.from.getMonth()) && (m.from.getDate() === duration.from.getDate())).length === 0}>
+                    <S.DeleteIcon/>削除
+                </S.DeleteButton>
+            </S.Buttons>
         </S.Root>
     )
 };
@@ -79,4 +89,42 @@ const S = {
         flex-direction: column;
         justify-content: space-evenly;
     `,
+    SaveButton: styled(Button)`
+        width: 25%;
+        background: #546E7A;
+        color: #FFFFFF;
+        border-radius: 100px;
+        margin-top: 4px;
+        font-weight: 700;
+        align-self: flex-end;
+        &:hover {
+            background: '#546E7A';
+            opacity: 0.7;
+        }
+    `,
+    DeleteButton: styled(Button)`
+    width: 25%;
+    background: #FFFFFF;
+    border: 1px solid #546E7A;
+    color: #546E7A;
+    border-radius: 100px;
+    margin-top: 4px;
+    font-weight: 700;
+    align-self: flex-end;
+    &:hover {
+        background: '#546E7A';
+        opacity: 0.7;
+    }
+    `,
+    SaveIcon: styled(FaSave)`
+        margin-right: 8px;
+    `,
+    DeleteIcon: styled(FaTrash)`
+        margin-right: 8px;
+    `,
+    Buttons: styled.div`
+        display: flex;
+        justify-content: end;
+        gap: 4px;
+    `
 }
