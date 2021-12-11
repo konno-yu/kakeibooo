@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { ReceiptDto } from "src/dto/ReceiptDto";
 import { ReceiptService } from "src/service/ReceiptService";
 
@@ -14,6 +14,11 @@ export class ReceiptController {
     @Get(':year/:month')
     getByMonth(@Param('year') year: number, @Param('month') month: number) {
         return this.receiptService.getByMonth(year, month);
+    }
+
+    @Get('/duration')
+    getByDuration(@Query('from') from: Date, @Query('to') to: Date) {
+        return this.receiptService.getByDuration(from, to);
     }
 
     @Post()

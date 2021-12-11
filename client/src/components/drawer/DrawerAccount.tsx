@@ -8,8 +8,8 @@ export const DrawerAccount: React.FC = () => {
             <SC.DrawerImage>
                 <FaceIcon />
             </SC.DrawerImage>
-            <SC.DrawerUserName>ぎんぺん</SC.DrawerUserName>
-            <SC.DrawerUserId>@pepepenguin</SC.DrawerUserId>
+            <SC.DrawerUserName>かけい坊</SC.DrawerUserName>
+            <SC.DrawerUserId>@kakeiboy</SC.DrawerUserId>
         </SC.DrawerAccount>
     )
 }

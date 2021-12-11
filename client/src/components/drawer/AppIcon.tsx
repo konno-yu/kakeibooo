@@ -6,7 +6,7 @@ export const AppIcon: React.FC = () => {
     return (
         <SC.AppIcon>
             <img src={Logo} width={30}/>
-            <SC.AppTitle>Kakeiboooo</SC.AppTitle>
+            <SC.AppTitle>Kakeibooo</SC.AppTitle>
         </SC.AppIcon>
     )
 }

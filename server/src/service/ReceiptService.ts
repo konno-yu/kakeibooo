@@ -13,7 +13,7 @@ export class ReceiptService {
     ) { }
 
     async get() {
-        return await this.receiptRepository.find({
+        return this.receiptRepository.find({
             order: {
                 purchaseDate: 'ASC'
             }
@@ -23,7 +23,7 @@ export class ReceiptService {
     async getByMonth(year: number, month: number) {
         const thisMonth = set(1, { year, month: month - 1 });
         const nextMonth = set(1, { year: getYear(setMonth(thisMonth, getMonth(thisMonth))), month });
-        return await this.receiptRepository.find({
+        return this.receiptRepository.find({
             where: {
                 purchaseDate: Between(thisMonth, nextMonth)
             },
@@ -31,6 +31,17 @@ export class ReceiptService {
                 purchaseDate: 'ASC'
             }
         });
+    }
+
+    async getByDuration(from: Date, to: Date) {
+        return this.receiptRepository.find({
+            where: {
+                purchaseDate: Between(from, to)
+            },
+            order: {
+                purchaseDate: 'ASC'
+            }
+        })
     }
 
     async post(body: Partial<ReceiptDto>) {
