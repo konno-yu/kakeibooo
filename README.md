@@ -1,6 +1,7 @@
 
 # Kakeibooo
 
+<a href="https://konno-yu.github.io/kakeibooo/" target="_blank"><img src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg"></a>
 [![CodeFactor](https://www.codefactor.io/repository/github/konno-yu/kakeibooo/badge)](https://www.codefactor.io/repository/github/konno-yu/kakeibooo)
 
 
