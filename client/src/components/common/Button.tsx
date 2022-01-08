@@ -8,8 +8,9 @@ interface Props {
     variant: ButtonType;
     label: string;
     color?: ColorPattern;
-    disabled: boolean;
-    icon?: JSX.Element
+    disabled?: boolean;
+    icon?: JSX.Element;
+    width: string | number;
 }
 
 export const Button: React.VFC<Props> = ({
@@ -17,16 +18,17 @@ export const Button: React.VFC<Props> = ({
     label,
     color,
     disabled,
-    icon
+    icon,
+    width = '100%'
 }) => {
     if (disabled) {
-        return <Styled.DisabledButton>{icon}{label}</Styled.DisabledButton>
+        return <Styled.DisabledButton width={width}>{icon}{label}</Styled.DisabledButton>
     }
     if (variant === 'filled') {
-        return <Styled.FilledButton color={color}>{icon}{label}</Styled.FilledButton>
+        return <Styled.FilledButton width={width} color={color}>{icon}{label}</Styled.FilledButton>
     }
     return (
-        <Styled.OutlinedButton color={color}>{icon}{label}</Styled.OutlinedButton>
+        <Styled.OutlinedButton width={width} color={color}>{icon}{label}</Styled.OutlinedButton>
     );
 };
 
@@ -39,17 +41,20 @@ const baseStyle = css`
     display: flex;
     gap: 5px;
     align-items: center;
+    justify-content: center;
 `;
 const Styled = {
-    DisabledButton: styled.button`
+    DisabledButton: styled.button<Pick<Props, 'width'>>`
         ${baseStyle};
+        ${(props) => `width: ${props.width}`};
         background: #E0E0E0;
         border: 1px solid #BDBDBD;
         color: #BDBDBD;
         cursor: auto;
     `,
-    FilledButton: styled.button<{ color: ColorPattern }>`
+    FilledButton: styled.button<{ color: ColorPattern, width: string | number }>`
         ${baseStyle};
+        ${({width}) => `width: ${width}`};
         color: #FFFFFF;
         ${({ color }) => color === 'normal' ? css`
             background: #607D8B;
@@ -75,8 +80,9 @@ const Styled = {
             }
         `}
     `,
-    OutlinedButton: styled.button<{ color: ColorPattern }>`
+    OutlinedButton: styled.button<{ color: ColorPattern, width: string | number }>`
         ${baseStyle};
+        ${({width}) => `width: ${width}`};
         color: ${({ color }) => color === 'normal' ? '#607D8B' : '#F44336'};
         border: ${({ color }) => color === 'normal' ? '1px solid #607D8B' : '1px solid #F44336'};
         ${({ color }) => color === 'normal' ? css`
