@@ -12,8 +12,8 @@ export const Tag: React.FC = () => {
                 <FaCircle color="#F5F5F5" size={12} />
             </LabelPart>
             <InputPart>
-                <Input placeholder="店舗名を入力してください" icon={<AiFillShopping size={18} color="#9E9E9E" />}/>
-                <Input placeholder="使った金額を入力してください" icon={<HiCurrencyYen size={18} color="#9E9E9E" />}/>
+                <Input width={150} placeholder="店舗名" icon={<AiFillShopping size={18} color="#9E9E9E" />}/>
+                <Input width={150} placeholder="使った金額" icon={<HiCurrencyYen size={18} color="#9E9E9E" />}/>
             </InputPart>
             <DeletePart>
                 <IconButton>
@@ -25,10 +25,10 @@ export const Tag: React.FC = () => {
 }
 
 const Container = styled.div`
+    width: 100%;
     height: 18%;
     background: #F5F5F5;
     display: flex;
-    width: 320px;
     justify-content: space-between;
     gap: 4px
 `;
