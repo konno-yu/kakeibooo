@@ -1,85 +1,98 @@
 import styled from "styled-components"
 
-interface IndicatorProps {
-    value: number[];
-    color: string[];
+interface Props {
+    value: { [key: string]: number };
     range: [number, number];
-    withLabel: boolean;
+    showLabel?: boolean;
+    unit?: { type: 'prefix' | 'suffix', name: string};
 }
 
-export const Indicator: React.FC<IndicatorProps> = (props) => {
-    const valueSummation = props.value.reduce((prev, current) => prev + current);
-    const isLimitOver = valueSummation > props.range[1];
-    const displayValues: number[] = [];
-    const displayColors: string[] = [];
+export const Indicator: React.FC<Props> = ({
+    value,
+    range,
+    showLabel = false,
+    unit
+}) => {
 
-    props.value.forEach((v, i) => {
-        // 0以上の値と色だけに絞る
-        if (v === 0) return;
-        displayValues.push(v / props.range[1] * 100);
-        displayColors.push(props.color[i]);
+    const displayValue: { [key: string]: number } = {};
+    Object.keys(value).forEach(key => {
+        if (value[key] > 0) {
+            displayValue[key] = (value[key] / range[1]) * 100;
+        }
     });
+    const keys = Object.keys(displayValue);
+    const values = Object.values(displayValue);
 
-    if (isLimitOver) {
-        return (
-            <S.IndicatorRoot>
-                { props.withLabel && <S.IndicatorScaleText>{props.range[0]}</S.IndicatorScaleText> }
-                    <S.IndicatorContainer>
-                        <S.LimitOverBar />
-                    </S.IndicatorContainer>
-                { props.withLabel && <S.IndicatorScaleText>{props.range[1]}</S.IndicatorScaleText> }
-            </S.IndicatorRoot>
-        );
+    const isLimitOver = (values: number[]) => {
+        return values.reduce((pre, cur) => { return pre + cur }, 0) > 100;
+    }
+
+    let barElement: JSX.Element | JSX.Element[];
+
+    if (isLimitOver(values)) {
+        barElement = <LimitOverBar />;
+    } else if (keys.length === 1) {
+        barElement = <Bar width={values[0]} color={keys[0]} isFirst isLast />;
+    } else {
+        barElement = keys.map((key, i) => {
+            if (i === 0) return <Bar width={displayValue[key]} color={key} isFirst />;
+            if (i === keys.length - 1) return <Bar width={displayValue[key]} color={key} isLast />;
+            return <Bar width={displayValue[key]} color={key} />
+        });
+    }
+
+    const createLabelText = (text: number, unit: Props['unit']) => {
+        return unit.type === 'prefix' ? `${unit.name}${text}` : `${text}${unit.name}`;
     }
 
     return (
-        <S.IndicatorRoot>
-            { props.withLabel && <S.IndicatorScaleText>{props.range[0]}</S.IndicatorScaleText> }
-                <S.IndicatorContainer>
-                    {
-                        displayValues.map((v, i) => {
-                            if (displayValues.length === 1) return <S.Bar width={v} color={displayColors[i]} isFirst isLast />
-                            if (i === displayValues.length - 1) return <S.Bar width={v} color={displayColors[i]} isLast />
-                            if (i === 0) return <S.Bar width={v} color={displayColors[i]} isFirst />;
-                            return <S.Bar width={v} color={displayColors[i]} />
-                        })
-                    }
-                </S.IndicatorContainer>
-            { props.withLabel && <S.IndicatorScaleText>{props.range[1]}</S.IndicatorScaleText> }
-        </S.IndicatorRoot>
+        <Container>
+            {showLabel && <ScaleLabel>{createLabelText(range[0], unit)}</ScaleLabel>}
+            <StyledIndicator>
+                {barElement}
+            </StyledIndicator>
+            {showLabel && <ScaleLabel>{createLabelText(range[1], unit)}</ScaleLabel>}
+        </Container>
     )
 }
 
-const S = {
-    IndicatorRoot: styled.div`
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    `,
-    IndicatorContainer: styled.div`
-        width: 80%;
-        height: 30%;
-        background: #ECEFF1;
-        border-radius: 12px;
-        display: flex;
-    `,
-    LimitOverBar: styled.div`
-        width: 100%;
-        height: 100%;
-        background: #FF5252;
-        border-radius: 12px;
-    `,
-    Bar: styled.div<{ width: number, color: string, isFirst?: boolean, isLast?: boolean }>`
-        ${({width}) => `width: ${width}%`};
-        height: 100%;
-        ${({ color }) => `background: ${color}`};
-        ${({ isFirst, isLast }) => isFirst && isLast ? `border-radius: 12px;` : isFirst ? `border-radius: 12px 0 0 12px;` : isLast ? `border-radius: 0 12px 12px 0;` : `border-radius: 0;`}
-    `,
-    IndicatorScaleText: styled.span`
-        color: #546E7A;
-        font-weight: 700;
-        font-size: 12px;
-    `
-}
+
+const Container = styled.div`
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+`;
+
+const ScaleLabel = styled.span`
+    color: #546E7A;
+    font-weight: 700;
+    font-size: 12px;
+    width: 10%;
+    text-align: center;
+`;
+
+const StyledIndicator = styled.div`
+    width: 80%;
+    height: 30%;
+    background: #ECEFF1;
+    border-radius: 12px;
+    display: flex;
+`;
+
+const LimitOverBar = styled.div`
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(-45deg, #FF8a80, #FF8a80 2px, #FFCDD2 2px, #FFCDD2 4px);
+    border-radius: 12px;
+`;
+
+const Bar = styled.div<{ width: number, color: string, isFirst?: boolean, isLast?: boolean }>`
+    ${({ width }) => `width: ${width}%`};
+    height: 100%;
+    ${({ color }) => `background: ${color}`};
+    ${({isFirst, isLast}) => isFirst && isLast ? 'border-radius: 12px;': isFirst ? `border-radius: 12px 0 0 12px;` : isLast ? `border-radius: 0 12px 12px 0;` : `border-radius: 0;`};
+`;
