@@ -5,7 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.3.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Enable Node.js 🌐
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
       - name: Install 💻
         run: |
           cd client
