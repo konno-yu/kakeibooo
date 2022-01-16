@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { MenuItem } from "./MenuItem"
 
 interface Props {
-    children: ReactElement<any>[];
+    children: ReactElement<typeof MenuItem>[];
 }
 export const Menu: React.FC<Props> = ({
     children
