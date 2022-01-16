@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npx webpack-cli serve --config webpack.config.js --open --mode development",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o docs-build"
+    "build-storybook": "build-storybook -o docs-build",
+    "chromatic": "npx chromatic --project-token=CHROMATIC_SECRET"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +35,7 @@
     "@types/styled-components": "^5.1.12",
     "babel-loader": "^8.2.3",
     "chart.js": "^3.5.1",
+    "chromatic": "^6.3.4",
     "css-loader": "^5.2.4",
     "date-fns": "^2.22.1",
     "file-loader": "^6.2.0",
