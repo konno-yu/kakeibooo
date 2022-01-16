@@ -1,0 +1,17 @@
+name: Chromatic
+on: push
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎
+      - uses: actions/checkout@v1
+      - name: Install 💻
+        run: |
+          cd client
+          npm install
+      - name: Publish to Chromatic 🚀
+        uses: chromaui/action@v1
+        with:
+          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          projectToken: ${{ secrets.CHROMATIC_SECRET }}
