@@ -13,14 +13,16 @@ export const Filled = Template.bind({});
 Filled.args = {
   label: "これはボタンです",
   variant: 'filled',
-  color: 'normal'
+  color: 'normal',
+  width: 200
 };
 
 export const Outlined = Template.bind({});
 Outlined.args = {
   label: 'これはボタンです',
   variant: 'outlined',
-  color: 'accent'
+  color: 'accent',
+  width: 200
 };
 
 export const Icon = Template.bind({});
@@ -28,11 +30,13 @@ Icon.args = {
   label: 'これはボタンです',
   variant: 'filled',
   color: 'normal',
-  icon: <FaSmileWink />
+  icon: <FaSmileWink />,
+  width: 200
 }
 
 export const Disabled = Template.bind({});
 Disabled.args = {
   label: 'これはボタンです',
   disabled: true,
+  width: 200
 }

@@ -3,8 +3,7 @@ import { IconType } from "react-icons";
 import styled, { css } from "styled-components";
 
 interface Props {
-    disabled: boolean;
-    children: IconType
+    disabled?: boolean;
 }
 
 export const IconButton: React.FC<Props> = ({

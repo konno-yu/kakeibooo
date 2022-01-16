@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 
 interface Props {
@@ -18,7 +18,7 @@ export const Input: React.VFC<Props> = ({
 }) => {
     if (disabled) {
         return (
-            <StyledInput
+            <DisabledInput
                 type="text"
                 placeholder={placeholder}
                 maxLength={maxLength}
@@ -46,22 +46,33 @@ const InputContainer = styled.div`
     align-items: center;
 `;
 
-const StyledInput = styled.input<{partWidth: number}>`
+const baseStyle = css`
     font-family: 'M PLUS Rounded 1c', sans-serif;
-    ${({partWidth}) => `width: ${partWidth}px`};
     font-size: 16px;
     height: 1.5rem;
-    color: #546E7A;
     font-weight: 700;
     border: none;
     border-bottom: 1px solid #E0E0E0;
-    &:focus {
-        outline: none;
-        border-bottom: 2px solid #546E7A;
-    }
     ::placeholder {
         font-weight: 400;
         color: #b0bec5;
         font-size: 12px;
     }
-`
+`;
+
+const DisabledInput = styled.input<{ partWidth: number }>`
+    ${baseStyle};
+    ${({ partWidth }) => `width: ${partWidth}px`};
+`;
+
+const StyledInput = styled.input<{ partWidth: number }>`
+    ${baseStyle};
+    ${({ partWidth }) => `width: ${partWidth}px`};
+    color: #546E7A;
+    background: transparent;
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid #546E7A;
+    }
+
+`;
