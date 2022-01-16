@@ -1,7 +1,7 @@
 import { AiOutlineShoppingCart, AiOutlineCalendar } from 'react-icons/ai';
 import { FaRegFrownOpen, FaRegGrinSquint, FaRegMeh, FaRegSmile } from 'react-icons/fa';
 import styled from 'styled-components';
-import { Indicator } from '../common/Indicator';
+import { Indicator } from '../common/Indicator__old';
 import { Card } from './Card';
 import { CardBody } from './CardBody';
 import { CardFooter } from './CardFooter';
