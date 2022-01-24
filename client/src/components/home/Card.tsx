@@ -64,4 +64,9 @@ const Title = styled.div <Pick<Props, 'color'>>`
 const Body = styled.div`
     height: 80%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    justify-content: space-around;
 `
