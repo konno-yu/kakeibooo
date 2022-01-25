@@ -3,7 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
 import DailyReceiptModel from "../receipt/model/DailyReceiptModel";
 import { getDate, getMonth } from "date-fns";
-import { chartOptions } from "./ChartOptions";
+import { chartOptions } from "../../settings/chartOptions";
 
 interface Props {
     receipts: DailyReceiptModel[];
