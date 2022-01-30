@@ -1,19 +1,21 @@
-import styled, { css } from "styled-components"
+import styled, { css } from "styled-components";
+import { FaUserEdit } from 'react-icons/fa';
+import ImgPath from '../../images/medal.svg';
 
 interface Props {
     dayIndex: number | null;
     children?: number;
-    isToday: boolean;
-    isSelected: boolean;
+    isToday?: boolean;
+    isSelected?: boolean;
     type: 'zero' | 'low' | 'normal' | 'high'
 }
 
 export const DayPanel: React.FC<Props> = ({
-    dayIndex = 1,
-    children = 1000,
+    dayIndex,
+    children,
     isToday = false,
     isSelected = false,
-    type = 'low'
+    type
 }) => {
     if (dayIndex === null) {
         return <Styled.Blank />
@@ -23,41 +25,42 @@ export const DayPanel: React.FC<Props> = ({
         <>
             <DayLabel>
                 {String(dayIndex).padStart(2, '0')}
-                {isToday && <TodayLabel>TODAY</TodayLabel>}
+                {(isToday && !isSelected) && <TodayLabel>今日</TodayLabel>}
+                {isSelected && <FaUserEdit size={24}/>}
             </DayLabel>
             <DayValueText>¥{children.toLocaleString()}</DayValueText>
         </>
     );
 
     switch (type) {
-        case 'zero': return (<Styled.Zero isSelected={isSelected}>{PanelBody}</Styled.Zero>);
-        case 'low': return (<Styled.Low isSelected={isSelected}>{PanelBody}</Styled.Low>);
-        case 'normal': return (<Styled.Normal isSelected={isSelected}>{PanelBody}</Styled.Normal>);
-        case 'high': return (<Styled.High isSelected={isSelected}>{PanelBody}</Styled.High>);
+        case 'zero': return (<Styled.Zero>{PanelBody}</Styled.Zero>);
+        case 'low': return (<Styled.Low>{PanelBody}</Styled.Low>);
+        case 'normal': return (<Styled.Normal>{PanelBody}</Styled.Normal>);
+        case 'high': return (<Styled.High>{PanelBody}</Styled.High>);
     }
 }
 
 const baseStyle = css`
     font-family: 'M PLUS Rounded 1c', sans-serif;
-    width: 120px;
-    height: 80px;
+    width: calc(100% / 7);
+    height: 100%;
+    min-height: 80px;
     border-radius: 8px;
-    padding: 4px;
     color: #546E7A;
     font-weight: 700;
+    display: flex;
+    flex-direction: column;
 `;
 
 const Styled = {
     Blank: styled.div`
         ${baseStyle};
         background: #FFFFFF;
-        border: 2px solid #ECEFF1;
     `,
-    Normal: styled.div<{isSelected: boolean}>`
+    Normal: styled.div`
         ${baseStyle};
         cursor: pointer;
         background: #FFFFFF;
-        border: ${(props) => props.isSelected ? "2px dashed #546E7A" : "2px solid #ECEFF1"};
         &:hover {
             background: #F5F5F5;
         }
@@ -65,11 +68,10 @@ const Styled = {
             background: #FFFFFF;
         }
     `,
-    Low: styled.div<{isSelected: boolean}>`
+    Low: styled.div`
         ${baseStyle};
         cursor: pointer;
         background: #B2DFDB;
-        border: ${(props) => props.isSelected ? "2px dashed #546E7A" : "2px solid #ECEFF1"};
         &:hover {
             background: #E0F2F1;
         }
@@ -77,11 +79,10 @@ const Styled = {
             background: #B2DFDB;
         }
     `,
-    High: styled.div<{isSelected: boolean}>`
+    High: styled.div`
         ${baseStyle};
         cursor: pointer;
         background: #FFCDD2;
-        border: ${(props) => props.isSelected ? "2px dashed #546E7A" : "2px solid #ECEFF1"};
         &:hover {
             background: #FFEBEE;
         }
@@ -89,11 +90,14 @@ const Styled = {
             background: #FFCDD2;
         }
     `,
-    Zero: styled.div<{isSelected: boolean}>`
+    Zero: styled.div`
         ${baseStyle};
         cursor: pointer;
         background: #FFF9C4;
-        border: ${(props) => props.isSelected ? "2px dashed #546E7A" : "2px solid #ECEFF1"};
+        background-image: url(${ImgPath});
+        background-size: 50% auto;
+        background-position: center center;
+        background-repeat: no-repeat;
         &:hover {
             background: #FFFDE7;
         }
@@ -104,8 +108,7 @@ const Styled = {
 };
 
 const DayLabel = styled.div`
-    height: 20%;
-    padding: 0 8px;
+    padding: 4px 8px 0 8px;
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -113,12 +116,12 @@ const DayLabel = styled.div`
 `;
 
 const DayValueText = styled.div`
-    height: 80%;
     font-size: 20px;
     font-weight: 900;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-grow: 1;
 `;
 
 const TodayLabel = styled.span`
