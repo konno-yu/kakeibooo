@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { Drawer } from './components/drawer/Drawer';
+import { Drawer } from './components/drawer/Drawer__old';
 import { store } from './store';
 import { HomeView } from './view/HomeView';
 import { HouseholdBookView } from './view/HouseholdBookView';

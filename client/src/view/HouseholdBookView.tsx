@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Calendar } from '../components/calendar/Calendar';
+import { Calendar } from '../components/calendar/__Calendar';
 import { Receipt } from '../components/receipt/Receipt';
 import styled from 'styled-components';
 

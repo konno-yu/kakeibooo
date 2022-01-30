@@ -6,7 +6,9 @@ export default {
     component: DayPanel
 } as ComponentMeta<typeof DayPanel>;
 
-const Template: ComponentStory<typeof DayPanel> = (args) => <DayPanel {...args} />;
+const Template: ComponentStory<typeof DayPanel> = (args) => {
+    return <div style={{width: '75%', background: '#ECEFF1'}}><DayPanel {...args} /></div>
+};
 
 export const Pure = Template.bind({});
 Pure.args = {

@@ -1,31 +1,34 @@
-import * as React from 'react';
-import { AppIcon } from './AppIcon';
-import { DrawerMenu } from './DrawerMenu';
-import { DrawerMenuButton } from './DrawerMenuButton';
-import { AiFillAccountBook } from 'react-icons/ai';
-import { TiHome } from 'react-icons/ti';
-import { BsFillBarChartFill } from 'react-icons/bs';
-import { RiFridgeFill } from 'react-icons/ri';
-import { IoSettingsSharp } from 'react-icons/io5';
-import { DrawerAccount } from './DrawerAccount';
+import { AiFillAccountBook } from "react-icons/ai"
+import { FaRegLightbulb } from "react-icons/fa"
+import { IoSettingsSharp } from "react-icons/io5"
+import { RiFridgeFill } from "react-icons/ri"
+import { TiHome } from "react-icons/ti"
+import styled from "styled-components"
+import { Account } from "./Account"
+import { AppTitle } from "./AppTitle"
+import { Menu } from "./Menu"
+import { MenuItem } from "./MenuItem"
 
 export const Drawer: React.FC = () => {
-    const [value, setValue] = React.useState<Drawer.MenuItem>('home');
-
-    const handleChange = (newValue: Drawer.MenuItem) => {
-        setValue(newValue);
-    }
     return (
-        <>
-            <AppIcon />
-            <DrawerAccount />
-            <DrawerMenu value={value} onChange={handleChange}>
-                <DrawerMenuButton value="home" icon={<TiHome/>}>ホーム</DrawerMenuButton>
-                <DrawerMenuButton value="finance" icon={<AiFillAccountBook />}>家計簿</DrawerMenuButton>
-                <DrawerMenuButton value="analyze" icon={<BsFillBarChartFill />}>分析</DrawerMenuButton>
-                <DrawerMenuButton value="fridge" icon={<RiFridgeFill />}>冷蔵庫</DrawerMenuButton>
-                <DrawerMenuButton value="setting" icon={<IoSettingsSharp />}>設定</DrawerMenuButton>
-            </DrawerMenu>
-        </>
+        <Container>
+            <AppTitle />
+            <Account iconOnly={false} />
+            <Menu>
+                <MenuItem selected icon={<TiHome />}>ホーム</MenuItem>
+                <MenuItem icon={<AiFillAccountBook />}>家計簿</MenuItem>
+                <MenuItem icon={<FaRegLightbulb />}>光熱費</MenuItem>
+                <MenuItem icon={<RiFridgeFill />}>冷蔵庫</MenuItem>
+                <MenuItem icon={<IoSettingsSharp />}>設定</MenuItem>
+            </Menu>
+        </Container>
     )
-}
+};
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+`
