@@ -1,11 +1,13 @@
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DotEnv = require('dotenv-webpack');
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
     template: './src/index.html',
     filename: './index.html',
     favicon: './src/favicon.ico'
 });
+const dotEnvPlugin = new DotEnv();
 
 module.exports = {
     mode: 'development',
@@ -36,6 +38,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
-        htmlWebpackPlugin
+        htmlWebpackPlugin,
+        dotEnvPlugin
     ]
 }

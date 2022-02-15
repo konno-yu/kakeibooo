@@ -7,6 +7,9 @@ import { Drawer } from './components/drawer/Drawer__old';
 import { store } from './store';
 import { HomeView } from './view/HomeView';
 import { HouseholdBookView } from './view/HouseholdBookView';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 export const App: React.FC = () => {
     return (
