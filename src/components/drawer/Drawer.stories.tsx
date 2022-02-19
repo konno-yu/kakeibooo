@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory, ComponentStoryObj } from "@storybook/react";
+import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
 import { Drawer } from "./Drawer";
 
 export default { component: Drawer } as ComponentMeta<typeof Drawer>;

@@ -5,8 +5,8 @@ import { IoSettingsSharp } from "react-icons/io5"
 import { RiFridgeFill } from "react-icons/ri"
 import { TiHome } from "react-icons/ti"
 import styled from "styled-components"
-import { Account } from "./Account"
-import { AppTitle } from "./AppTitle"
+import { Account } from "./account/Account"
+import { AppTitle } from "./app_title/AppTitle"
 import { Menu } from "./menu/Menu"
 import { MenuItem } from "./menu/MenuItem"
 
@@ -16,7 +16,7 @@ export const Drawer: React.FC = () => {
     return (
         <Container>
             <AppTitle />
-            <Account iconOnly={false} />
+            <Account username="かけい坊" userId="kakeiboy" />
             <Menu value={selected} onChange={handleChange}>
                 <MenuItem id="home" icon={<TiHome />}>ホーム</MenuItem>
                 <MenuItem id="household" icon={<AiFillAccountBook />}>家計簿</MenuItem>
