@@ -1,20 +1,24 @@
 import styled from "styled-components"
-import AccountImage from '../../images/avatar.svg';
+import IconPath from '../../../images/avatar.svg';
 
 interface Props {
-    iconOnly: boolean;
+    iconOnly?: boolean;
+    username: string;
+    userId: string;
 }
 
 export const Account: React.VFC<Props> = ({
-    iconOnly = false
+    iconOnly = false,
+    username,
+    userId
 }) => {
     return (
         <AccountContainer>
-            <Image src={AccountImage} />
+            <img src={IconPath} />
             { iconOnly === false &&
                 <>
-                    <UserNameText>かけい坊</UserNameText>
-                    <UserIdText>@Kakeiboy</UserIdText>
+                    <UserNameText>{username}</UserNameText>
+                    <UserIdText>@{userId}</UserIdText>
                 </>
             }
         </AccountContainer>
