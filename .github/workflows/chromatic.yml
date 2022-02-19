@@ -23,7 +23,7 @@ jobs:
           restore-keys: |
             node-
       - name: Install 💻
-        run:　npm install
+        run: npm install
       - name: Publish to Chromatic 🚀
         uses: chromaui/action@v1
         with:
