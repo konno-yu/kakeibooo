@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Logo from '../../images/icon.svg';
+import Logo from '../../../images/icon.svg';
 
 export const AppTitle: React.VFC = () => {
     return (
