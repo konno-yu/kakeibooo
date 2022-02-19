@@ -1,11 +1,8 @@
 {
   "name": "kakeibooo",
   "version": "1.0.0",
-  "description": "<a href=\"https://konno-yu.github.io/kakeibooo/\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg\"></a> [![CodeFactor](https://www.codefactor.io/repository/github/konno-yu/kakeibooo/badge)](https://www.codefactor.io/repository/github/konno-yu/kakeibooo) [![Chromatic](https://github.com/konno-yu/kakeibooo/actions/workflows/chromatic.yml/badge.svg?branch=develop)](https://github.com/konno-yu/kakeibooo/actions/workflows/chromatic.yml)",
+  "description": "",
   "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npx webpack-cli serve --config webpack.config.js --open --mode development",
@@ -13,25 +10,26 @@
     "build-storybook": "build-storybook -o docs-build",
     "chromatic": "npx chromatic --project-token=CHROMATIC_SECRET"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://konno-yu@github.com/konno-yu/kakeibooo.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/konno-yu/kakeibooo/issues"
-  },
-  "homepage": "https://github.com/konno-yu/kakeibooo#readme",
   "devDependencies": {
     "@babel/core": "^7.16.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/styles": "^4.11.4",
     "@reduxjs/toolkit": "^1.6.1",
     "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-essentials": "^6.4.9",
     "@storybook/addon-links": "^6.4.9",
+    "@storybook/builder-webpack5": "^6.4.19",
+    "@storybook/manager-webpack5": "^6.4.19",
     "@storybook/react": "^6.4.9",
-    "@supabase/supabase-js": "^1.30.0",
     "@types/react": "^17.0.4",
     "@types/react-dom": "^17.0.3",
     "@types/react-redux": "^7.1.18",
@@ -42,7 +40,6 @@
     "chromatic": "^6.3.4",
     "css-loader": "^5.2.4",
     "date-fns": "^2.22.1",
-    "dotenv-webpack": "^7.1.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
     "node-sass": "^5.0.0",
@@ -59,11 +56,12 @@
     "styled-components": "^5.3.0",
     "ts-loader": "^9.1.1",
     "typescript": "^4.2.4",
-    "webpack": "^5.36.2",
+    "webpack": "^5.69.1",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.60",
     "axios": "^0.21.1",
     "react-icons": "^4.2.0"
   }
