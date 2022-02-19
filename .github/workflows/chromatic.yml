@@ -16,13 +16,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+      - uses: action/cache@v2
+        with:
+          path: ~/.npm
+          key: node-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            node-
       - name: Install 💻
-        run: |
-          cd client
-          npm install
+        run:　npm install
       - name: Publish to Chromatic 🚀
         uses: chromaui/action@v1
         with:
-          workingDir: client
+          workingDir: ./src
           token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           projectToken: ${{ secrets.CHROMATIC_SECRET }}
