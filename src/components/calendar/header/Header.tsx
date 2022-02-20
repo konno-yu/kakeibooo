@@ -1,11 +1,19 @@
 import styled from "styled-components";
 
-const DAY_OF_WEEK_LABEL = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+const DAY_OF_WEEK_LABEL: {[key in 'ja' | 'en']: string[]} = {
+    ja: ['日', '月', '火', '水', '木', '金', '土'],
+    en: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+};
 
-export const Header: React.VFC = () => {
+interface Props {
+    locale?: 'ja' | 'en';
+}
+export const Header: React.VFC<Props> = ({
+    locale = 'ja'
+}) => {
     return (
         <StyledHeader>
-            { DAY_OF_WEEK_LABEL.map(elm => <HeaderElement>{elm}</HeaderElement>) }
+            { DAY_OF_WEEK_LABEL[locale].map(elm => <HeaderElement>{elm}</HeaderElement>) }
         </StyledHeader>
     )
 }
@@ -23,4 +31,5 @@ const HeaderElement = styled.div`
     font-weight: 800;
     color: #546E7A;
     border-bottom: 1.5px solid #546E7A;
+    text-align: center;
 `
