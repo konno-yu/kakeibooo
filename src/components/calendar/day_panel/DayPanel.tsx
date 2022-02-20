@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { FaUserEdit } from 'react-icons/fa';
-import ImgPath from '../../images/medal.svg';
+import ImgPath from '../../../images/medal.svg';
 
 interface Props {
     dayIndex: number | null;
