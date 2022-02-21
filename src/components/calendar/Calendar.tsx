@@ -1,19 +1,20 @@
 import { getDate, isEqual } from "date-fns";
+import { setDate } from "date-fns/esm";
 import styled from "styled-components";
+import { selectEdittingDate } from "../../reducer/householdBookSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { MonthSelector } from "../common/MonthSelector";
-import { DayPanel } from "./DayPanel";
-import { Header } from "./Header";
+import { DayPanel } from "./day_panel/DayPanel";
+import { Header } from "./header/Header";
 
 interface Props {
     datas: { [key in number]: { date: Date, totalCost: number }[] },
     today: Date;
-    selected: Date;
 }
 
 export const Calendar: React.FC<Props> = ({
     datas,
     today,
-    selected
 }) => {
     const getPanelType = (cost: number) => {
         if (cost === 0) return 'zero';
@@ -21,10 +22,16 @@ export const Calendar: React.FC<Props> = ({
         if (cost > 2500) return 'high';
         return 'normal';
     }
+    const dispatch = useAppDispatch();
+    const targetDate = useAppSelector(state => state.householdBook.targetDate);
+
+    const handleOnClick = (dateIndex: number) => {
+        dispatch(selectEdittingDate(dateIndex));
+    }
     return (
         <Container>
-            <div><MonthSelector targetDate={new Date()} /></div>
-            <div><Header /></div>
+            <div><MonthSelector targetDate={targetDate} /></div>
+            <div><Header locale="en" /></div>
             <Sample>
                 {
                     Object.values(datas).map(week => {
@@ -36,8 +43,9 @@ export const Calendar: React.FC<Props> = ({
                                 return <DayPanel
                                     type={getPanelType(day.totalCost)}
                                     dayIndex={getDate(day.date)}
-                                    isSelected={isEqual(day.date, selected)}
+                                    isSelected={isEqual(day.date, targetDate)}
                                     isToday={isEqual(day.date, today)}
+                                    onClick={handleOnClick}
                                 >{day.totalCost}</DayPanel>
                             })
                         }</Week>

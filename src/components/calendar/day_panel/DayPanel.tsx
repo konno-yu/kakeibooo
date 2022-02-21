@@ -7,7 +7,8 @@ interface Props {
     children?: number;
     isToday?: boolean;
     isSelected?: boolean;
-    type: 'zero' | 'low' | 'normal' | 'high'
+    type: 'zero' | 'low' | 'normal' | 'high',
+    onClick?: (dayIndex: number) => void;
 }
 
 export const DayPanel: React.FC<Props> = ({
@@ -15,15 +16,20 @@ export const DayPanel: React.FC<Props> = ({
     children,
     isToday = false,
     isSelected = false,
-    type
+    type,
+    onClick
 }) => {
     if (dayIndex === null) {
         return <Styled.Blank />
     }
 
+    const handleOnClick = () => {
+        onClick(dayIndex);
+    }
+
     const PanelBody: JSX.Element = (
         <>
-            <DayLabel>
+            <DayLabel key={dayIndex}>
                 {String(dayIndex).padStart(2, '0')}
                 {(isToday && !isSelected) && <TodayLabel>今日</TodayLabel>}
                 {isSelected && <FaUserEdit size={24}/>}
@@ -33,10 +39,10 @@ export const DayPanel: React.FC<Props> = ({
     );
 
     switch (type) {
-        case 'zero': return (<Styled.Zero>{PanelBody}</Styled.Zero>);
-        case 'low': return (<Styled.Low>{PanelBody}</Styled.Low>);
-        case 'normal': return (<Styled.Normal>{PanelBody}</Styled.Normal>);
-        case 'high': return (<Styled.High>{PanelBody}</Styled.High>);
+        case 'zero': return (<Styled.Zero onClick={handleOnClick}>{PanelBody}</Styled.Zero>);
+        case 'low': return (<Styled.Low onClick={handleOnClick}>{PanelBody}</Styled.Low>);
+        case 'normal': return (<Styled.Normal onClick={handleOnClick}>{PanelBody}</Styled.Normal>);
+        case 'high': return (<Styled.High onClick={handleOnClick}>{PanelBody}</Styled.High>);
     }
 }
 
