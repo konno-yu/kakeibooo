@@ -1,10 +1,10 @@
 import { FaCalendar } from "react-icons/fa"
 import styled from "styled-components"
-import { Indicator } from "../common/Indicator"
-import { MonthSelector } from "../common/MonthSelector"
-import { Typography } from "../common/Typography"
-import { Card } from "./Card"
-import { MonthTransition } from "./MonthTransition"
+import { Indicator } from "../../common/indicator/Indicator"
+import { MonthSelector } from "../../common/month_selector/MonthSelector"
+import { Typography } from "../../common/typography/Typography"
+import { Card } from "../card/Card"
+import { MonthTransition } from "../month_transition/MonthTransition"
 
 interface Props {
     targetDate: Date,
