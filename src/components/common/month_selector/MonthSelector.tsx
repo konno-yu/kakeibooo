@@ -1,18 +1,21 @@
-import { getYear } from "date-fns";
+import { getMonth, getYear } from "date-fns";
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
 import styled from "styled-components";
-import { IconButton } from "./IconButton";
+import { IconButton } from "../icon_button/IconButton";
 
 interface Props {
     targetDate: Date;
+    locale?: 'ja' | 'en'
 }
 
 export const MonthSelector: React.FC<Props> = ({
-    targetDate = new Date()
+    targetDate,
+    locale = 'ja'
 }) => {
+    const displayFormat = locale === 'ja' ? `${getYear(targetDate)}年 ${getMonth(targetDate) + 1}月` : `${(targetDate).toLocaleDateString('en-US', { month: 'long' })} ${getYear(targetDate)}`;
     return (
         <Container>
-            <span>{(targetDate).toLocaleDateString('en-US', { month: 'long' })} {getYear(targetDate)}</span>
+            <span>{displayFormat}</span>
             <ButtonContainer>
                 <IconButton>
                     <HiArrowCircleLeft size={28} color="#546E7A" />
