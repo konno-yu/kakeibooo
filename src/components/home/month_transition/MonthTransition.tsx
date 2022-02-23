@@ -2,7 +2,7 @@ import { ChartData } from "chart.js";
 import { getDate, getMonth } from "date-fns";
 import { Bar, Line } from "react-chartjs-2"
 import styled from "styled-components";
-import { chartOptions } from "../../settings/chartOptions"
+import { chartOptions } from "../../../settings/chartOptions"
 
 interface Props {
     datas: { date: Date, totalCost: number }[]
