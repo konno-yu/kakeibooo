@@ -1,11 +1,23 @@
 import { HiPlusSm } from "react-icons/hi"
 import styled from "styled-components"
-import { Button } from "../common/Button"
-import { Divider } from "../common/Divider"
-import { Typography } from "../common/Typography"
-import { Tag } from "./Tag"
+import { addTag } from "../../reducer/householdBookSlice"
+import { useAppDispatch, useAppSelector } from "../../store"
+import { Button } from "../common/button/Button"
+import { Divider } from "../common/divider/Divider"
+import { Typography } from "../common/typography/Typography"
+import { Tag } from "./tag/Tag"
 
 export const Receipt: React.FC = () => {
+    const tags = useAppSelector(state => state.householdBook.tags);
+    const dispatch = useAppDispatch();
+    const handleClickAdd = () => {
+        dispatch(addTag())
+    }
+
+    const calcDailySummartion = () => {
+        return `¥${tags.reduce((pre, current) => pre + current.cost, 0).toLocaleString()}`;
+    }
+
     return (
         <Container>
             <Header>
@@ -15,20 +27,20 @@ export const Receipt: React.FC = () => {
             <Divider width={2} type="dashed" color="#CFD8DC" />
             <Body>
                 <Tags>
-                    <Tag/>
-                    <Tag/>
-                    <Tag />
-                        <Button width='80%' variant="outlined" color="normal" label="レシートを追加" icon={<HiPlusSm />} />
+                    {
+                        tags.map(tag => (<Tag index={tag.index} storeName={tag.storeName} cost={tag.cost}/>))
+                    }
+                        <Button disabled={tags.length >= 4} onClick={handleClickAdd} width='80%' variant="outlined" color="normal" label="レシートを追加" icon={<HiPlusSm />} />
                 </Tags>
                 <Summartion>
                     <Typography type="subHeader" variant="normal">合計</Typography>
-                    <Typography type="header" variant="normal">¥2,000</Typography>
+                    <Typography type="header" variant="normal">{calcDailySummartion()}</Typography>
                 </Summartion>
             </Body>
             <Divider width={2} type="dashed" color="#CFD8DC" />
             <Footer>
-                <Button width='80%' variant="filled" color="normal" label="食費を登録" />
-                <Button width='80%' variant="filled" color="accent" label="Noマネーディとして登録" />
+                <Button onClick={() => alert("reg")} width='80%' variant="filled" color="normal" label="食費を登録" />
+                <Button onClick={() => alert("NMD")}width='80%' variant="filled" color="accent" label="Noマネーディとして登録" />
             </Footer>
         </Container>
     )
