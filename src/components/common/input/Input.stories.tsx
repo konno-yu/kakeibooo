@@ -1,21 +1,21 @@
-import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
-import { FaSmileWink } from "react-icons/fa";
-import { Input } from "./Input";
+import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
+import { FaSmileWink } from 'react-icons/fa';
+import { Input } from './Input';
 
 export default { component: Input } as ComponentMeta<typeof Input>;
 
 export const Pure: ComponentStoryObj<typeof Input> = {
-    args: {}
+  args: {},
 };
 
 export const Icon: ComponentStoryObj<typeof Input> = {
-    args: {
-        icon: <FaSmileWink color="#009688" />
-    }
+  args: {
+    icon: <FaSmileWink color="#009688" />,
+  },
 };
 
 export const Disalbed: ComponentStoryObj<typeof Input> = {
-    args: {
-        disabled: true
-    }
+  args: {
+    disabled: true,
+  },
 };

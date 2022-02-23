@@ -9,8 +9,8 @@ export const Filled: ComponentStoryObj<typeof Button> = {
     label: 'これはボタンです',
     variant: 'filled',
     color: 'normal',
-    width: 200
-  }
+    width: 200,
+  },
 };
 
 export const Outlined: ComponentStoryObj<typeof Button> = {
@@ -18,8 +18,8 @@ export const Outlined: ComponentStoryObj<typeof Button> = {
     label: 'これはボタンです',
     variant: 'outlined',
     color: 'accent',
-    width: 200
-  }
+    width: 200,
+  },
 };
 
 export const Icon: ComponentStoryObj<typeof Button> = {
@@ -28,14 +28,14 @@ export const Icon: ComponentStoryObj<typeof Button> = {
     variant: 'filled',
     color: 'normal',
     icon: <FaSmileWink />,
-    width: 200
-  }
+    width: 200,
+  },
 };
 
 export const Disabled: ComponentStoryObj<typeof Button> = {
   args: {
     label: 'これはボタンです',
     disabled: true,
-    width: 200
-  }
+    width: 200,
+  },
 };
