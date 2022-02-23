@@ -3,7 +3,7 @@ import { setDate } from "date-fns/esm";
 import styled from "styled-components";
 import { selectEdittingDate } from "../../reducer/householdBookSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { MonthSelector } from "../common/MonthSelector";
+import { MonthSelector } from "../common/month_selector/MonthSelector";
 import { DayPanel } from "./day_panel/DayPanel";
 import { Header } from "./header/Header";
 
@@ -30,7 +30,7 @@ export const Calendar: React.FC<Props> = ({
     }
     return (
         <Container>
-            <div><MonthSelector targetDate={targetDate} /></div>
+            <div><MonthSelector targetDate={targetDate} locale="en" /></div>
             <div><Header locale="en" /></div>
             <Sample>
                 {
