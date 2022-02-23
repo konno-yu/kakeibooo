@@ -1,7 +1,6 @@
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { GiPayMoney } from "react-icons/gi";
 import styled from "styled-components";
-import { Typography } from "../common/Typography";
 
 export const WeekSummary: React.FC = () => {
     return (
@@ -24,7 +23,7 @@ const Card = styled.div`
     font-family: 'M PLUS Rounded 1c', sans-serif;
     border: 2px solid #ECEFF1;
     border-radius: 8px;
-    background: #4DB6AC;
+    background: #333333;
     width: 100%;
     font-weight: 700;
     padding: 12px;
