@@ -1,0 +1,7 @@
+build/
+public/
+supabase/
+**/node_modules/
+*.config.js
+.*lintrc.js
+/*.*
