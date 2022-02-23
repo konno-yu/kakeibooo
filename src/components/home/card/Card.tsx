@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { Typography } from "../common/Typography";
 
 interface Props {
     icon: JSX.Element;
