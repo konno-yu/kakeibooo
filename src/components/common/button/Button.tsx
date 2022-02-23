@@ -11,6 +11,7 @@ interface Props {
     disabled?: boolean;
     icon?: JSX.Element;
     width: string | number;
+    onClick: () => void;
 }
 
 export const Button: React.VFC<Props> = ({
@@ -19,16 +20,17 @@ export const Button: React.VFC<Props> = ({
     color,
     disabled,
     icon,
-    width = '100%'
+    width = '100%',
+    onClick
 }) => {
     if (disabled) {
         return <Styled.DisabledButton width={width}>{icon}{label}</Styled.DisabledButton>
     }
     if (variant === 'filled') {
-        return <Styled.FilledButton width={width} color={color}>{icon}{label}</Styled.FilledButton>
+        return <Styled.FilledButton onClick={onClick} width={width} color={color}>{icon}{label}</Styled.FilledButton>
     }
     return (
-        <Styled.OutlinedButton width={width} color={color}>{icon}{label}</Styled.OutlinedButton>
+        <Styled.OutlinedButton onClick={onClick} width={width} color={color}>{icon}{label}</Styled.OutlinedButton>
     );
 };
 

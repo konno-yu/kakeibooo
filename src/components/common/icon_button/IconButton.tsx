@@ -4,11 +4,13 @@ import styled, { css } from "styled-components";
 
 interface Props {
     disabled?: boolean;
+    onClick: () => void;
 }
 
 export const IconButton: React.FC<Props> = ({
     disabled = false,
-    children
+    children,
+    onClick,
 }) => {
     if (disabled) {
         const disabledChildren = cloneElement(children as ReactElement, {
@@ -16,7 +18,7 @@ export const IconButton: React.FC<Props> = ({
         });
         return <Styled.Disabled>{disabledChildren}</Styled.Disabled>;
     }
-    return <Styled.Normal>{children}</Styled.Normal>
+    return <Styled.Normal onClick={onClick}>{children}</Styled.Normal>
 };
 
 const baseStyle = css`
