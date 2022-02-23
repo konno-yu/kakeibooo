@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory, ComponentStoryObj } from "@storybook/react";
+import { ComponentMeta, ComponentStoryObj } from "@storybook/react";
 import { FaSmileWink } from "react-icons/fa";
 import { Input } from "./Input";
 

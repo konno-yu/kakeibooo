@@ -7,6 +7,8 @@ interface Props {
     maxLength?: number;
     icon?: JSX.Element;
     disabled?: boolean;
+    value: string | number;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input: React.VFC<Props> = ({
@@ -14,7 +16,9 @@ export const Input: React.VFC<Props> = ({
     placeholder = '文字を入力してください',
     maxLength = 100,
     icon,
-    disabled
+    disabled,
+    value,
+    onChange
 }) => {
     if (disabled) {
         return (
@@ -35,6 +39,8 @@ export const Input: React.VFC<Props> = ({
             placeholder={placeholder}
             maxLength={maxLength}
             partWidth={width}
+            value={value}
+            onChange={onChange}
             />
         </InputContainer>
     )
