@@ -1,18 +1,18 @@
 import { TiChevronLeft, TiChevronRight } from "react-icons/ti"
 import styled from "styled-components"
-import { Button } from "../common/Button"
-import { IconButton } from "../common/IconButton"
-import { WeekMemoEditor } from "./WeekMemoEditor"
-import { WeekSummary } from "./WeekSummary"
-import { WeekTransition } from "./WeekTransition"
+import { Button } from "../../common/button/Button"
+import { IconButton } from "../../common/icon_button/IconButton"
+import { WeekMemoEditor } from "../week_memo_editor/WeekMemoEditor"
+import { WeekSummary } from "../week_summary/WeekSummary"
+import { WeekTransition } from "../week_transition/WeekTransition"
 
 export const WeekDisplay: React.FC = () => {
     return (
         <Container>
             <SummaryContainer>
-                <IconButton><TiChevronLeft size={28} color='#546E7A'/></IconButton>
+                <IconButton onClick={() => alert("前の月へ")}><TiChevronLeft size={28} color='#546E7A'/></IconButton>
                 <WeekSummary />
-                <IconButton><TiChevronRight size={28} color='#546E7A'/></IconButton>
+                <IconButton onClick={() => alert("次の月へ")}><TiChevronRight size={28} color='#546E7A'/></IconButton>
             </SummaryContainer>
             <WeekTransition
                 dates={[1, 2, 3, 4, 5, 6, 7]}
@@ -21,8 +21,8 @@ export const WeekDisplay: React.FC = () => {
             <MemoContainer>
                 <WeekMemoEditor value="サンプル" />
                 <ButtonContainer>
-                    <Button variant="filled" color="normal" label="保存" width="20%"></Button>
-                    <Button variant="outlined" color="normal" label="削除" width="20%"></Button>
+                    <Button onClick={() => alert("メモ保存")} variant="filled" color="normal" label="保存" width="20%"></Button>
+                    <Button onClick={() => alert("メモ削除")} variant="outlined" color="normal" label="削除" width="20%"></Button>
                 </ButtonContainer>
             </MemoContainer>
         </Container>
