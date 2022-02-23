@@ -1,41 +1,48 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getMonth, getYear, setDate, setMonth } from "date-fns";
-import MonthlyReceiptModel from "../components/receipt/model/MonthlyReceiptModel";
+import { setDate } from "date-fns";
 
 interface HouseholdBookState {
     // 表示対象の年月日
     targetDate: Date;
-    // 表示対象月における日別の食費
-    monthlyReceipt: MonthlyReceiptModel;
+    tags: { index: number, storeName: string, cost: number }[]
 }
 
 const initialState: HouseholdBookState = {
-    targetDate: new Date(),
-    monthlyReceipt: new MonthlyReceiptModel(new Date(), undefined),
+    // TODO 暫定（ほんとうは今日の日付にしておくべき）
+    targetDate: new Date(2022, 0, 31),
+    tags: []
 }
 
 export const householdBookSlice = createSlice({
     name: 'household_book',
     initialState,
     reducers: {
-        showNextMonth: (state: HouseholdBookState) => {
-            state.targetDate = setMonth(state.targetDate, getMonth(state.targetDate) + 1)
-        },
-        showPrevMonth: (state: HouseholdBookState) => {
-            state.targetDate = setMonth(state.targetDate, getMonth(state.targetDate) - 1)
-        },
-        showSpecifyDate: (state: HouseholdBookState, action: PayloadAction<number>) => {
+        selectEdittingDate: (state: HouseholdBookState, action: PayloadAction<number>) => {
             state.targetDate = setDate(state.targetDate, action.payload);
         },
-        updateMonthlyReceipt: (state: HouseholdBookState, action: PayloadAction<MonthlyReceiptModel>) => {
-            state.monthlyReceipt = action.payload;
+        addTag: (state: HouseholdBookState) => {
+            state.tags.push({ index: state.tags.length, storeName: '', cost: null });
         },
+        deleteTag: (state: HouseholdBookState, action: PayloadAction<number>) => {
+            state.tags = state.tags.filter(tag => tag.index !== action.payload);
+            state.tags = state.tags.map((tag, i) => {
+                return { index: i, ...tag };
+            });
+        },
+        inputStoreName: (state: HouseholdBookState, action: PayloadAction<{ index: number, storeName: string }>) => {
+            console.log(action.payload);
+            state.tags[action.payload.index].storeName = action.payload.storeName;
+        },
+        inputCost: (state: HouseholdBookState, action: PayloadAction<{ index: number, cost: number }>) => {
+            state.tags[action.payload.index].cost = action.payload.cost;
+        }
     }
 })
 
 export const {
-    showNextMonth,
-    showPrevMonth,
-    showSpecifyDate,
-    updateMonthlyReceipt,
+    selectEdittingDate,
+    addTag,
+    deleteTag,
+    inputStoreName,
+    inputCost,
 } = householdBookSlice.actions;
