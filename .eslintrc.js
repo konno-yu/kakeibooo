@@ -10,7 +10,7 @@ module.exports = {
     'airbnb/hooks',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'prettier'
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,21 +22,19 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
-    'no-use-before-define': "off",
-    "@typescript-eslint/no-use-before-define": "off",
-    'import/prefer-default-export': "off",
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
+    'import/prefer-default-export': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/extensions': [
       'error',
       {
-         js: 'never',
-         jsx: 'never',
-         ts: 'never',
-         tsx: 'never',
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
       },
     ],
     'react/jsx-filename-extension': [
@@ -51,13 +49,13 @@ module.exports = {
         allowAsStatement: true,
       },
     ],
- },
- settings: {
-   'import/resolver': {
-     node: {
-       paths: ['src'],
-       extensions: ['.js', '.jsx', '.ts', '.tsx']
-     },
-   },
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 };
