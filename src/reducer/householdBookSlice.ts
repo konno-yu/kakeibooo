@@ -25,12 +25,9 @@ export const householdBookSlice = createSlice({
     },
     deleteTag: (state: HouseholdBookState, action: PayloadAction<number>) => {
       state.tags = state.tags.filter((tag) => tag.index !== action.payload);
-      state.tags = state.tags.map((tag, i) => {
-        return { index: i, ...tag };
-      });
+      state.tags = state.tags.map((tag, i) => ({ index: i, ...tag }));
     },
     inputStoreName: (state: HouseholdBookState, action: PayloadAction<{ index: number; storeName: string }>) => {
-      console.log(action.payload);
       state.tags[action.payload.index].storeName = action.payload.storeName;
     },
     inputCost: (state: HouseholdBookState, action: PayloadAction<{ index: number; cost: number }>) => {

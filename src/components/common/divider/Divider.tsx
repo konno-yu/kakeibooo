@@ -5,7 +5,7 @@ interface Props {
   width: number;
   color: string;
 }
-export const Divider: React.VFC<Props> = ({ type = 'solid', width = 1, color = '#BDBDBD' }) => (
+export const Divider = ({ type = 'solid', width = 1, color = '#BDBDBD' }: Props) => (
   <StyledDivider type={type} width={width} color={color} />
 );
 

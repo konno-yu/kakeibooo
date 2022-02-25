@@ -1,13 +1,13 @@
-import { cloneElement, ReactElement } from 'react';
-import { IconType } from 'react-icons';
+import { cloneElement, ReactElement, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 interface Props {
   disabled?: boolean;
   onClick: () => void;
+  children: ReactNode;
 }
 
-export const IconButton: React.FC<Props> = ({ disabled = false, children, onClick }) => {
+export const IconButton = ({ disabled = false, children, onClick }: Props) => {
   if (disabled) {
     const disabledChildren = cloneElement(children as ReactElement, {
       style: { color: '#BDBDBD' },

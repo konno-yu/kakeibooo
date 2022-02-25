@@ -10,9 +10,9 @@ import { AppTitle } from './app_title/AppTitle';
 import { Menu } from './menu/Menu';
 import { MenuItem } from './menu/MenuItem';
 
-export const Drawer: React.FC = () => {
+export const Drawer = () => {
   const [selected, setSelected] = useState('home');
-  const handleChange = (selected: string) => setSelected(selected);
+  const handleChange = (nowSelected: string) => setSelected(nowSelected);
   return (
     <Container>
       <AppTitle />

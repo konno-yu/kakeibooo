@@ -7,12 +7,12 @@ interface Props {
   onChange?: (selected: string) => void;
   children: ReactElement<AProps>[];
 }
-export const Menu: React.FC<Props> = ({ value, onChange, children }) => {
+export const Menu: React.FC<Props> = ({ value, onChange, children }: Props) => {
   const [selected, setSelected] = useState(value);
-  const handleOnChange = (selected: string) => {
-    setSelected(selected);
+  const handleOnChange = (nowSelected: string) => {
+    setSelected(nowSelected);
     if (onChange) {
-      onChange(selected);
+      onChange(nowSelected);
     }
   };
   return (

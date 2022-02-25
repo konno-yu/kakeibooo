@@ -14,7 +14,7 @@ interface Props {
   onClick: () => void;
 }
 
-export const Button: React.VFC<Props> = ({ variant, label, color, disabled, icon, width = '100%', onClick }) => {
+export const Button = ({ variant, label, color, disabled, icon, width = '100%', onClick }: Props) => {
   if (disabled) {
     return (
       <Styled.DisabledButton width={width}>

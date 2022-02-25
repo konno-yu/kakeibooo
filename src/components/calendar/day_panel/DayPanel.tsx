@@ -11,14 +11,7 @@ interface Props {
   onClick?: (dayIndex: number) => void;
 }
 
-export const DayPanel: React.FC<Props> = ({
-  dayIndex,
-  children,
-  isToday = false,
-  isSelected = false,
-  type,
-  onClick,
-}) => {
+export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = false, type, onClick }: Props) => {
   if (dayIndex === null) {
     return <Styled.Blank />;
   }
@@ -47,6 +40,8 @@ export const DayPanel: React.FC<Props> = ({
       return <Styled.Normal onClick={handleOnClick}>{PanelBody}</Styled.Normal>;
     case 'high':
       return <Styled.High onClick={handleOnClick}>{PanelBody}</Styled.High>;
+    default:
+      return <div />;
   }
 };
 

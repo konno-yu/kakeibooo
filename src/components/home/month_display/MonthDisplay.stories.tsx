@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory, ComponentStoryObj } from '@storybook/react';
+import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { MonthDisplay } from './MonthDisplay';
 
 export default { component: MonthDisplay } as ComponentMeta<typeof MonthDisplay>;

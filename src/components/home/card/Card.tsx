@@ -1,21 +1,21 @@
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface Props {
   icon: JSX.Element;
   title: string;
   color: string;
+  children: ReactNode;
 }
-export const Card: React.FC<Props> = ({ icon, title, color, children }) => {
-  return (
-    <StyledCard>
-      <Header>
-        <Icon color={color}>{icon}</Icon>
-        <Title color={color}>{title}</Title>
-      </Header>
-      <Body>{children}</Body>
-    </StyledCard>
-  );
-};
+export const Card = ({ icon, title, color, children }: Props) => (
+  <StyledCard>
+    <Header>
+      <Icon color={color}>{icon}</Icon>
+      <Title color={color}>{title}</Title>
+    </Header>
+    <Body>{children}</Body>
+  </StyledCard>
+);
 
 const StyledCard = styled.div`
   font-family: 'M PLUS Rounded 1c', sans-serif;

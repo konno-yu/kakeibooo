@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory, ComponentStoryObj } from '@storybook/react';
+import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { FaCalculator } from 'react-icons/fa';
 import { Card } from './Card';
 

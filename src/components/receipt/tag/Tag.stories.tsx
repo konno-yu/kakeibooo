@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory, ComponentStoryObj } from '@storybook/react';
+import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import { store } from '../../../store';
 import { Tag } from './Tag';

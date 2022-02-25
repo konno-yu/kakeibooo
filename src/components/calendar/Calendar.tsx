@@ -1,4 +1,4 @@
-import { getDate, isEqual, setDate } from 'date-fns';
+import { getDate, isEqual } from 'date-fns';
 import styled from 'styled-components';
 import { selectEdittingDate } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -11,7 +11,7 @@ interface Props {
   today: Date;
 }
 
-export const Calendar: React.FC<Props> = ({ datas, today }) => {
+export const Calendar: React.FC<Props> = ({ datas, today }: Props) => {
   const getPanelType = (cost: number) => {
     if (cost === 0) return 'zero';
     if (cost <= 1000) return 'low';

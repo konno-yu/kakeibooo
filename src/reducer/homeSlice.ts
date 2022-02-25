@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface HomeState {
   memo: { from: Date; to: Date; text: string }[];
@@ -12,7 +12,7 @@ export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
-    updateMemo: (state, action) => {
+    updateMemo: (state, action: PayloadAction<{ from: Date; to: Date; text: string }[]>) => {
       state.memo = action.payload;
     },
   },

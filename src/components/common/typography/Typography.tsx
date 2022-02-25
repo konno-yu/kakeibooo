@@ -3,9 +3,10 @@ import styled, { css } from 'styled-components';
 interface Props {
   type: 'header' | 'subHeader';
   variant: 'normal' | 'accent' | 'helper';
+  children: string;
 }
 
-export const Typography: React.FC<Props> = ({ type = 'header', variant = 'normal', children }) => {
+export const Typography = ({ type = 'header', variant = 'normal', children }: Props) => {
   switch (variant) {
     case 'normal':
       return <NormalText type={type}>{children}</NormalText>;
@@ -14,6 +15,7 @@ export const Typography: React.FC<Props> = ({ type = 'header', variant = 'normal
     case 'helper':
       return <HelperText type={type}>{children}</HelperText>;
     default:
+      return <div />;
   }
 };
 

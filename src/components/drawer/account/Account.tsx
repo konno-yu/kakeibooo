@@ -7,9 +7,9 @@ interface Props {
   userId: string;
 }
 
-export const Account: React.VFC<Props> = ({ iconOnly = false, username, userId }) => (
+export const Account = ({ iconOnly = false, username, userId }: Props) => (
   <AccountContainer>
-    <img src={IconPath} />
+    <Image src={IconPath} alt="account" />
     {iconOnly === false && (
       <>
         <UserNameText>{username}</UserNameText>

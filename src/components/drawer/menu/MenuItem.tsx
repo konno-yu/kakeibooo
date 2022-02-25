@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 export interface AProps {
@@ -5,8 +6,9 @@ export interface AProps {
   icon?: JSX.Element;
   id: string;
   onChange?: (selected: string) => void;
+  children: ReactNode;
 }
-export const MenuItem: React.FC<AProps> = ({ selected = false, icon, id, children, onChange }) => {
+export const MenuItem = ({ selected = false, icon, id, children, onChange }: AProps) => {
   const handleOnChange = () => {
     if (onChange) {
       return onChange(id);

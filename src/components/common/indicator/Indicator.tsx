@@ -7,7 +7,7 @@ interface Props {
   unit?: { type: 'prefix' | 'suffix'; name: string };
 }
 
-export const Indicator: React.FC<Props> = ({ value, range, showLabel = false, unit }) => {
+export const Indicator = ({ value, range, showLabel = false, unit }: Props) => {
   const displayValue: { [key: string]: number } = {};
   Object.keys(value).forEach((key) => {
     if (value[key] > 0) {
@@ -17,24 +17,24 @@ export const Indicator: React.FC<Props> = ({ value, range, showLabel = false, un
   const keys = Object.keys(displayValue);
   const values = Object.values(displayValue);
 
-  const isLimitOver = (values: number[]) => values.reduce((pre, cur) => pre + cur, 0) > 100;
+  const isLimitOver = (v: number[]) => v.reduce((pre, cur) => pre + cur, 0) > 100;
 
   let barElement: JSX.Element | JSX.Element[];
 
   if (isLimitOver(values)) {
     barElement = <LimitOverBar />;
   } else if (keys.length === 1) {
-    barElement = <Bar width={values[0]} color={keys[0]} isFirst isLast />;
+    barElement = <FirstLastBar width={values[0]} color={keys[0]} />;
   } else {
     barElement = keys.map((key, i) => {
-      if (i === 0) return <Bar width={displayValue[key]} color={key} isFirst />;
-      if (i === keys.length - 1) return <Bar width={displayValue[key]} color={key} isLast />;
+      if (i === 0) return <FirstBar width={displayValue[key]} color={key} />;
+      if (i === keys.length - 1) return <LastBar width={displayValue[key]} color={key} />;
       return <Bar width={displayValue[key]} color={key} />;
     });
   }
 
-  const createLabelText = (text: number, unit: Props['unit']) =>
-    unit.type === 'prefix' ? `${unit.name}${text}` : `${text}${unit.name}`;
+  const createLabelText = (text: number, u: Props['unit']) =>
+    u.type === 'prefix' ? `${u.name}${text}` : `${text}${u.name}`;
 
   return (
     <Container>
@@ -78,16 +78,21 @@ const LimitOverBar = styled.div`
   border-radius: 12px;
 `;
 
-const Bar = styled.div<{ width: number; color: string; isFirst?: boolean; isLast?: boolean }>`
+const Bar = styled.div<{ width: number; color: string }>`
   ${({ width }) => `width: ${width}%`};
   height: 100%;
   ${({ color }) => `background: ${color}`};
-  ${({ isFirst, isLast }) =>
-    isFirst && isLast
-      ? 'border-radius: 12px;'
-      : isFirst
-      ? `border-radius: 12px 0 0 12px;`
-      : isLast
-      ? `border-radius: 0 12px 12px 0;`
-      : `border-radius: 0;`};
+  border-radius: 0;
+`;
+
+const FirstLastBar = styled(Bar)`
+  border-radius: 12px;
+`;
+
+const LastBar = styled(Bar)`
+  border-radius: 0 12px 12px 0;
+`;
+
+const FirstBar = styled(Bar)`
+  border-radius: 12px 0 0 12px;
 `;

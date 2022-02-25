@@ -1,13 +1,13 @@
 import { ChartData } from 'chart.js';
 import { getDate, getMonth } from 'date-fns';
-import { Bar, Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { chartOptions } from '../../../settings/chartOptions';
 
 interface Props {
   datas: { date: Date; totalCost: number }[];
 }
-export const MonthTransition: React.FC<Props> = ({ datas }) => {
+export const MonthTransition: React.FC<Props> = ({ datas }: Props) => {
   const getColor = (totalCost: number) => {
     if (totalCost === 0) return '#FFF176';
     if (totalCost <= 1000) return '#4DB6AC';

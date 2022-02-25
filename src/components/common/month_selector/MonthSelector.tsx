@@ -8,19 +8,26 @@ interface Props {
   locale?: 'ja' | 'en';
 }
 
-export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja' }) => {
+export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja' }: Props) => {
   const displayFormat =
     locale === 'ja'
       ? `${getYear(targetDate)}年 ${getMonth(targetDate) + 1}月`
       : `${targetDate.toLocaleDateString('en-US', { month: 'long' })} ${getYear(targetDate)}`;
+
+  const handleClickPrevious = () => {
+    /** */
+  };
+  const handleClickNext = () => {
+    /** */
+  };
   return (
     <Container>
       <span>{displayFormat}</span>
       <ButtonContainer>
-        <IconButton>
+        <IconButton onClick={handleClickPrevious}>
           <HiArrowCircleLeft size={28} color="#546E7A" />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleClickNext}>
           <HiArrowCircleRight size={28} color="#546E7A" />
         </IconButton>
       </ButtonContainer>

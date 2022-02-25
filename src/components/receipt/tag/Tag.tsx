@@ -13,17 +13,15 @@ interface Props {
   cost: number;
 }
 
-export const Tag: React.FC<Props> = ({ index, storeName, cost }) => {
+export const Tag = ({ index, storeName, cost }: Props) => {
   const dispatch = useAppDispatch();
 
   const handleStoreNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const storeName = event.target.value;
-    dispatch(inputStoreName({ index, storeName }));
+    dispatch(inputStoreName({ index, storeName: event.target.value }));
   };
 
   const handleCostChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const cost = +event.target.value;
-    dispatch(inputCost({ index, cost }));
+    dispatch(inputCost({ index, cost: +event.target.value }));
   };
 
   const handleDelete = () => {

@@ -2,7 +2,7 @@ import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { GiPayMoney } from 'react-icons/gi';
 import styled from 'styled-components';
 
-export const WeekSummary: React.FC = () => (
+export const WeekSummary = () => (
   <Card>
     <Header>
       <HeaderTitle>

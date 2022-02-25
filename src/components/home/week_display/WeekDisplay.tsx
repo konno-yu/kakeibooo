@@ -6,15 +6,27 @@ import { WeekMemoEditor } from '../week_memo_editor/WeekMemoEditor';
 import { WeekSummary } from '../week_summary/WeekSummary';
 import { WeekTransition } from '../week_transition/WeekTransition';
 
-export const WeekDisplay: React.FC = () => {
+export const WeekDisplay = () => {
+  const handleClickPrevious = () => {
+    /** */
+  };
+  const handleClickNext = () => {
+    /** */
+  };
+  const handleClickSave = () => {
+    /** */
+  };
+  const handleClickDelete = () => {
+    /** */
+  };
   return (
     <Container>
       <SummaryContainer>
-        <IconButton onClick={() => alert('前の月へ')}>
+        <IconButton onClick={handleClickPrevious}>
           <TiChevronLeft size={28} color="#546E7A" />
         </IconButton>
         <WeekSummary />
-        <IconButton onClick={() => alert('次の月へ')}>
+        <IconButton onClick={handleClickNext}>
           <TiChevronRight size={28} color="#546E7A" />
         </IconButton>
       </SummaryContainer>
@@ -25,8 +37,8 @@ export const WeekDisplay: React.FC = () => {
       <MemoContainer>
         <WeekMemoEditor value="サンプル" />
         <ButtonContainer>
-          <Button onClick={() => alert('メモ保存')} variant="filled" color="normal" label="保存" width="20%"></Button>
-          <Button onClick={() => alert('メモ削除')} variant="outlined" color="normal" label="削除" width="20%"></Button>
+          <Button onClick={handleClickSave} variant="filled" color="normal" label="保存" width="20%" />
+          <Button onClick={handleClickDelete} variant="outlined" color="normal" label="削除" width="20%" />
         </ButtonContainer>
       </MemoContainer>
     </Container>

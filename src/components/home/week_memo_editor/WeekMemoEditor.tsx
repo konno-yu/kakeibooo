@@ -34,7 +34,7 @@ const modules = {
   toolbar: [['bold', 'italic', 'underline', 'strike'], [{ color: COLOR_MAP }, { background: COLOR_MAP }], ['clean']],
 };
 
-export const WeekMemoEditor: React.FC<Props> = ({ value }) => (
+export const WeekMemoEditor = ({ value }: Props) => (
   <Container>
     <StyledQuill
       placeholder={'1週間のメモを残しておきしょう！\n（ 例： 献立、 気付いたこと など）'}

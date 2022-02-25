@@ -8,7 +8,7 @@ const DAY_OF_WEEK_LABEL: { [key in 'ja' | 'en']: string[] } = {
 interface Props {
   locale?: 'ja' | 'en';
 }
-export const Header: React.VFC<Props> = ({ locale = 'ja' }) => (
+export const Header = ({ locale = 'ja' }: Props) => (
   <StyledHeader>
     {DAY_OF_WEEK_LABEL[locale].map((elm) => (
       <HeaderElement>{elm}</HeaderElement>

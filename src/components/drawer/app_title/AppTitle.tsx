@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import Logo from '../../../images/icon.svg';
 
-export const AppTitle: React.VFC = () => (
+export const AppTitle = () => (
   <TitleContainer>
-    <img src={Logo} width={30} />
+    <img src={Logo} width={30} alt="logo" />
     <Title>Kakeibooo</Title>
   </TitleContainer>
 );

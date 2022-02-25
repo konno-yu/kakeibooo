@@ -16,6 +16,13 @@ export const Receipt: React.FC = () => {
 
   const calcDailySummartion = () => `¥${tags.reduce((pre, current) => pre + current.cost, 0).toLocaleString()}`;
 
+  const handleClickRegist = () => {
+    /** */
+  };
+  const handleClickNoMoney = () => {
+    /** */
+  };
+
   return (
     <Container>
       <Header>
@@ -53,9 +60,9 @@ export const Receipt: React.FC = () => {
       </Body>
       <Divider width={2} type="dashed" color="#CFD8DC" />
       <Footer>
-        <Button onClick={() => alert('reg')} width="80%" variant="filled" color="normal" label="食費を登録" />
+        <Button onClick={handleClickRegist} width="80%" variant="filled" color="normal" label="食費を登録" />
         <Button
-          onClick={() => alert('NMD')}
+          onClick={handleClickNoMoney}
           width="80%"
           variant="filled"
           color="accent"

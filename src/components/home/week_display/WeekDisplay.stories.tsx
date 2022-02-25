@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory, ComponentStoryObj } from '@storybook/react';
+import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { WeekDisplay } from './WeekDisplay';
 
 export default { component: WeekDisplay } as ComponentMeta<typeof WeekDisplay>;

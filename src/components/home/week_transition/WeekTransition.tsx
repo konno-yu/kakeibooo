@@ -14,7 +14,7 @@ const ICONS: { [key in 'zero' | 'low' | 'normal' | 'high']: JSX.Element } = {
 };
 const LABELS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-export const WeekTransition: React.FC<Props> = ({ dates, types }) => (
+export const WeekTransition = ({ dates, types }: Props) => (
   <Container>
     {types.map((type, i) => (
       <Day>
