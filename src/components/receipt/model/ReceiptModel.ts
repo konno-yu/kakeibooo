@@ -1,29 +1,30 @@
-export default class ReceiptModel {
-    private _storeName: string;
-    private _cost: number;
+// export default class ReceiptModel {
+//   private _storeName: string;
 
-    constructor(storeName: string, cost: number) {
-        this._storeName = storeName;
-        this._cost = cost;
-    }
+//   private _cost: number;
 
-    get storeName() {
-        return this._storeName;
-    }
+//   constructor(storeName: string, cost: number) {
+//     this._storeName = storeName;
+//     this._cost = cost;
+//   }
 
-    set storeName(storeName: string) {
-        this._storeName = storeName;
-    }
+//   get storeName() {
+//     return this._storeName;
+//   }
 
-    get cost() {
-        return this._cost;
-    }
+//   set storeName(storeName: string) {
+//     this._storeName = storeName;
+//   }
 
-    set cost(cost: number) {
-        this._cost = cost;
-    }
+//   get cost() {
+//     return this._cost;
+//   }
 
-    public getDailyCost() {
-        return { storeName: this._storeName, cost: this._cost };
-    }
-}
+//   set cost(cost: number) {
+//     this._cost = cost;
+//   }
+
+//   public getDailyCost() {
+//     return { storeName: this._storeName, cost: this._cost };
+//   }
+// }

@@ -1,16 +1,13 @@
 {
-    "compilerOptions": {
-        "typeRoots": [
-            "types",
-            "node_modules/@types"
-        ],
-        "outDir": "./dist/",
-        "noImplicitAny": true,
-        "module": "ES6",
-        "target": "ES5",
-        "jsx": "react-jsx",
-        "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node"
-    }
+  "compilerOptions": {
+    "typeRoots": ["types", "node_modules/@types"],
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "ES6",
+    "target": "ES5",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node"
+  }
 }
