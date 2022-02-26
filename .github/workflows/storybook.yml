@@ -3,7 +3,7 @@ on:
   pull_request:
     branches:
       - develop
-  types: [closed]
+    types: [closed]
 jobs:
   deploy storybook:
     runs-on: ubuntu-latest
