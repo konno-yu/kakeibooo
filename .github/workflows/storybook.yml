@@ -1,7 +1,8 @@
 name: 🚀 Deploy storybook
-on: pull_request
-  branches:
-    - develop
+on:
+  pull_request:
+    branches:
+      - develop
   type: [closed]
 jobs:
   deploy storybook:

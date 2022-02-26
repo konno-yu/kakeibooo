@@ -1,7 +1,7 @@
 name: 🐶 Lint
 on:
   pull_request:
-    breanches:
+    branches:
       - develop
 jobs:
   lint:
