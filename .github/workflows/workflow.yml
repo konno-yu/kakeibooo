@@ -1,4 +1,4 @@
-name: 🐶 Lint
+name: 🐶 Check for Merge
 on:
   pull_request:
     branches:
