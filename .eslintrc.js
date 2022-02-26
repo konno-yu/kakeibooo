@@ -59,7 +59,7 @@ module.exports = {
       },
     ],
     // https://redux-toolkit.js.org/usage/immer-reducers#linting-state-mutations
-    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
+    // 'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
   },
   settings: {
     'import/resolver': {
