@@ -1,28 +1,27 @@
-name: Build and Deploy
-on: [push]
+name: 🚀 Deploy storybook
+on: pull_request
+  branches:
+    - develop
+  type: [closed]
 jobs:
-  build-and-deploy:
+  deploy storybook:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     steps:
-      - name: Checkout 🛎
+      - name: checkout
         uses: actions/checkout@v2.3.1
         with:
           persist-credentials: false
-      - name: Enable Node.js 🌐
-        uses: actions/setup-node@v1
+      - name: enable node.js
+        uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - uses: actions/cache@v1.0.3
-        with:
-          path: ~/.npm
-          key: node-${{hashFiles('**/package-lock.json')}}
-          restore-keys: |
-            node-
-      - name: Install 💻
-        run: npm install
-      - name: Build 🔧
+          cache: npm
+      - name: npm install
+        run: npm ci
+      - name: build storybook
         run: npm run build-storybook
-      - name: Deploy 🚀
+      - name: deploy to github pages
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY }}
