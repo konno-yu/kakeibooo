@@ -1,32 +1,32 @@
-name: Chromatic
-on:
-  pull_request:
-    branches:
-      - develop
-jobs:
-  chromatic-deployment:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@v2.3.1
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - name: Enable Node.js 🌐
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - uses: actions/cache@v1.0.3
-        with:
-          path: ~/.npm
-          key: node-${{hashFiles('**/package-lock.json')}}
-          restore-keys: |
-            node-
-      - name: Install 💻
-        run: npm install
-      - name: Publish to Chromatic 🚀
-        uses: chromaui/action@v1
-        with:
-          workingDir: ./src
-          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          projectToken: ${{ secrets.CHROMATIC_SECRET }}
+# name: 🔍Chromatic
+# on:
+#   pull_request:
+#     branches:
+#       - develop
+# jobs:
+#   chromatic-deployment:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout 🛎
+#         uses: actions/checkout@v2.3.1
+#         with:
+#           fetch-depth: 0
+#           persist-credentials: false
+#       - name: Enable Node.js 🌐
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 14.x
+#       - uses: actions/cache@v1.0.3
+#         with:
+#           path: ~/.npm
+#           key: node-${{hashFiles('**/package-lock.json')}}
+#           restore-keys: |
+#             node-
+#       - name: Install 💻
+#         run: npm install
+#       - name: Publish to Chromatic 🚀
+#         uses: chromaui/action@v1
+#         with:
+#           workingDir: ./src
+#           token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+#           projectToken: ${{ secrets.CHROMATIC_SECRET }}
