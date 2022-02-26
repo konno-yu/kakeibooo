@@ -5,7 +5,7 @@ on:
       - develop
     types: [closed]
 jobs:
-  deploy storybook:
+  deploy-storybook:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
