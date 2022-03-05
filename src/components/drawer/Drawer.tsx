@@ -1,10 +1,11 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { useState } from 'react';
 import { AiFillAccountBook } from 'react-icons/ai';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { RiFridgeFill } from 'react-icons/ri';
 import { TiHome } from 'react-icons/ti';
-import styled from 'styled-components';
 import { Account } from './account/Account';
 import { AppTitle } from './app_title/AppTitle';
 import { Menu } from './menu/Menu';
@@ -14,7 +15,7 @@ export const Drawer = () => {
   const [selected, setSelected] = useState('home');
   const handleChange = (nowSelected: string) => setSelected(nowSelected);
   return (
-    <Container>
+    <div css={drawerContainer}>
       <AppTitle />
       <Account username="かけい坊" userId="kakeiboy" />
       <Menu value={selected} onChange={handleChange}>
@@ -34,14 +35,16 @@ export const Drawer = () => {
           設定
         </MenuItem>
       </Menu>
-    </Container>
+    </div>
   );
 };
 
-const Container = styled.div`
+const drawerContainer = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 24px);
+  height: calc(100% - 48px);
   gap: 20px;
+  padding: 24px 12px;
 `;
