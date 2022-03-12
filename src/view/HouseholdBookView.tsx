@@ -4,39 +4,32 @@ import { getWeekOfMonth, isEqual } from 'date-fns';
 import { Calendar } from '../components/calendar/Calendar';
 import { Receipt } from '../components/receipt/Receipt';
 import { useAppSelector } from '../store';
+import { Expenses } from '../reducer/householdBookSlice';
 
 /**
  * 特定の日のレシートだけ抽出する
  * TODO ここにいてよいのかは謎、Sliceに移すべきかもしれない
  */
-export const extractTargetDayReceipt = (
-  receipts: {
-    [key: number]: (null | {
-      date: Date;
-      receipts: { index: number; storeName: string; cost: number }[] | [] | null;
-    })[];
-  },
-  targetDate: Date
-) => {
-  const weeklyReceipt = receipts[getWeekOfMonth(targetDate)].filter((receipt) => receipt);
-  const dailyReceipt = weeklyReceipt.filter((wr) => wr.date && isEqual(wr.date, targetDate))[0].receipts;
+export const extractTargetDayReceipt = (expenses: Expenses, targetDate: Date) => {
+  const weeklyReceipts = expenses[getWeekOfMonth(targetDate)].filter((receipt) => receipt);
+  const dailyReceipt = weeklyReceipts.filter((wr) => wr.date && isEqual(wr.date, targetDate))[0].receipts;
   return dailyReceipt;
 };
 
 export const HouseholdBookView: React.FC = () => {
-  const receipts = useAppSelector((state) => state.householdBook.receipts);
+  const expenses = useAppSelector((state) => state.householdBook.expenses);
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
   const today = new Date(new Date().setHours(0, 0, 0, 0));
 
-  const getTags = () => extractTargetDayReceipt(receipts, targetDate);
+  const getReceipts = () => extractTargetDayReceipt(expenses, targetDate);
 
   return (
     <div css={householdBookContainer}>
       <div css={calendarContainer}>
-        <Calendar today={today} datas={receipts} />
+        <Calendar today={today} datas={expenses} />
       </div>
       <div css={receiptContainer}>
-        <Receipt tags={getTags()} />
+        <Receipt receipts={getReceipts()} />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export default { component: Receipt } as ComponentMeta<typeof Receipt>;
 
 export const Pure: ComponentStoryObj<typeof Receipt> = {
   args: {
-    tags: [
+    receipts: [
       { index: 0, storeName: 'サンプル1', cost: 1000 },
       { index: 1, storeName: 'サンプル2', cost: 2000 },
     ],

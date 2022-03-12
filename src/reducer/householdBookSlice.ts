@@ -1,32 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { endOfMonth, getDate, getDay, getMonth, getWeekOfMonth, getYear, setDate, setMonth } from 'date-fns';
 
+export type Receipt = { index: number; storeName: string; cost: number };
+/**
+ * 食費を表す型
+ * weekIndex ... 対象月における週を表すインデックス（1 ~ 6）
+ * receiptsが空配列 ... ノーマネーデイ
+ * receiptsがnull ... 未入力
+ */
+export type Expenses = {
+  [weekIndex: number]: (null | { date: Date; receipts: Receipt[] | [] | null })[];
+};
+
 interface HouseholdBookState {
   /** 編集対象の年月日 */
   targetDate: Date;
-  /** 表示中の月におけるレシート */
-  receipts: {
-    [key: number]: (null | {
-      date: Date;
-      receipts: { index: number; storeName: string; cost: number }[] | [] | null;
-    })[];
-  };
+  /** 表示中の月における食費 */
+  expenses: Expenses;
 }
 
 /**
  * 指定された年月のテンプレートをつくる
  */
-export const createMonthTemplate = (
-  targetDate: Date
-): {
-  [key: number]: (null | { date: Date; receipts: { index: number; storeName: string; cost: number }[] | [] | null })[];
-} => {
-  const template: {
-    [key: number]: (null | {
-      date: Date;
-      receipts: { index: number; storeName: string; cost: number }[] | [] | null;
-    })[];
-  } = {
+export const createMonthTemplate = (targetDate: Date): Expenses => {
+  const template: Expenses = {
     1: [null, null, null, null, null, null, null],
     2: [null, null, null, null, null, null, null],
     3: [null, null, null, null, null, null, null],
@@ -59,7 +56,7 @@ export const createMonthTemplate = (
 
 const initialState: HouseholdBookState = {
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
-  receipts: createMonthTemplate(new Date()),
+  expenses: createMonthTemplate(new Date()),
 };
 
 export const householdBookSlice = createSlice({
@@ -73,12 +70,12 @@ export const householdBookSlice = createSlice({
     /** 前月を表示する */
     shiftPreviousMonth: (state: HouseholdBookState) => {
       state.targetDate = setMonth(state.targetDate, getMonth(state.targetDate) - 1);
-      state.receipts = createMonthTemplate(state.targetDate);
+      state.expenses = createMonthTemplate(state.targetDate);
     },
     /** 来月を表示する */
     shiftNextMonth: (state: HouseholdBookState) => {
       state.targetDate = setMonth(state.targetDate, getMonth(state.targetDate) + 1);
-      state.receipts = createMonthTemplate(state.targetDate);
+      state.expenses = createMonthTemplate(state.targetDate);
     },
   },
 });
