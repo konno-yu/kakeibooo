@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
@@ -69,6 +70,6 @@ export const Pure: ComponentStoryObj<typeof Calendar> = {
 
 const decorator = css`
   width: 75%;
-  background: ECEFF1;
+  background: #eceff1;
   padding: 8px;
 `;
