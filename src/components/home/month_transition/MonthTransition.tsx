@@ -25,7 +25,7 @@ export const MonthTransition: React.FC<Props> = ({ datas }: Props) => {
     return balance;
   };
 
-  const formatData = (): ChartData => {
+  const formatData = (): ChartData<'bar'> => {
     const labels: string[] = [];
     const data: number[] = [];
     const color: string[] = [];
@@ -35,21 +35,21 @@ export const MonthTransition: React.FC<Props> = ({ datas }: Props) => {
       data.push(d.totalCost);
       color.push(getColor(d.totalCost));
     });
-
     return {
-      labels,
+      // labels,
       datasets: [
-        {
-          label: '残金',
-          data: calculateBalance(),
-          type: 'line',
-          yAxisID: 'balance',
-          borderColor: '#546E7A',
-          backgroundColor: '#546E7A',
-          order: 1,
-        },
+        // {
+        //   label: '残金',
+        //   data: calculateBalance(),
+        //   type: 'line',
+        //   yAxisID: 'balance',
+        //   borderColor: '#546E7A',
+        //   backgroundColor: '#546E7A',
+        //   order: 1,
+        // },
         {
           label: '食費',
+          type: 'bar',
           data,
           borderColor: color,
           backgroundColor: color,
@@ -61,11 +61,9 @@ export const MonthTransition: React.FC<Props> = ({ datas }: Props) => {
     };
   };
 
-  return (
-    <Container>
-      <Bar data={formatData} options={chartOptions} height={120} />
-    </Container>
-  );
+  const formattedData: ChartData = formatData();
+
+  return <Container>{/* <Bar data={{ formattedData }} options={chartOptions} height={120} /> */}</Container>;
 };
 
 const Container = styled.div`
