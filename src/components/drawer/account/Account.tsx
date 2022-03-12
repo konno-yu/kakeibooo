@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { css } from '@emotion/react';
 import IconPath from '../../../images/avatar.svg';
 
 interface Props {
@@ -8,39 +8,39 @@ interface Props {
 }
 
 export const Account = ({ iconOnly = false, username, userId }: Props) => (
-  <AccountContainer>
-    <Image src={IconPath} alt="account" />
+  <div css={container}>
+    <img css={image} src={IconPath} alt="account" />
     {iconOnly === false && (
       <>
-        <UserNameText>{username}</UserNameText>
-        <UserIdText>@{userId}</UserIdText>
+        <div css={usernameText}>{username}</div>
+        <div css={userIdText}>@{userId}</div>
       </>
     )}
-  </AccountContainer>
+  </div>
 );
 
-const AccountContainer = styled.div`
+const container = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const Image = styled.img`
+const image = css`
   height: 70px;
   width: 70px;
   border: 3px solid #cfd8dc;
   border-radius: 100px;
 `;
 
-const UserNameText = styled.span`
+const usernameText = css`
   font-size: 16px;
   margin-top: 4px;
   font-weight: 600;
   color: #546e7a;
 `;
 
-const UserIdText = styled.span`
+const userIdText = css`
   font-size: 14px;
   font-weight: 600;
   color: #90a4ae;

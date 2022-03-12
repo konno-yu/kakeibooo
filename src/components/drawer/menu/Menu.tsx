@@ -1,5 +1,5 @@
+import { css } from '@emotion/react';
 import { cloneElement, ReactElement, useState } from 'react';
-import styled from 'styled-components';
 import { AProps } from './MenuItem';
 
 interface Props {
@@ -16,18 +16,18 @@ export const Menu: React.FC<Props> = ({ value, onChange, children }: Props) => {
     }
   };
   return (
-    <MenuContainer>
+    <div css={container}>
       {children.map((child) => {
         if (child.props.id === selected) {
           return cloneElement(child, { selected: true, onChange: handleOnChange });
         }
         return cloneElement(child, { onChange: handleOnChange });
       })}
-    </MenuContainer>
+    </div>
   );
 };
 
-const MenuContainer = styled.div`
+const container = css`
   display: flex;
   flex-direction: column;
   gap: 16px;

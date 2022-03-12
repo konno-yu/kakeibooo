@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import { getDate, getMonth, getYear } from 'date-fns';
 import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
@@ -72,15 +73,14 @@ export const Receipt: React.FC<ReceiptProps> = ({ tags }) => {
 
   const handleClickRegist = () => {
     /** */
-    console.log(dayTags);
   };
   const handleClickNoMoney = () => {
     /** */
   };
 
   return (
-    <Container>
-      <Header>
+    <div css={container}>
+      <div css={header}>
         <Typography type="header" variant="normal">
           Kakeibooo
         </Typography>
@@ -89,9 +89,9 @@ export const Receipt: React.FC<ReceiptProps> = ({ tags }) => {
             .toString()
             .padStart(2, '0')}`}
         </Typography>
-      </Header>
+      </div>
       <Divider width={2} type="dashed" color="#CFD8DC" />
-      <Body>
+      <div css={body}>
         <Tags>
           {dayTags.map((tag) => (
             <Tag
@@ -113,17 +113,17 @@ export const Receipt: React.FC<ReceiptProps> = ({ tags }) => {
             icon={<HiPlusSm />}
           />
         </Tags>
-        <Summartion>
+        <div css={summartion}>
           <Typography type="subHeader" variant="normal">
             合計
           </Typography>
           <Typography type="header" variant="normal">
             {calcDailySummartion()}
           </Typography>
-        </Summartion>
-      </Body>
+        </div>
+      </div>
       <Divider width={2} type="dashed" color="#CFD8DC" />
-      <Footer>
+      <div css={footer}>
         <Button
           disabled={dayTags.length === 0}
           onClick={handleClickRegist}
@@ -140,12 +140,12 @@ export const Receipt: React.FC<ReceiptProps> = ({ tags }) => {
           label="Noマネーディとして登録"
           disabled={dayTags.length > 0}
         />
-      </Footer>
-    </Container>
+      </div>
+    </div>
   );
 };
 
-const Container = styled.div`
+const container = css`
   height: calc(100vh - 24px);
   background: #ffffff;
   border: 2px solid #eceff1;
@@ -155,7 +155,7 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Header = styled.div`
+const header = css`
   height: 10%;
   padding: 8px;
   display: flex;
@@ -164,7 +164,7 @@ const Header = styled.div`
   text-align: center;
 `;
 
-const Body = styled.div`
+const body = css`
   height: 70%;
   padding: 8px;
   display: flex;
@@ -182,14 +182,14 @@ const Tags = styled.div`
   gap: 8px;
 `;
 
-const Summartion = styled.div`
+const summartion = css`
   width: calc(100% - 16px);
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const Footer = styled.div`
+const footer = css`
   height: 20%;
   width: 100%;
   display: flex;

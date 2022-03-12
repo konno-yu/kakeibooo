@@ -1,6 +1,6 @@
+import { css } from '@emotion/react';
 import { getMonth, getYear } from 'date-fns';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
-import styled from 'styled-components';
 import { IconButton } from '../icon_button/IconButton';
 
 interface Props {
@@ -17,21 +17,21 @@ export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPr
       : `${targetDate.toLocaleDateString('en-US', { month: 'long' })} ${getYear(targetDate)}`;
 
   return (
-    <Container>
+    <div css={container}>
       <span>{displayFormat}</span>
-      <ButtonContainer>
+      <div css={monthTransition}>
         <IconButton onClick={onPrev}>
           <HiArrowCircleLeft size={28} color="#546E7A" />
         </IconButton>
         <IconButton onClick={onNext}>
           <HiArrowCircleRight size={28} color="#546E7A" />
         </IconButton>
-      </ButtonContainer>
-    </Container>
+      </div>
+    </div>
   );
 };
 
-const Container = styled.div`
+const container = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 24px;
   color: #546e7a;
@@ -41,6 +41,6 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const ButtonContainer = styled.div`
+const monthTransition = css`
   display: flex;
 `;
