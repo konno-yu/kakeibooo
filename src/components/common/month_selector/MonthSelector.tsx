@@ -6,28 +6,24 @@ import { IconButton } from '../icon_button/IconButton';
 interface Props {
   targetDate: Date;
   locale?: 'ja' | 'en';
+  onPrev: () => void;
+  onNext: () => void;
 }
 
-export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja' }: Props) => {
+export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPrev, onNext }: Props) => {
   const displayFormat =
     locale === 'ja'
       ? `${getYear(targetDate)}年 ${getMonth(targetDate) + 1}月`
       : `${targetDate.toLocaleDateString('en-US', { month: 'long' })} ${getYear(targetDate)}`;
 
-  const handleClickPrevious = () => {
-    /** */
-  };
-  const handleClickNext = () => {
-    /** */
-  };
   return (
     <Container>
       <span>{displayFormat}</span>
       <ButtonContainer>
-        <IconButton onClick={handleClickPrevious}>
+        <IconButton onClick={onPrev}>
           <HiArrowCircleLeft size={28} color="#546E7A" />
         </IconButton>
-        <IconButton onClick={handleClickNext}>
+        <IconButton onClick={onNext}>
           <HiArrowCircleRight size={28} color="#546E7A" />
         </IconButton>
       </ButtonContainer>

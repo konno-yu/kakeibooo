@@ -12,7 +12,7 @@ interface Props {
 }
 export const MonthDisplay: React.FC<Props> = ({ targetDate, datas }: Props) => (
   <Container>
-    <MonthSelector targetDate={targetDate} />
+    <MonthSelector targetDate={targetDate} onPrev={() => alert('')} onNext={() => alert('')} />
     <MonthTransition datas={datas} />
     <div style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
       <Card title="今月の食費" icon={<FaCalendar color="#FFFFFF" />} color="#546E7A">

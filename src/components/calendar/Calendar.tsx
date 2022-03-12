@@ -1,6 +1,6 @@
 import { getDate, isEqual } from 'date-fns';
 import styled from 'styled-components';
-import { selectEdittingDate } from '../../reducer/householdBookSlice';
+import { selectEdittingDate, shiftPreviousMonth, shiftNextMonth } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { MonthSelector } from '../common/month_selector/MonthSelector';
 import { DayPanel } from './day_panel/DayPanel';
@@ -33,10 +33,19 @@ export const Calendar: React.FC<Props> = ({ datas, today }: Props) => {
   const handleOnClick = (dateIndex: number) => {
     dispatch(selectEdittingDate(dateIndex));
   };
+
+  const handleOnPrev = () => {
+    dispatch(shiftPreviousMonth());
+  };
+
+  const handleOnNext = () => {
+    dispatch(shiftNextMonth());
+  };
+
   return (
     <Container>
       <div>
-        <MonthSelector targetDate={targetDate} locale="en" />
+        <MonthSelector targetDate={targetDate} locale="en" onPrev={handleOnPrev} onNext={handleOnNext} />
       </div>
       <div>
         <Header locale="en" />
