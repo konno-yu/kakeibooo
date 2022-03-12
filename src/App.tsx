@@ -3,13 +3,10 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
-// import { createClient } from '@supabase/supabase-js';
 import { Drawer } from './components/drawer/Drawer';
 import { store } from './store';
 // import { HomeView } from './view/HomeView';
 import { HouseholdBookView } from './view/HouseholdBookView';
-
-// const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 export const App: React.FC = () => (
   <Provider store={store}>
