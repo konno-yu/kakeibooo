@@ -2,8 +2,6 @@ import { AiFillShopping } from 'react-icons/ai';
 import { FaCircle, FaTrashAlt } from 'react-icons/fa';
 import { HiCurrencyYen } from 'react-icons/hi';
 import styled from 'styled-components';
-import { inputCost, inputStoreName, deleteTag } from '../../../reducer/householdBookSlice';
-import { useAppDispatch } from '../../../store';
 import { IconButton } from '../../common/icon_button/IconButton';
 import { Input } from '../../common/input/Input';
 
@@ -11,21 +9,22 @@ interface Props {
   index: number;
   storeName: string;
   cost: number;
+  onChangeStoreName: (index: number, storeName: string) => void;
+  onChangeCost: (index: number, cost: number) => void;
+  onDelete: (index: number) => void;
 }
 
-export const Tag = ({ index, storeName, cost }: Props) => {
-  const dispatch = useAppDispatch();
-
+export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, onDelete }: Props) => {
   const handleStoreNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(inputStoreName({ index, storeName: event.target.value }));
+    onChangeStoreName(index, event.target.value);
   };
 
   const handleCostChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(inputCost({ index, cost: +event.target.value }));
+    onChangeCost(index, +event.target.value);
   };
 
   const handleDelete = () => {
-    dispatch(deleteTag(index));
+    onDelete(index);
   };
 
   return (

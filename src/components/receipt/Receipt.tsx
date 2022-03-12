@@ -1,23 +1,78 @@
+import { getDate, getMonth, getYear } from 'date-fns';
+import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
 import styled from 'styled-components';
-import { addTag } from '../../reducer/householdBookSlice';
-import { useAppDispatch, useAppSelector } from '../../store';
+import { useAppSelector } from '../../store';
+import { extractTargetDayReceipt } from '../../view/HouseholdBookView';
 import { Button } from '../common/button/Button';
 import { Divider } from '../common/divider/Divider';
 import { Typography } from '../common/typography/Typography';
 import { Tag } from './tag/Tag';
 
-export const Receipt: React.FC = () => {
-  const tags = useAppSelector((state) => state.householdBook.tags);
-  const dispatch = useAppDispatch();
+export interface ReceiptProps {
+  tags: { index: number; storeName: string; cost: number }[] | [];
+}
+
+// TODO カスタムフック切り出し
+export const Receipt: React.FC<ReceiptProps> = ({ tags }) => {
+  const [dayTags, setDayTags] = React.useState<{ index: number; storeName: string; cost: number }[] | [] | null>(tags);
+  const receipts = useAppSelector((state) => state.householdBook.receipts);
+  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
+
+  useEffect(() => {
+    setDayTags(extractTargetDayReceipt(receipts, targetDate));
+  }, [receipts, targetDate]);
+
+  /**
+   * レシートを追加する
+   */
   const handleClickAdd = () => {
-    dispatch(addTag());
+    setDayTags([...dayTags, { index: dayTags.length, storeName: '', cost: null }]);
   };
 
-  const calcDailySummartion = () => `¥${tags.reduce((pre, current) => pre + current.cost, 0).toLocaleString()}`;
+  /**
+   * レシートの店舗名を更新する
+   * @param index 対象となるレシート
+   * @param storeName 更新後の店舗名
+   */
+  const handleChangeStoreName = (index: number, storeName: string) => {
+    setDayTags(dayTags.map((tag) => (tag.index === index ? { ...tag, storeName } : tag)));
+  };
+
+  /**
+   * レシートの金額を更新する
+   * @oaram index 対象となるレシート
+   * @param cost 更新後の金額
+   */
+  const handleChangeCost = (index: number, cost: number) => {
+    setDayTags(dayTags.map((tag) => (tag.index === index ? { ...tag, cost } : tag)));
+  };
+
+  /**
+   * レシートを削除する
+   * @param index 対象となるレシート
+   */
+  const handleClickDelete = (index: number) => {
+    const remainReceipts = (dayTags as { index: number; storeName: string; cost: number }[]).filter(
+      (tag) => tag.index !== index
+    );
+    // indexを振り直してステートを更新する
+    setDayTags(remainReceipts.map((receipt, i) => ({ ...receipt, index: i })));
+  };
+
+  /**
+   * 選択中の日付における合計金額を計算する
+   * @returns 合計金額に￥マークをつけつつカンマ区切りにして返す
+   */
+  const calcDailySummartion = () => {
+    const totalCost: number =
+      dayTags.length === 0 ? 0 : dayTags.map((tag) => tag.cost).reduce((pre, current) => pre + current, 0);
+    return `¥${totalCost.toLocaleString()}`;
+  };
 
   const handleClickRegist = () => {
     /** */
+    console.log(dayTags);
   };
   const handleClickNoMoney = () => {
     /** */
@@ -30,17 +85,26 @@ export const Receipt: React.FC = () => {
           Kakeibooo
         </Typography>
         <Typography type="subHeader" variant="accent">
-          2022/01/06
+          {`${getYear(targetDate)}/${getMonth(targetDate).toString().padStart(2, '0')}/${getDate(targetDate)
+            .toString()
+            .padStart(2, '0')}`}
         </Typography>
       </Header>
       <Divider width={2} type="dashed" color="#CFD8DC" />
       <Body>
         <Tags>
-          {tags.map((tag) => (
-            <Tag index={tag.index} storeName={tag.storeName} cost={tag.cost} />
+          {dayTags.map((tag) => (
+            <Tag
+              index={tag.index}
+              storeName={tag.storeName}
+              cost={tag.cost}
+              onChangeStoreName={handleChangeStoreName}
+              onChangeCost={handleChangeCost}
+              onDelete={handleClickDelete}
+            />
           ))}
           <Button
-            disabled={tags.length >= 4}
+            disabled={dayTags.length >= 4}
             onClick={handleClickAdd}
             width="80%"
             variant="outlined"
@@ -60,13 +124,21 @@ export const Receipt: React.FC = () => {
       </Body>
       <Divider width={2} type="dashed" color="#CFD8DC" />
       <Footer>
-        <Button onClick={handleClickRegist} width="80%" variant="filled" color="normal" label="食費を登録" />
+        <Button
+          disabled={dayTags.length === 0}
+          onClick={handleClickRegist}
+          width="80%"
+          variant="filled"
+          color="normal"
+          label="食費を登録"
+        />
         <Button
           onClick={handleClickNoMoney}
           width="80%"
           variant="filled"
           color="accent"
           label="Noマネーディとして登録"
+          disabled={dayTags.length > 0}
         />
       </Footer>
     </Container>
@@ -75,7 +147,6 @@ export const Receipt: React.FC = () => {
 
 const Container = styled.div`
   height: calc(100vh - 24px);
-  width: 25%;
   background: #ffffff;
   border: 2px solid #eceff1;
   border-radius: 8px;
