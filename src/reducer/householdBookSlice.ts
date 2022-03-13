@@ -33,7 +33,7 @@ export const createMonthTemplate = (targetDate: Date): Expenses => {
   };
   const lastDayOfMonth = getDate(endOfMonth(targetDate));
   for (let day = 1; day <= lastDayOfMonth; day += 1) {
-    const date = new Date(getYear(targetDate), getMonth(targetDate), day);
+    const date = new Date(getYear(targetDate), getMonth(targetDate), day, 9, 0, 0);
     const weekIndex = getWeekOfMonth(date);
     const dayIndex = getDay(date);
 
@@ -55,7 +55,7 @@ export const createMonthTemplate = (targetDate: Date): Expenses => {
 };
 
 const initialState: HouseholdBookState = {
-  targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
+  targetDate: new Date(new Date().setHours(9, 0, 0, 0)),
   expenses: createMonthTemplate(new Date()),
 };
 

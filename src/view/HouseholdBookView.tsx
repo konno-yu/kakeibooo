@@ -19,7 +19,7 @@ export const extractTargetDayReceipt = (expenses: Expenses, targetDate: Date) =>
 export const HouseholdBookView: React.FC = () => {
   const expenses = useAppSelector((state) => state.householdBook.expenses);
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
-  const today = new Date(new Date().setHours(0, 0, 0, 0));
+  const today = new Date(new Date().setHours(9, 0, 0, 0));
 
   const getReceipts = () => extractTargetDayReceipt(expenses, targetDate);
 
