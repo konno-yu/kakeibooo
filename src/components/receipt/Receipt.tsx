@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
 import styled from 'styled-components';
 import { Receipt as ReceiptDef } from '../../reducer/householdBookSlice';
+import * as expenseRest from '../../rest/expenses';
 import { useAppSelector } from '../../store';
 import { extractTargetDayReceipt } from '../../view/HouseholdBookView';
 import { Button } from '../common/button/Button';
@@ -78,11 +79,31 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
     return '¥0';
   };
 
-  const handleClickRegist = () => {
-    /** */
+  /**
+   * [食費を登録]ボタンが押された場合の動作 <br/>
+   * 編集日のデータが登録済みかに応じてPOST/PUTを投げ分ける
+   *
+   */
+  const handleClickRegist = async () => {
+    const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
+    if (isPost) {
+      await expenseRest.post(targetDate, dayReceipts);
+    } else {
+      await expenseRest.put(targetDate, dayReceipts);
+    }
   };
-  const handleClickNoMoney = () => {
-    /** */
+
+  /**
+   * [Noマネーデイとして登録]が押された場合の動作 <br/>
+   * 編集日のデータが登録済みかに応じてPOST/PUTを投げ分ける
+   */
+  const handleClickNoMoney = async () => {
+    const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
+    if (isPost) {
+      await expenseRest.post(targetDate, []);
+    } else {
+      await expenseRest.put(targetDate, []);
+    }
   };
 
   return (

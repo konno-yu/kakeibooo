@@ -3,8 +3,9 @@ import { css } from '@emotion/react';
 import { getWeekOfMonth, isEqual } from 'date-fns';
 import { Calendar } from '../components/calendar/Calendar';
 import { Receipt } from '../components/receipt/Receipt';
-import { useAppSelector } from '../store';
-import { Expenses } from '../reducer/householdBookSlice';
+import { useAppDispatch, useAppSelector } from '../store';
+import { Expenses, setMonthExpenses } from '../reducer/householdBookSlice';
+import * as expenseRest from '../rest/expenses';
 
 /**
  * 特定の日のレシートだけ抽出する
@@ -20,6 +21,16 @@ export const HouseholdBookView: React.FC = () => {
   const expenses = useAppSelector((state) => state.householdBook.expenses);
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
   const today = new Date(new Date().setHours(9, 0, 0, 0));
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      await expenseRest.get(targetDate).then((res) => {
+        dispatch(setMonthExpenses(res.data));
+      });
+    };
+    void fetch();
+  }, [targetDate, dispatch]);
 
   const getReceipts = () => extractTargetDayReceipt(expenses, targetDate);
 

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { endOfMonth, getDate, getDay, getMonth, getWeekOfMonth, getYear, setDate, setMonth } from 'date-fns';
+import { Get } from '../rest/expenses';
 
 export type Receipt = { index: number; storeName: string; cost: number };
 /**
