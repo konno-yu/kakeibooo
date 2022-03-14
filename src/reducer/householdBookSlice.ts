@@ -37,19 +37,7 @@ export const createMonthTemplate = (targetDate: Date): Expenses => {
     const weekIndex = getWeekOfMonth(date);
     const dayIndex = getDay(date);
 
-    /** ほんとうはこっち */
-    // template[weekIndex][dayIndex] = { date, receipts: null };
-    if (dayIndex === 0) {
-      template[weekIndex][dayIndex] = { date, receipts: [] };
-    } else {
-      template[weekIndex][dayIndex] = {
-        date,
-        receipts: [
-          { index: 0, storeName: `サンプル${dayIndex}`, cost: 1000 * dayIndex },
-          { index: 1, storeName: `サンプル${dayIndex}`, cost: 1000 * dayIndex },
-        ],
-      };
-    }
+    template[weekIndex][dayIndex] = { date, receipts: null };
   }
   return template;
 };
@@ -67,6 +55,12 @@ export const householdBookSlice = createSlice({
     selectEdittingDate: (state: HouseholdBookState, action: PayloadAction<number>) => {
       state.targetDate = setDate(state.targetDate, action.payload);
     },
+    setMonthExpenses: (state: HouseholdBookState, action: PayloadAction<Get[]>) => {
+      action.payload.forEach((payload) => {
+        const hoge = new Date(payload.purchase_date);
+        state.expenses[getWeekOfMonth(hoge)][getDay(hoge)].receipts = payload.receipts;
+      });
+    },
     /** 前月を表示する */
     shiftPreviousMonth: (state: HouseholdBookState) => {
       state.targetDate = setMonth(state.targetDate, getMonth(state.targetDate) - 1);
@@ -80,4 +74,4 @@ export const householdBookSlice = createSlice({
   },
 });
 
-export const { selectEdittingDate, shiftPreviousMonth, shiftNextMonth } = householdBookSlice.actions;
+export const { selectEdittingDate, shiftPreviousMonth, shiftNextMonth, setMonthExpenses } = householdBookSlice.actions;

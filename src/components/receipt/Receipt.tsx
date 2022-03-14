@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { getDate, getMonth, getYear } from 'date-fns';
+import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
 import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ import { Typography } from '../common/typography/Typography';
 import { Tag } from './tag/Tag';
 
 export interface ReceiptProps {
-  receipts: ReceiptDef[] | [];
+  receipts: ReceiptDef[] | [] | null;
 }
 
 // TODO カスタムフック切り出し
@@ -29,6 +29,9 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
    * レシートを追加する
    */
   const handleClickAdd = () => {
+    if (dayReceipts === null) {
+      setDayReceipts([{ index: 0, storeName: '', cost: null }]);
+    }
     setDayReceipts([...dayReceipts, { index: dayReceipts.length, storeName: '', cost: null }]);
   };
 
@@ -65,11 +68,14 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
    * @returns 合計金額に￥マークをつけつつカンマ区切りにして返す
    */
   const calcDailySummartion = () => {
-    const totalCost: number =
-      dayReceipts.length === 0
-        ? 0
-        : dayReceipts.map((receipt) => receipt.cost).reduce((pre, current) => pre + current, 0);
-    return `¥${totalCost.toLocaleString()}`;
+    if (dayReceipts) {
+      const totalCost: number =
+        dayReceipts?.length === 0
+          ? 0
+          : dayReceipts?.map((receipt) => receipt.cost).reduce((pre, current) => pre + current, 0);
+      return `¥${totalCost.toLocaleString()}`;
+    }
+    return '¥0';
   };
 
   const handleClickRegist = () => {
@@ -86,7 +92,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
           Kakeibooo
         </Typography>
         <Typography type="subHeader" variant="accent">
-          {`${getYear(targetDate)}/${getMonth(targetDate).toString().padStart(2, '0')}/${getDate(targetDate)
+          {`${getYear(targetDate)}/${(getMonth(targetDate) + 1).toString().padStart(2, '0')}/${getDate(targetDate)
             .toString()
             .padStart(2, '0')}`}
         </Typography>
@@ -94,18 +100,19 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
       <Divider width={2} type="dashed" color="#CFD8DC" />
       <div css={body}>
         <Tags>
-          {dayReceipts.map((tag) => (
-            <Tag
-              index={tag.index}
-              storeName={tag.storeName}
-              cost={tag.cost}
-              onChangeStoreName={handleChangeStoreName}
-              onChangeCost={handleChangeCost}
-              onDelete={handleClickDelete}
-            />
-          ))}
+          {dayReceipts &&
+            dayReceipts.map((tag) => (
+              <Tag
+                index={tag.index}
+                storeName={tag.storeName}
+                cost={tag.cost}
+                onChangeStoreName={handleChangeStoreName}
+                onChangeCost={handleChangeCost}
+                onDelete={handleClickDelete}
+              />
+            ))}
           <Button
-            disabled={dayReceipts.length >= 4}
+            disabled={dayReceipts && dayReceipts.length >= 4}
             onClick={handleClickAdd}
             width="80%"
             variant="outlined"
@@ -126,7 +133,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
       <Divider width={2} type="dashed" color="#CFD8DC" />
       <div css={footer}>
         <Button
-          disabled={dayReceipts.length === 0}
+          disabled={!dayReceipts || dayReceipts.length === 0}
           onClick={handleClickRegist}
           width="80%"
           variant="filled"
@@ -139,7 +146,7 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
           variant="filled"
           color="accent"
           label="Noマネーディとして登録"
-          disabled={dayReceipts.length > 0}
+          disabled={dayReceipts && dayReceipts.length > 0}
         />
       </div>
     </div>
