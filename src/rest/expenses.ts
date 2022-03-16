@@ -1,4 +1,4 @@
-import { endOfMonth, getDate, getMonth, getYear, setDate, startOfMonth } from 'date-fns';
+import { getMonth, getYear } from 'date-fns';
 import { Receipt } from '../reducer/householdBookSlice';
 import { supabase } from '../supabaseClient';
 
