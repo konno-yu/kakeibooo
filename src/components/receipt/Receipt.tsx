@@ -82,46 +82,42 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
     return '¥0';
   };
 
+  /**
+   * 処理が成功した時のスナックバーを表示する
+   */
+  const showSuccessSnackbar = (text: string, subText?: string) => {
+    setSnackbarStatus({ open: true, type: 'success', text, subText });
+    setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+  };
+
+  /**
+   * 処理が失敗した時のスナックバーを表示する
+   */
+  const showErrorSnackbar = (text: string, subText?: string) => {
+    setSnackbarStatus({ open: true, type: 'error', text, subText });
+    setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+  };
+
+  /**
+   * レシートをDBに登録する前の入力バリデーションを行う
+   * @returns バリデーションの成否
+   */
   const validate = () => {
     if (dayReceipts?.filter((receipt) => receipt.cost === null).length > 0) {
-      setSnackbarStatus({
-        open: true,
-        type: 'error',
-        text: '登録に失敗しました',
-        subText: '金額が未入力のレシートがあるようです',
-      });
-      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      showErrorSnackbar('登録に失敗しました', '金額が未入力のレシートがあるようです');
       return false;
     }
     if (dayReceipts?.filter((receipt) => receipt.storeName === '').length > 0) {
-      setSnackbarStatus({
-        open: true,
-        type: 'error',
-        text: '登録に失敗しました',
-        subText: '店舗名が未入力のレシートがあるようです',
-      });
-      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      showErrorSnackbar('登録に失敗しました', '店舗名が未入力のレシートがあるようです');
       return false;
     }
     if (dayReceipts.filter((receipt) => Number.isNaN(receipt.cost)).length > 0) {
-      setSnackbarStatus({
-        open: true,
-        type: 'error',
-        text: '登録に失敗しました',
-        subText: '金額が数値ではないレシートがあるようです',
-      });
-      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      showErrorSnackbar('登録に失敗しました', '金額が数値ではないレシートがあるようです');
       return false;
     }
     const storeNames = dayReceipts?.map((receipt) => receipt.storeName);
     if ([...new Set(storeNames)].length !== storeNames.length) {
-      setSnackbarStatus({
-        open: true,
-        type: 'error',
-        text: '登録に失敗しました',
-        subText: '同じ店舗のレシートが複数あるようです',
-      });
-      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      showErrorSnackbar('登録に失敗しました', '同じ店舗のレシートが複数あるようです');
       return false;
     }
     return true;
@@ -141,14 +137,12 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
       await expenseRest.post(targetDate, dayReceipts).then((res) => {
         dispatch(setDailyExpense(res.data[0]));
       });
-      setSnackbarStatus({ open: true, type: 'success', text: '登録が完了しました' });
-      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      showSuccessSnackbar('登録が完了しました');
     } else {
       await expenseRest.put(targetDate, dayReceipts).then((res) => {
         dispatch(setDailyExpense(res.data[0]));
       });
-      setSnackbarStatus({ open: true, type: 'success', text: '登録が完了しました' });
-      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      showSuccessSnackbar('登録が完了しました');
     }
   };
 
@@ -162,14 +156,12 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
       await expenseRest.post(targetDate, []).then((res) => {
         dispatch(setDailyExpense(res.data[0]));
       });
-      setSnackbarStatus({ open: true, type: 'success', text: '登録が完了しました' });
-      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      showSuccessSnackbar('登録が完了しました');
     } else {
       await expenseRest.put(targetDate, []).then((res) => {
         dispatch(setDailyExpense(res.data[0]));
       });
-      setSnackbarStatus({ open: true, type: 'success', text: '登録が完了しました' });
-      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      showSuccessSnackbar('登録が完了しました');
     }
   };
 
