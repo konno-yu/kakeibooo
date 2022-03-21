@@ -1,6 +1,12 @@
 import { getDate, isEqual } from 'date-fns';
+import { useEffect } from 'react';
 import styled from 'styled-components';
-import { selectEdittingDate, shiftPreviousMonth, shiftNextMonth } from '../../reducer/householdBookSlice';
+import {
+  selectEdittingDate,
+  shiftPreviousMonth,
+  shiftNextMonth,
+  fetchMonthlyExpenses,
+} from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { MonthSelector } from '../common/month_selector/MonthSelector';
 import { DayPanel } from './day_panel/DayPanel';
@@ -14,6 +20,16 @@ interface Props {
 }
 
 export const Calendar: React.FC<Props> = ({ datas, today }: Props) => {
+  const dispatch = useAppDispatch();
+  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
+
+  useEffect(() => {
+    const fetch = async () => {
+      await dispatch(fetchMonthlyExpenses());
+    };
+    void fetch();
+  }, [targetDate, dispatch]);
+
   const getPanelType = (cost: number) => {
     if (cost === 0) return 'zero';
     if (cost <= 1000) return 'low';
@@ -27,8 +43,6 @@ export const Calendar: React.FC<Props> = ({ datas, today }: Props) => {
     receipts.forEach((r) => (totalCost += r.cost));
     return totalCost;
   };
-  const dispatch = useAppDispatch();
-  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
 
   const handleOnClick = (dateIndex: number) => {
     dispatch(selectEdittingDate(dateIndex));
