@@ -9,7 +9,7 @@ export interface Get {
   created_at: Date;
 }
 
-interface Post {
+export interface Post {
   purchase_date: Date;
   receipts: Receipt[];
 }

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { endOfMonth, getDate, getDay, getMonth, getWeekOfMonth, getYear, setDate, setMonth } from 'date-fns';
-import { Get } from '../rest/expenses';
+import { Get, Post } from '../rest/expenses';
 
 export type Receipt = { index: number; storeName: string; cost: number };
 /**
@@ -62,6 +62,10 @@ export const householdBookSlice = createSlice({
         state.expenses[getWeekOfMonth(hoge)][getDay(hoge)].receipts = payload.receipts;
       });
     },
+    setDailyExpense: (state: HouseholdBookState, action: PayloadAction<Post>) => {
+      const fuga = new Date(action.payload.purchase_date);
+      state.expenses[getWeekOfMonth(fuga)][getDay(fuga)].receipts = action.payload.receipts;
+    },
     /** 前月を表示する */
     shiftPreviousMonth: (state: HouseholdBookState) => {
       state.targetDate = setMonth(state.targetDate, getMonth(state.targetDate) - 1);
@@ -75,4 +79,5 @@ export const householdBookSlice = createSlice({
   },
 });
 
-export const { selectEdittingDate, shiftPreviousMonth, shiftNextMonth, setMonthExpenses } = householdBookSlice.actions;
+export const { selectEdittingDate, shiftPreviousMonth, shiftNextMonth, setMonthExpenses, setDailyExpense } =
+  householdBookSlice.actions;
