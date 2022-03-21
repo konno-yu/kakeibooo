@@ -17,7 +17,7 @@ export const extractTargetDayReceipt = (expenses: Expenses, targetDate: Date) =>
   return dailyReceipt;
 };
 
-export const HouseholdBookView: React.FC = () => {
+export const HouseholdBookView = () => {
   const expenses = useAppSelector((state) => state.householdBook.expenses);
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
   const today = new Date(new Date().setHours(9, 0, 0, 0));
@@ -35,7 +35,7 @@ export const HouseholdBookView: React.FC = () => {
   const getReceipts = () => extractTargetDayReceipt(expenses, targetDate);
 
   return (
-    <div css={householdBookContainer}>
+    <div id="hoge" css={householdBookContainer}>
       <div css={calendarContainer}>
         <Calendar today={today} datas={expenses} />
       </div>
