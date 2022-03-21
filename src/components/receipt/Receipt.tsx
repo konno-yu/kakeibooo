@@ -3,8 +3,7 @@ import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
 import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
 import styled from 'styled-components';
-import { Receipt as ReceiptDef, setDailyExpense } from '../../reducer/householdBookSlice';
-import * as expenseRest from '../../rest/expenses';
+import { postDailyExpenses, Receipt as ReceiptDef, updateDailyExpenses } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { extractTargetDayReceipt } from '../../view/HouseholdBookView';
 import { Button } from '../common/button/Button';
@@ -134,14 +133,10 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
     }
     const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
     if (isPost) {
-      await expenseRest.post(targetDate, dayReceipts).then((res) => {
-        dispatch(setDailyExpense(res.data[0]));
-      });
+      await dispatch(postDailyExpenses(dayReceipts));
       showSuccessSnackbar('登録が完了しました');
     } else {
-      await expenseRest.put(targetDate, dayReceipts).then((res) => {
-        dispatch(setDailyExpense(res.data[0]));
-      });
+      await dispatch(updateDailyExpenses(dayReceipts));
       showSuccessSnackbar('登録が完了しました');
     }
   };
@@ -153,14 +148,10 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
   const handleClickNoMoney = async () => {
     const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
     if (isPost) {
-      await expenseRest.post(targetDate, []).then((res) => {
-        dispatch(setDailyExpense(res.data[0]));
-      });
+      await dispatch(postDailyExpenses([]));
       showSuccessSnackbar('登録が完了しました');
     } else {
-      await expenseRest.put(targetDate, []).then((res) => {
-        dispatch(setDailyExpense(res.data[0]));
-      });
+      await dispatch(updateDailyExpenses([]));
       showSuccessSnackbar('登録が完了しました');
     }
   };
