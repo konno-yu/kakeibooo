@@ -1,7 +1,12 @@
 import { css } from '@emotion/react';
+import ReactDOM from 'react-dom';
 import { RiEmotionSadFill, RiEmotionFill } from 'react-icons/ri';
 
-interface SnackbarProps {
+export interface SnackbarProps {
+  /**
+   * `Snackbar`の表示状態を指定します
+   */
+  open: boolean;
   /**
    * `Snackbar`の種別を指定します
    */
@@ -21,25 +26,27 @@ const COLOR_SET: { [key in 'success' | 'error']: string } = {
   error: '#EF9A9A',
 };
 
-export const Snackbar = ({ type, text, subText }: SnackbarProps) => (
-  <div css={snackbarBase(COLOR_SET[type])}>
-    {type === 'error' && <RiEmotionSadFill color="#FFFFFF" size={24} />}
-    {type === 'success' && <RiEmotionFill color="#FFFFFF" size={24} />}
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-      `}
-    >
-      <span css={textStyle}>{text}</span>
-      <span css={subTextStyle}>{subText}</span>
-    </div>
-  </div>
-);
+export const Snackbar = ({ open, type, text, subText }: SnackbarProps) =>
+  ReactDOM.createPortal(
+    <div css={open ? snackbarBase(COLOR_SET[type]) : none}>
+      {type === 'error' && <RiEmotionSadFill color="#FFFFFF" size={24} />}
+      {type === 'success' && <RiEmotionFill color="#FFFFFF" size={24} />}
+      <div
+        css={css`
+          display: flex;
+          flex-direction: column;
+        `}
+      >
+        <span css={textStyle}>{text}</span>
+        <span css={subTextStyle}>{subText}</span>
+      </div>
+    </div>,
+    document.getElementById('root')
+  );
 
 const snackbarBase = (color: string) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  width: 250px;
+  width: 280px;
   height: 45px;
   background: ${color};
   padding: 0 8px;
@@ -48,6 +55,24 @@ const snackbarBase = (color: string) => css`
   align-items: center;
   flex-direction: row;
   gap: 8px;
+  position: absolute;
+  box-shadow: 3px 3px 3px #9e9e9e;
+  top: 8px;
+  right: 16px;
+  animation: fadein 1s forwards;
+  @keyframes fadein {
+    0% {
+      transform: translateX(300px);
+    }
+
+    100% {
+      transform: translateX(0px);
+    }
+  }
+`;
+
+const none = css`
+  display: none;
 `;
 
 const textStyle = css`
