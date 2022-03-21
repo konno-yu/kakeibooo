@@ -3,12 +3,13 @@ import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
 import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
 import styled from 'styled-components';
-import { Receipt as ReceiptDef } from '../../reducer/householdBookSlice';
+import { Receipt as ReceiptDef, setDailyExpense } from '../../reducer/householdBookSlice';
 import * as expenseRest from '../../rest/expenses';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { extractTargetDayReceipt } from '../../view/HouseholdBookView';
 import { Button } from '../common/button/Button';
 import { Divider } from '../common/divider/Divider';
+import { Snackbar, SnackbarProps } from '../common/snackbar/Snackbar';
 import { Typography } from '../common/typography/Typography';
 import { Tag } from './tag/Tag';
 
@@ -17,10 +18,12 @@ export interface ReceiptProps {
 }
 
 // TODO カスタムフック切り出し
-export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
+export const Receipt = ({ receipts }: ReceiptProps) => {
   const [dayReceipts, setDayReceipts] = React.useState<ReceiptDef[] | [] | null>(receipts);
   const expenses = useAppSelector((state) => state.householdBook.expenses);
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
+  const [snackbarStatus, setSnackbarStatus] = React.useState<SnackbarProps>({ open: false, type: 'success', text: '' });
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setDayReceipts(extractTargetDayReceipt(expenses, targetDate));
@@ -79,17 +82,73 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
     return '¥0';
   };
 
+  const validate = () => {
+    if (dayReceipts?.filter((receipt) => receipt.cost === null).length > 0) {
+      setSnackbarStatus({
+        open: true,
+        type: 'error',
+        text: '登録に失敗しました',
+        subText: '金額が未入力のレシートがあるようです',
+      });
+      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      return false;
+    }
+    if (dayReceipts?.filter((receipt) => receipt.storeName === '').length > 0) {
+      setSnackbarStatus({
+        open: true,
+        type: 'error',
+        text: '登録に失敗しました',
+        subText: '店舗名が未入力のレシートがあるようです',
+      });
+      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      return false;
+    }
+    if (dayReceipts.filter((receipt) => Number.isNaN(receipt.cost)).length > 0) {
+      setSnackbarStatus({
+        open: true,
+        type: 'error',
+        text: '登録に失敗しました',
+        subText: '金額が数値ではないレシートがあるようです',
+      });
+      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      return false;
+    }
+    const storeNames = dayReceipts?.map((receipt) => receipt.storeName);
+    if ([...new Set(storeNames)].length !== storeNames.length) {
+      setSnackbarStatus({
+        open: true,
+        type: 'error',
+        text: '登録に失敗しました',
+        subText: '同じ店舗のレシートが複数あるようです',
+      });
+      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+      return false;
+    }
+    return true;
+  };
+
   /**
    * [食費を登録]ボタンが押された場合の動作 <br/>
    * 編集日のデータが登録済みかに応じてPOST/PUTを投げ分ける
    *
    */
   const handleClickRegist = async () => {
+    if (!validate()) {
+      return;
+    }
     const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
     if (isPost) {
-      await expenseRest.post(targetDate, dayReceipts);
+      await expenseRest.post(targetDate, dayReceipts).then((res) => {
+        dispatch(setDailyExpense(res.data[0]));
+      });
+      setSnackbarStatus({ open: true, type: 'success', text: '登録が完了しました' });
+      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
     } else {
-      await expenseRest.put(targetDate, dayReceipts);
+      await expenseRest.put(targetDate, dayReceipts).then((res) => {
+        dispatch(setDailyExpense(res.data[0]));
+      });
+      setSnackbarStatus({ open: true, type: 'success', text: '登録が完了しました' });
+      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
     }
   };
 
@@ -100,9 +159,17 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
   const handleClickNoMoney = async () => {
     const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
     if (isPost) {
-      await expenseRest.post(targetDate, []);
+      await expenseRest.post(targetDate, []).then((res) => {
+        dispatch(setDailyExpense(res.data[0]));
+      });
+      setSnackbarStatus({ open: true, type: 'success', text: '登録が完了しました' });
+      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
     } else {
-      await expenseRest.put(targetDate, []);
+      await expenseRest.put(targetDate, []).then((res) => {
+        dispatch(setDailyExpense(res.data[0]));
+      });
+      setSnackbarStatus({ open: true, type: 'success', text: '登録が完了しました' });
+      setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
     }
   };
 
@@ -170,6 +237,12 @@ export const Receipt: React.FC<ReceiptProps> = ({ receipts }) => {
           disabled={dayReceipts && dayReceipts.length > 0}
         />
       </div>
+      <Snackbar
+        open={snackbarStatus.open}
+        type={snackbarStatus.type}
+        text={snackbarStatus.text}
+        subText={snackbarStatus.subText}
+      />
     </div>
   );
 };
