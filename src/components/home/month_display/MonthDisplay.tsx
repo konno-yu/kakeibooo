@@ -31,22 +31,6 @@ export const MonthDisplay: React.FC<Props> = ({ targetDate, datas }: Props) => (
           unit={{ type: 'suffix', name: '日' }}
         />
       </Card>
-      <Card title="今月の食費" icon={<FaCalendar color="#FFFFFF" />} color="#546E7A">
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography type="header" variant="normal">
-            ¥1,200
-          </Typography>
-          <Typography type="subHeader" variant="helper">
-            （1日あたり ¥900）
-          </Typography>
-        </div>
-        <Indicator
-          range={[0, 15]}
-          value={{ '#FF5252': 2, '#546E7A': 2, '#009688': 5 }}
-          showLabel
-          unit={{ type: 'suffix', name: '日' }}
-        />
-      </Card>
     </div>
   </Container>
 );
