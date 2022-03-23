@@ -1,5 +1,5 @@
+import { css } from '@emotion/react';
 import { ReactNode } from 'react';
-import styled from 'styled-components';
 
 export interface AProps {
   selected?: boolean;
@@ -17,14 +17,14 @@ export const MenuItem = ({ selected = false, icon, id, children, onChange }: APr
   };
 
   return (
-    <StyledMenuItem id={id} selected={selected} onClick={handleOnChange}>
+    <button type="button" css={menuItem(selected)} id={id} onClick={handleOnChange}>
       {icon}
       {children}
-    </StyledMenuItem>
+    </button>
   );
 };
 
-const StyledMenuItem = styled.button<AProps>`
+const menuItem = (selected: boolean) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   height: 40px;
   width: 160px;
@@ -37,12 +37,25 @@ const StyledMenuItem = styled.button<AProps>`
   border-radius: 4px;
   border: none;
   cursor: pointer;
-  background: ${(props) => (props.selected ? '#80CBC4' : 'none')};
-  color: ${(props) => (props.selected ? '#FFFFFF' : '#546E7A')};
-  &:hover {
-    background: ${(props) => (props.selected ? '#b2dfdb' : '#EEEEEE')};
-  }
-  &:active {
-    background: ${(props) => (props.selected ? '#80CBC4' : 'none')};
-  }
+  ${selected
+    ? css`
+        background: #80cbc4;
+        color: #ffffff;
+        &:hover {
+          background: #b2dfdb;
+        }
+        &:active {
+          background: #80cbc4;
+        }
+      `
+    : css`
+        background: none;
+        color: #546e7a;
+        &:hover {
+          background: #eeeeee;
+        }
+        &:active {
+          background: none;
+        }
+      `}
 `;

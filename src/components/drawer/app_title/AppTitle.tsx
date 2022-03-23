@@ -1,14 +1,14 @@
-import styled from 'styled-components';
+import { css } from '@emotion/react';
 import Logo from '../../../images/icon.svg';
 
 export const AppTitle = () => (
-  <TitleContainer>
+  <div css={container}>
     <img src={Logo} width={30} alt="logo" />
-    <Title>Kakeibooo</Title>
-  </TitleContainer>
+    <div css={title}>Kakeibooo</div>
+  </div>
 );
 
-const TitleContainer = styled.div`
+const container = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   display: flex;
   justify-content: center;
@@ -16,7 +16,7 @@ const TitleContainer = styled.div`
   gap: 8px;
 `;
 
-const Title = styled.span`
+const title = css`
   color: #546e7a;
   font-weight: 900;
   font-size: 16px;

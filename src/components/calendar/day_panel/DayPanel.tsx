@@ -4,7 +4,7 @@ import ImgPath from '../../../images/medal.svg';
 
 interface Props {
   dayIndex: number | null;
-  children?: number;
+  children?: number | null;
   isToday?: boolean;
   isSelected?: boolean;
   type: 'zero' | 'low' | 'normal' | 'high';
@@ -27,7 +27,7 @@ export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = fal
         {isToday && !isSelected && <TodayLabel>今日</TodayLabel>}
         {isSelected && <FaUserEdit size={24} />}
       </DayLabel>
-      <DayValueText>¥{children.toLocaleString()}</DayValueText>
+      <DayValueText>{children === null ? '' : `¥${children.toLocaleString()}`}</DayValueText>
     </>
   );
 

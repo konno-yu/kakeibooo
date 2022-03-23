@@ -1,9 +1,7 @@
+import { css } from '@emotion/react';
 import { AiFillShopping } from 'react-icons/ai';
 import { FaCircle, FaTrashAlt } from 'react-icons/fa';
 import { HiCurrencyYen } from 'react-icons/hi';
-import styled from 'styled-components';
-import { inputCost, inputStoreName, deleteTag } from '../../../reducer/householdBookSlice';
-import { useAppDispatch } from '../../../store';
 import { IconButton } from '../../common/icon_button/IconButton';
 import { Input } from '../../common/input/Input';
 
@@ -11,29 +9,30 @@ interface Props {
   index: number;
   storeName: string;
   cost: number;
+  onChangeStoreName: (index: number, storeName: string) => void;
+  onChangeCost: (index: number, cost: number) => void;
+  onDelete: (index: number) => void;
 }
 
-export const Tag = ({ index, storeName, cost }: Props) => {
-  const dispatch = useAppDispatch();
-
+export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, onDelete }: Props) => {
   const handleStoreNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(inputStoreName({ index, storeName: event.target.value }));
+    onChangeStoreName(index, event.target.value);
   };
 
   const handleCostChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(inputCost({ index, cost: +event.target.value }));
+    onChangeCost(index, +event.target.value);
   };
 
   const handleDelete = () => {
-    dispatch(deleteTag(index));
+    onDelete(index);
   };
 
   return (
-    <Container>
-      <LabelPart>
+    <div css={container}>
+      <div css={label}>
         <FaCircle color="#F5F5F5" size={12} />
-      </LabelPart>
-      <InputPart>
+      </div>
+      <div css={input}>
         <Input
           onChange={handleStoreNameChange}
           width={150}
@@ -48,17 +47,17 @@ export const Tag = ({ index, storeName, cost }: Props) => {
           placeholder="使った金額"
           icon={<HiCurrencyYen size={16} color="#9E9E9E" />}
         />
-      </InputPart>
-      <DeletePart>
+      </div>
+      <div css={dustbox}>
         <IconButton onClick={handleDelete}>
           <FaTrashAlt size={20} color="#546E7A" />
         </IconButton>
-      </DeletePart>
-    </Container>
+      </div>
+    </div>
   );
 };
 
-const Container = styled.div`
+const container = css`
   width: 100%;
   height: 18%;
   background: #f5f5f5;
@@ -67,7 +66,7 @@ const Container = styled.div`
   gap: 4px;
 `;
 
-const LabelPart = styled.div`
+const label = css`
   width: 10%;
   background: #4db6ac;
   display: flex;
@@ -75,7 +74,7 @@ const LabelPart = styled.div`
   align-items: center;
 `;
 
-const InputPart = styled.div`
+const input = css`
   width: 70%;
   display: flex;
   flex-direction: column;
@@ -85,9 +84,9 @@ const InputPart = styled.div`
   gap: 4px;
 `;
 
-const DeletePart = styled.div`
+const dustbox = css`
   width: 20%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 `;
