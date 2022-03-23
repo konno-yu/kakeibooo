@@ -24,6 +24,6 @@ export const ErrorWithDetails: ComponentStoryObj<typeof Snackbar> = {
     open: true,
     type: 'error',
     text: '登録に失敗しました',
-    subText: '食費は入力されていますか？',
+    subText: '金額が未入力のレシートがあるようです',
   },
 };
