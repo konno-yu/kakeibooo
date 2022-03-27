@@ -7,15 +7,17 @@ import { Drawer } from './components/drawer/Drawer';
 import { store } from './store';
 // import { HomeView } from './view/HomeView';
 import { HouseholdBookView } from './view/HouseholdBookView';
+import { LoginView } from './view/LoginView';
 
 export const App: React.FC = () => (
   <Provider store={store}>
-    <SC.Drawer>
+    <LoginView />
+    {/* <SC.Drawer>
       <Drawer />
     </SC.Drawer>
     <SC.Content>
       <HouseholdBookView />
-    </SC.Content>
+    </SC.Content> */}
   </Provider>
 );
 
