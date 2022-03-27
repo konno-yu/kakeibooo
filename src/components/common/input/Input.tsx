@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 interface Props {
   width?: number;
   placeholder?: string;
+  type?: string;
   maxLength?: number;
   icon?: JSX.Element;
   disabled?: boolean;
@@ -13,6 +14,7 @@ interface Props {
 export const Input = ({
   width = 200,
   placeholder = '文字を入力してください',
+  type = 'text',
   maxLength = 100,
   icon,
   disabled,
@@ -26,7 +28,7 @@ export const Input = ({
     <InputContainer>
       {icon}
       <StyledInput
-        type="text"
+        type={type}
         placeholder={placeholder}
         maxLength={maxLength}
         partWidth={width}
