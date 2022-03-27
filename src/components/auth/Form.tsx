@@ -25,8 +25,7 @@ export const Form = ({ error }: FormProps) => {
     setPassword(event.target.value);
   };
   const handleLogin = async () => {
-    await dispatch(signIn({ email: address, password })).then((res) => {
-    });
+    await dispatch(signIn({ email: address, password }));
   };
 
   return (
