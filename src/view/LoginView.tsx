@@ -1,12 +1,15 @@
 import { css } from '@emotion/react';
 import { Form } from '../components/auth/Form';
+import { useAppSelector } from '../store';
 
-export const LoginView = () => (
-  <div css={loginContainer}>
-    <Form />
-  </div>
-);
-
+export const LoginView = () => {
+  const error = useAppSelector((state) => state.auth.error);
+  return (
+    <div css={loginContainer}>
+      <Form error={error} />
+    </div>
+  );
+};
 const loginContainer = css`
   height: calc(100vh - 24px);
   width: calc(100% - 24px);
