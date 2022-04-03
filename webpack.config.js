@@ -17,7 +17,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: ['babel-loader', 'ts-loader'],
-        exclude: /node_modules/,
+        // exclude: /node_modules/,
       },
       {
         test: /\.s?css$/,
@@ -36,6 +36,7 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist',
+    historyApiFallback: true,
   },
   output: {
     filename: 'bundle.js',
