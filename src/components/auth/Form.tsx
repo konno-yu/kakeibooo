@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { ChangeEvent, useState } from 'react';
 import { HiMail, HiKey } from 'react-icons/hi';
 import { ApiError } from '@supabase/supabase-js';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../common/button/Button';
 import { Input } from '../common/input/Input';
 import ImagePath from '../../images/white_icon.svg';
@@ -16,6 +17,7 @@ export const Form = ({ error }: FormProps) => {
   const dispatch = useAppDispatch();
   const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleOnChangeAddress = (event: ChangeEvent<HTMLInputElement>) => {
     setAddress(event.target.value);
@@ -25,7 +27,11 @@ export const Form = ({ error }: FormProps) => {
     setPassword(event.target.value);
   };
   const handleLogin = async () => {
-    await dispatch(signIn({ email: address, password }));
+    await dispatch(signIn({ email: address, password })).then((res) => {
+      if (res.payload) {
+        navigate('/householdbook');
+      }
+    });
   };
 
   return (
