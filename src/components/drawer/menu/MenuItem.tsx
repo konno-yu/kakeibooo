@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
 export interface AProps {
   selected?: boolean;
@@ -17,12 +18,18 @@ export const MenuItem = ({ selected = false, icon, id, children, onChange }: APr
   };
 
   return (
-    <button type="button" css={menuItem(selected)} id={id} onClick={handleOnChange}>
-      {icon}
-      {children}
-    </button>
+    <Link css={link} to={`/${id}`}>
+      <button type="button" css={menuItem(selected)} id={id} onClick={handleOnChange}>
+        {icon}
+        {children}
+      </button>
+    </Link>
   );
 };
+
+const link = css`
+  text-decoration: none;
+`;
 
 const menuItem = (selected: boolean) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
