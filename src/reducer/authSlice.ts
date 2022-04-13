@@ -39,6 +39,16 @@ export const authSlice = createSlice({
         ...state,
         session: null,
         error: action.payload,
+      }))
+      .addCase(signOut.fulfilled, (state, action) => ({
+        ...state,
+        session: action.payload,
+        error: null,
+      }))
+      .addCase(signOut.rejected, (state, action) => ({
+        ...state,
+        session: null,
+        error: action.payload,
       }));
   },
 });
@@ -53,4 +63,16 @@ export const signIn = createAsyncThunk<Session | null, { email: string; password
     return session;
   }
 );
+
+export const signOut = createAsyncThunk<Session | null, null, { rejectValue: ApiError }>(
+  'auth/signOut',
+  async (_, thunkAPI) => {
+    const { error } = await authRest.signOut();
+    if (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+    return null;
+  }
+);
+
 export const { setSession } = authSlice.actions;

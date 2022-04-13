@@ -11,5 +11,9 @@ export const useAuth = () => {
     [dispatch]
   );
 
+  const signOut = useCallback(async () => {
+    await dispatch(signOut());
+  }, [dispatch]);
+
   return { signIn };
 };
