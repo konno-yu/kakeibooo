@@ -4,7 +4,7 @@ import { useAppSelector } from '../store';
 export const PrivateRoute = ({ children }: RouteProps) => {
   const session = useAppSelector((state) => state.auth.session);
   if (session === null) {
-    return <Navigate to="/" />;
+    return <Navigate to="/signin" />;
   }
   return children as JSX.Element;
 };

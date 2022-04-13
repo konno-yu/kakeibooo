@@ -29,7 +29,7 @@ export const Form = ({ error }: FormProps) => {
   const handleLogin = async () => {
     await dispatch(signIn({ email: address, password })).then((res) => {
       if (res.payload) {
-        navigate('/householdbook');
+        navigate('/home');
       }
     });
   };
