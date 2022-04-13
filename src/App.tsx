@@ -8,8 +8,12 @@ import { RootRoute } from './routes/RootRoute';
 // eslint-disable-next-line import/no-unresolved
 import { AuthListener } from './services/authListener';
 import { store } from './store';
+import { FridgeView } from './view/FridgeView';
+import { HomeView } from './view/HomeView';
 import { HouseholdBookView } from './view/HouseholdBookView';
 import { LoginView } from './view/LoginView';
+import { SettingsView } from './view/SettingsView';
+import { UtilityCostView } from './view/UtilityCostView';
 
 export const App: React.FC = () => (
   <Provider store={store}>
@@ -19,10 +23,42 @@ export const App: React.FC = () => (
           <Route path="/" element={<RootRoute />} />
           <Route path="/signin" element={<LoginView />} />
           <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <HomeView />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/householdbook"
             element={
               <PrivateRoute>
                 <HouseholdBookView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/utility-cost"
+            element={
+              <PrivateRoute>
+                <UtilityCostView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/fridge"
+            element={
+              <PrivateRoute>
+                <FridgeView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <SettingsView />
               </PrivateRoute>
             }
           />
@@ -41,18 +77,21 @@ const NotFound = () => (
   </div>
 );
 
-const UnderConstruction = () => (
+export const UnderConstruction = () => (
   <div css={notFound}>
     <RiEmotionSadLine color="#009688" size={48} />
-    <h3>鋭意製作中です</h3>
+    <h3>準備中</h3>
   </div>
 );
 
 const notFound = css`
-  width: 100%;
-  height: 100vh;
+  background: #eceff1;
+  height: calc(100vh - 24px);
+  width: calc(85% - 24px);
+  padding: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 8px;
 `;
