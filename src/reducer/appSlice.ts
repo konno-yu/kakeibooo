@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Tabs = 'home' | 'householdbook' | 'utility-cost' | 'fridge' | 'settings';
+export type Tabs = 'home' | 'householdbook' | 'utility-cost' | 'fridge' | 'settings';
 interface AppSlice {
   selectedTab: Tabs;
 }
 
 const initialState: AppSlice = {
-  selectedTab: 'home',
+  selectedTab: (sessionStorage.getItem('selectedTab') as Tabs) || 'home',
 };
 
 const appSlice = createSlice({

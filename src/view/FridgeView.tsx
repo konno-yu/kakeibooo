@@ -3,19 +3,14 @@ import { UnderConstruction } from '../App';
 import { Drawer } from '../components/drawer/Drawer';
 import { useAppDispatch, useAppSelector } from '../store';
 
-export const FridgeView = () => {
-  // TODO 多重
-  const dispatch = useAppDispatch();
-  const selectedTab = useAppSelector((state) => state.app.selectedTab);
-  return (
-    <>
-      <div css={drawer}>
-        <Drawer />
-      </div>
-      <UnderConstruction />
-    </>
-  );
-};
+export const FridgeView = () => (
+  <>
+    <div css={drawer}>
+      <Drawer />
+    </div>
+    <UnderConstruction />
+  </>
+);
 
 // TODO 多重
 const drawer = css`

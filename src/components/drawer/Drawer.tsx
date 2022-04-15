@@ -12,14 +12,18 @@ import { AppTitle } from './app_title/AppTitle';
 import { Menu } from './menu/Menu';
 import { MenuItem } from './menu/MenuItem';
 import { signOut } from '../../reducer/authSlice';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { appAction, Tabs } from '../../reducer/appSlice';
 
 export const Drawer = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // TODO ここの値はReduxで管理する
-  const [selected, setSelected] = useState('home');
-  const handleChange = (nowSelected: string) => setSelected(nowSelected);
+  const selectedTab = useAppSelector((state) => state.app.selectedTab);
+  const handleChange = (nowSelected: string) => {
+    dispatch(appAction.selectTab(nowSelected as Tabs));
+    sessionStorage.setItem('selectedTab', nowSelected);
+  };
 
   const logout = async () => {
     await dispatch(signOut()).then((_) => {
@@ -39,7 +43,7 @@ export const Drawer = () => {
       >
         <AppTitle />
         <Account username="かけい坊" userId="kakeiboy" />
-        <Menu value={selected} onChange={handleChange}>
+        <Menu value={selectedTab} onChange={handleChange}>
           <MenuItem id="home" icon={<TiHome />}>
             ホーム
           </MenuItem>

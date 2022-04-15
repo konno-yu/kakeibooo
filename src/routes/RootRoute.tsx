@@ -6,5 +6,5 @@ export const RootRoute = () => {
   if (session === null) {
     return <Navigate to="signin" />;
   }
-  return <Navigate to="home" />;
+  return <Navigate to={sessionStorage.getItem('selectedTab')} />;
 };
