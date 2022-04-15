@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
 import { AiFillAccountBook } from 'react-icons/ai';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
@@ -26,7 +25,7 @@ export const Drawer = () => {
   };
 
   const logout = async () => {
-    await dispatch(signOut()).then((_) => {
+    await dispatch(signOut()).then(() => {
       navigate('signin');
     });
   };
