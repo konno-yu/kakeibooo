@@ -1,12 +1,11 @@
 import { css } from '@emotion/react';
 import * as React from 'react';
 import { RiEmotionSadLine } from 'react-icons/ri';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { RootRoute } from './routes/RootRoute';
-// eslint-disable-next-line import/no-unresolved
-import { AuthListener } from './services/authListener';
 import { store } from './store';
 import { FridgeView } from './view/FridgeView';
 import { HomeView } from './view/HomeView';
@@ -14,6 +13,26 @@ import { HouseholdBookView } from './view/HouseholdBookView';
 import { LoginView } from './view/LoginView';
 import { SettingsView } from './view/SettingsView';
 import { UtilityCostView } from './view/UtilityCostView';
+import { setSession } from './reducer/authSlice';
+import { supabase } from './supabaseClient';
+
+type Props = {
+  children: React.ReactNode;
+};
+
+export const AuthListener: React.VFC<Props> = ({ children }: Props) => {
+  const dispatch = useDispatch();
+  const session = supabase.auth.session();
+
+  useEffect(() => {
+    if (session) {
+      dispatch(setSession({ session }));
+    }
+  }, [dispatch, session]);
+
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <>{children}</>;
+};
 
 export const App: React.FC = () => (
   <Provider store={store}>
