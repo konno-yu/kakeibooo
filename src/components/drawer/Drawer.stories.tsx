@@ -1,8 +1,5 @@
 import { css } from '@emotion/react';
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { store } from '../../store';
 import { Drawer } from './Drawer';
 
 export default { component: Drawer } as ComponentMeta<typeof Drawer>;

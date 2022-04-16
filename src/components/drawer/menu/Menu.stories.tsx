@@ -1,8 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { GiPig, GiCow, GiChicken } from 'react-icons/gi';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { store } from '../../../store';
 import { Menu } from './Menu';
 import { MenuItem } from './MenuItem';
 

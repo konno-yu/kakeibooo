@@ -1,6 +1,4 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { Provider } from 'react-redux';
-import { store } from '../../../store';
 import { Tag } from './Tag';
 
 export default { component: Tag } as ComponentMeta<typeof Tag>;
