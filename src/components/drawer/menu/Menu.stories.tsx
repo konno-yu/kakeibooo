@@ -1,5 +1,8 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { GiPig, GiCow, GiChicken } from 'react-icons/gi';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { store } from '../../../store';
 import { Menu } from './Menu';
 import { MenuItem } from './MenuItem';
 
@@ -14,6 +17,13 @@ export const Pure: ComponentStoryObj<typeof Menu> = {
     ],
     value: 'one',
   },
+  decorators: [
+    (story) => (
+      <Provider store={store}>
+        <BrowserRouter>{story()}</BrowserRouter>
+      </Provider>
+    ),
+  ],
 };
 
 export const WithIcon: ComponentStoryObj<typeof Menu> = {
@@ -31,4 +41,11 @@ export const WithIcon: ComponentStoryObj<typeof Menu> = {
     ],
     value: 'chick',
   },
+  decorators: [
+    (story) => (
+      <Provider store={store}>
+        <BrowserRouter>{story()}</BrowserRouter>
+      </Provider>
+    ),
+  ],
 };

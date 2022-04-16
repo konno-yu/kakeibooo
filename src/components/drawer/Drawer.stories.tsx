@@ -1,12 +1,23 @@
 import { css } from '@emotion/react';
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { store } from '../../store';
 import { Drawer } from './Drawer';
 
 export default { component: Drawer } as ComponentMeta<typeof Drawer>;
 
 export const Pure: ComponentStoryObj<typeof Drawer> = {
   args: {},
-  decorators: [(story) => <div css={decorator}>{story()}</div>],
+  decorators: [
+    (story) => (
+      <Provider store={store}>
+        <BrowserRouter>
+          <div css={decorator}>{story()}</div>
+        </BrowserRouter>
+      </Provider>
+    ),
+  ],
 };
 
 const decorator = css`

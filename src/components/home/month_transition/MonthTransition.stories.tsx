@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { dammyDataForStory } from '../month_display/MonthDisplay.stories';
+import { dammyDataForStory } from '../month_display/DummyDataForStory';
 import { MonthTransition } from './MonthTransition';
 
 export default { component: MonthTransition } as ComponentMeta<typeof MonthTransition>;
