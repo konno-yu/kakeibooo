@@ -1,39 +1,69 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
 import { AiFillAccountBook } from 'react-icons/ai';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { RiFridgeFill } from 'react-icons/ri';
 import { TiHome } from 'react-icons/ti';
+import { GoSignOut } from 'react-icons/go';
+import { useNavigate } from 'react-router-dom';
 import { Account } from './account/Account';
 import { AppTitle } from './app_title/AppTitle';
 import { Menu } from './menu/Menu';
 import { MenuItem } from './menu/MenuItem';
+import { signOut } from '../../reducer/authSlice';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { appAction, Tabs } from '../../reducer/appSlice';
 
 export const Drawer = () => {
-  const [selected, setSelected] = useState('home');
-  const handleChange = (nowSelected: string) => setSelected(nowSelected);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  // TODO ここの値はReduxで管理する
+  const selectedTab = useAppSelector((state) => state.app.selectedTab);
+  const handleChange = (nowSelected: string) => {
+    dispatch(appAction.selectTab(nowSelected as Tabs));
+    sessionStorage.setItem('selectedTab', nowSelected);
+  };
+
+  const logout = async () => {
+    await dispatch(signOut()).then(() => {
+      navigate('signin');
+    });
+  };
+
   return (
     <div css={drawerContainer}>
-      <AppTitle />
-      <Account username="かけい坊" userId="kakeiboy" />
-      <Menu value={selected} onChange={handleChange}>
-        <MenuItem id="home" icon={<TiHome />}>
-          ホーム
-        </MenuItem>
-        <MenuItem id="household" icon={<AiFillAccountBook />}>
-          家計簿
-        </MenuItem>
-        <MenuItem id="utility_cost" icon={<FaRegLightbulb />}>
-          光熱費
-        </MenuItem>
-        <MenuItem id="fridge" icon={<RiFridgeFill />}>
-          冷蔵庫
-        </MenuItem>
-        <MenuItem id="setting" icon={<IoSettingsSharp />}>
-          設定
-        </MenuItem>
-      </Menu>
+      <div
+        css={css`
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        `}
+      >
+        <AppTitle />
+        <Account username="かけい坊" userId="kakeiboy" />
+        <Menu value={selectedTab} onChange={handleChange}>
+          <MenuItem id="home" icon={<TiHome />}>
+            ホーム
+          </MenuItem>
+          <MenuItem id="householdbook" icon={<AiFillAccountBook />}>
+            家計簿
+          </MenuItem>
+          <MenuItem id="utility-cost" icon={<FaRegLightbulb />}>
+            光熱費
+          </MenuItem>
+          <MenuItem id="fridge" icon={<RiFridgeFill />}>
+            冷蔵庫
+          </MenuItem>
+          <MenuItem id="settings" icon={<IoSettingsSharp />}>
+            設定
+          </MenuItem>
+        </Menu>
+      </div>
+      <button css={button} type="button" onClick={logout}>
+        <GoSignOut />
+        ログアウト
+      </button>
     </div>
   );
 };
@@ -46,4 +76,17 @@ const drawerContainer = css`
   height: calc(100% - 48px);
   gap: 20px;
   padding: 24px 12px;
+`;
+
+const button = css`
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-weight: 600;
+  color: #546e7a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
 `;

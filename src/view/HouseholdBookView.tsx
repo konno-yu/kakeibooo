@@ -5,6 +5,7 @@ import { Calendar } from '../components/calendar/Calendar';
 import { Receipt } from '../components/receipt/Receipt';
 import { useAppDispatch, useAppSelector } from '../store';
 import { Expenses, fetchMonthlyExpenses } from '../reducer/householdBookSlice';
+import { Drawer } from '../components/drawer/Drawer';
 
 /**
  * 特定の日のレシートだけ抽出する
@@ -32,20 +33,33 @@ export const HouseholdBookView = () => {
   const getReceipts = () => extractTargetDayReceipt(expenses, targetDate);
 
   return (
-    <div id="hoge" css={householdBookContainer}>
-      <div css={calendarContainer}>
-        <Calendar today={today} datas={expenses} />
+    <>
+      <div css={drawer}>
+        <Drawer />
       </div>
-      <div css={receiptContainer}>
-        <Receipt receipts={getReceipts()} />
+      <div css={householdBookContainer}>
+        <div css={calendarContainer}>
+          <Calendar today={today} datas={expenses} />
+        </div>
+        <div css={receiptContainer}>
+          <Receipt receipts={getReceipts()} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
+const drawer = css`
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  height: 100vh;
+  width: 15%;
+  border-right: 1px solid #eeeeee;
+`;
+
 const householdBookContainer = css`
+  background: #eceff1;
   height: calc(100vh - 24px);
-  width: calc(100% - 24px);
+  width: calc(85% - 24px);
   padding: 12px;
   display: flex;
   justify-content: space-between;

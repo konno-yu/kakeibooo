@@ -60,7 +60,14 @@ module.exports = {
     ],
     // https://redux-toolkit.js.org/usage/immer-reducers#linting-state-mutations
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: false,
+      },
+    ],
   },
+
   settings: {
     'import/resolver': {
       node: {

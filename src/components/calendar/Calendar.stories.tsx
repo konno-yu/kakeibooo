@@ -1,7 +1,5 @@
 import { css } from '@emotion/react';
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { Provider } from 'react-redux';
-import { store } from '../../store';
 import { Calendar } from './Calendar';
 
 export default { component: Calendar } as ComponentMeta<typeof Calendar>;
@@ -58,13 +56,7 @@ export const Pure: ComponentStoryObj<typeof Calendar> = {
       ],
     },
   },
-  decorators: [
-    (story) => (
-      <Provider store={store}>
-        <div css={decorator}>{story()}</div>
-      </Provider>
-    ),
-  ],
+  decorators: [(story) => <div css={decorator}>{story()}</div>],
 };
 
 const decorator = css`
