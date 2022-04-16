@@ -58,13 +58,7 @@ export const Pure: ComponentStoryObj<typeof Calendar> = {
       ],
     },
   },
-  decorators: [
-    (story) => (
-      <Provider store={store}>
-        <div css={decorator}>{story()}</div>
-      </Provider>
-    ),
-  ],
+  decorators: [(story) => <div css={decorator}>{story()}</div>],
 };
 
 const decorator = css`

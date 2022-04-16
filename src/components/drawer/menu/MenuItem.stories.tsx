@@ -25,13 +25,6 @@ export const Selected: ComponentStoryObj<typeof MenuItem> = {
     children: 'サンプル',
     selected: true,
   },
-  decorators: [
-    (story) => (
-      <Provider store={store}>
-        <BrowserRouter>{story()}</BrowserRouter>
-      </Provider>
-    ),
-  ],
 };
 
 export const Icon: ComponentStoryObj<typeof MenuItem> = {
@@ -40,11 +33,4 @@ export const Icon: ComponentStoryObj<typeof MenuItem> = {
     selected: true,
     icon: <GiFlatfish size={24} />,
   },
-  decorators: [
-    (story) => (
-      <Provider store={store}>
-        <BrowserRouter>{story()}</BrowserRouter>
-      </Provider>
-    ),
-  ],
 };

@@ -9,15 +9,7 @@ export default { component: Drawer } as ComponentMeta<typeof Drawer>;
 
 export const Pure: ComponentStoryObj<typeof Drawer> = {
   args: {},
-  decorators: [
-    (story) => (
-      <Provider store={store}>
-        <BrowserRouter>
-          <div css={decorator}>{story()}</div>
-        </BrowserRouter>
-      </Provider>
-    ),
-  ],
+  decorators: [(story) => <div css={decorator}>{story()}</div>],
 };
 
 const decorator = css`

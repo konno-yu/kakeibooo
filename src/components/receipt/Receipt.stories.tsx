@@ -15,15 +15,13 @@ export const Pure: ComponentStoryObj<typeof Receipt> = {
   },
   decorators: [
     (story) => (
-      <Provider store={store}>
-        <div
-          css={css`
-            width: 25%;
-          `}
-        >
-          {story()}
-        </div>
-      </Provider>
+      <div
+        css={css`
+          width: 25%;
+        `}
+      >
+        {story()}
+      </div>
     ),
   ],
 };

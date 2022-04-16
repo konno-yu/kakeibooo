@@ -7,11 +7,5 @@ export default { component: Tag } as ComponentMeta<typeof Tag>;
 
 export const Pure: ComponentStoryObj<typeof Tag> = {
   args: {},
-  decorators: [
-    (story) => (
-      <Provider store={store}>
-        <div style={{ width: '25%' }}>{story()}</div>
-      </Provider>
-    ),
-  ],
+  decorators: [(story) => <div style={{ width: '25%' }}>{story()}</div>],
 };
