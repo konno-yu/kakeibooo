@@ -38,3 +38,4 @@ lerna-debug.log*
 **/supabase/.branches
 **/supabase/.temp
 **/supabase/.env
+.vercel
