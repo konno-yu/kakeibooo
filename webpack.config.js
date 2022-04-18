@@ -7,7 +7,9 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   filename: './index.html',
   favicon: './src/favicon.ico',
 });
-const dotEnvPlugin = new DotEnv();
+const dotEnvPlugin = new DotEnv({
+  systemvars: true,
+});
 
 module.exports = {
   mode: 'development',
