@@ -26,6 +26,8 @@ export const Drawer = () => {
 
   const logout = async () => {
     await dispatch(signOut()).then(() => {
+      // ログアウト時にセッションストレージの情報を消しておく
+      sessionStorage.removeItem('selectedTab');
       navigate('signin');
     });
   };
