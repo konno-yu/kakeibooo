@@ -35,57 +35,55 @@ export const AuthListener: React.VFC<Props> = ({ children }: Props) => {
 };
 
 export const App: React.FC = () => (
-  <Provider store={store}>
-    <AuthListener>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<RootRoute />} />
-          <Route path="/signin" element={<LoginView />} />
-          <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                <HomeView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/householdbook"
-            element={
-              <PrivateRoute>
-                <HouseholdBookView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/utility-cost"
-            element={
-              <PrivateRoute>
-                <UtilityCostView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/fridge"
-            element={
-              <PrivateRoute>
-                <FridgeView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <PrivateRoute>
-                <SettingsView />
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthListener>
-  </Provider>
+  <AuthListener>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<RootRoute />} />
+        <Route path="/signin" element={<LoginView />} />
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute>
+              <HomeView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/householdbook"
+          element={
+            <PrivateRoute>
+              <HouseholdBookView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/utility-cost"
+          element={
+            <PrivateRoute>
+              <UtilityCostView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/fridge"
+          element={
+            <PrivateRoute>
+              <FridgeView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute>
+              <SettingsView />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  </AuthListener>
 );
 
 // TODO 暫定
