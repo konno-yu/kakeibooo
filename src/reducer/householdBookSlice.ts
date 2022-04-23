@@ -79,54 +79,54 @@ export const householdBookSlice = createSlice({
       state.expenses = createMonthTemplate(state.targetDate);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchMonthlyExpenses.fulfilled, (state, action) => {
-        action.payload.forEach((payload) => {
-          const targetDate = new Date(payload.purchase_date);
-          state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = payload.receipts;
-        });
-      })
-      .addCase(postDailyExpenses.fulfilled, (state, action) => {
-        const targetDate = new Date(action.payload.purchase_date);
-        state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = action.payload.receipts;
-      })
-      .addCase(updateDailyExpenses.fulfilled, (state, action) => {
-        const targetDate = new Date(action.payload.purchase_date);
-        state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = action.payload.receipts;
-      });
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(fetchMonthlyExpenses.fulfilled, (state, action) => {
+  //       action.payload.forEach((payload) => {
+  //         const targetDate = new Date(payload.purchase_date);
+  //         state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = payload.receipts;
+  //       });
+  //     })
+  //     .addCase(postDailyExpenses.fulfilled, (state, action) => {
+  //       const targetDate = new Date(action.payload.purchase_date);
+  //       state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = action.payload.receipts;
+  //     })
+  //     .addCase(updateDailyExpenses.fulfilled, (state, action) => {
+  //       const targetDate = new Date(action.payload.purchase_date);
+  //       state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = action.payload.receipts;
+  //     });
+  // },
 });
 
 /** ある月の食費をDBから取得する */
-export const fetchMonthlyExpenses = createAsyncThunk<Get[], undefined, { state: RootState }>(
-  'household_book/fetchMonthlyExpenses',
-  async (_, thunkAPI) => {
-    const { targetDate } = thunkAPI.getState().householdBook;
-    const response = await expenseRest.get(targetDate);
-    return response.data;
-  }
-);
+// export const fetchMonthlyExpenses = createAsyncThunk<Get[], undefined, { state: RootState }>(
+//   'household_book/fetchMonthlyExpenses',
+//   async (_, thunkAPI) => {
+//     const { targetDate } = thunkAPI.getState().householdBook;
+//     const response = await expenseRest.get(targetDate);
+//     return response.data;
+//   }
+// );
 
 /** 編集日の食費をDBに登録する */
-export const postDailyExpenses = createAsyncThunk<Post, Receipt[], { state: RootState }>(
-  'household_book/postDailyExpenses',
-  async (args, thunkAPI) => {
-    const { targetDate } = thunkAPI.getState().householdBook;
-    const response = await expenseRest.post(targetDate, args);
-    return response.data[0];
-  }
-);
+// export const postDailyExpenses = createAsyncThunk<Post, Receipt[], { state: RootState }>(
+//   'household_book/postDailyExpenses',
+//   async (args, thunkAPI) => {
+//     const { targetDate } = thunkAPI.getState().householdBook;
+//     const response = await expenseRest.post(targetDate, args);
+//     return response.data[0];
+//   }
+// );
 
 /** 編集日の食費を更新する */
-export const updateDailyExpenses = createAsyncThunk<Post, Receipt[], { state: RootState }>(
-  'household_book/updateDailyExpenses',
-  async (args, thunkAPI) => {
-    const { targetDate } = thunkAPI.getState().householdBook;
-    const response = await expenseRest.put(targetDate, args);
-    return response.data[0];
-  }
-);
+// export const updateDailyExpenses = createAsyncThunk<Post, Receipt[], { state: RootState }>(
+//   'household_book/updateDailyExpenses',
+//   async (args, thunkAPI) => {
+//     const { targetDate } = thunkAPI.getState().householdBook;
+//     const response = await expenseRest.put(targetDate, args);
+//     return response.data[0];
+//   }
+// );
 
 export const { selectEdittingDate, shiftPreviousMonth, shiftNextMonth, setMonthExpenses, setDailyExpense } =
   householdBookSlice.actions;

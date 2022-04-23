@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ApiError, Session } from '@supabase/supabase-js';
-import * as authRest from '../rest/auth';
+// import * as authRest from '../rest/auth';
 // import { supabase } from '../supabaseClient';
 
 interface AuthState {

@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { UnderConstruction } from '../App';
 import { Drawer } from '../components/drawer/Drawer';
-import { useAppDispatch, useAppSelector } from '../store';
+// import { useAppDispatch, useAppSelector } from '../store';
 
 export const FridgeView = () => (
   <>

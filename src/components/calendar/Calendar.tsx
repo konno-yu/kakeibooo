@@ -5,7 +5,7 @@ import {
   selectEdittingDate,
   shiftPreviousMonth,
   shiftNextMonth,
-  fetchMonthlyExpenses,
+  // fetchMonthlyExpenses,
 } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { MonthSelector } from '../common/month_selector/MonthSelector';
@@ -25,7 +25,7 @@ export const Calendar: React.FC<Props> = ({ datas, today }: Props) => {
 
   useEffect(() => {
     const fetch = async () => {
-      await dispatch(fetchMonthlyExpenses());
+      // await dispatch(fetchMonthlyExpenses());
     };
     void fetch();
   }, [targetDate, dispatch]);

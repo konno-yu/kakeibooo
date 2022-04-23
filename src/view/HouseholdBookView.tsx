@@ -4,7 +4,7 @@ import { getWeekOfMonth, isEqual } from 'date-fns';
 import { Calendar } from '../components/calendar/Calendar';
 import { Receipt } from '../components/receipt/Receipt';
 import { useAppDispatch, useAppSelector } from '../store';
-import { Expenses, fetchMonthlyExpenses } from '../reducer/householdBookSlice';
+import { Expenses } from '../reducer/householdBookSlice';
 import { Drawer } from '../components/drawer/Drawer';
 
 /**
@@ -24,10 +24,10 @@ export const HouseholdBookView = () => {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    const fetch = async () => {
-      await dispatch(fetchMonthlyExpenses());
-    };
-    void fetch();
+    // const fetch = async () => {
+    //   await dispatch(fetchMonthlyExpenses());
+    // };
+    // void fetch();
   }, [dispatch]);
 
   const getReceipts = () => extractTargetDayReceipt(expenses, targetDate);
