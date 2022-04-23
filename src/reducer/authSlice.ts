@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ApiError, Session } from '@supabase/supabase-js';
 import * as authRest from '../rest/auth';
-import { supabase } from '../supabaseClient';
+// import { supabase } from '../supabaseClient';
 
 interface AuthState {
   /** セッション情報 */
-  session: Session | null;
+  // session: Session | null;
   /** エラー情報 */
   error: ApiError | null;
 }
 
 const initialState: AuthState = {
-  session: supabase.auth.session(),
+  // session: supabase.auth.session(),
   error: null,
 };
 
@@ -28,51 +28,51 @@ export const authSlice = createSlice({
       session: action.payload.session,
     }),
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(signIn.fulfilled, (state, action) => ({
-        ...state,
-        session: action.payload,
-        error: null,
-      }))
-      .addCase(signIn.rejected, (state, action) => ({
-        ...state,
-        session: null,
-        error: action.payload,
-      }))
-      .addCase(signOut.fulfilled, (state, action) => ({
-        ...state,
-        session: action.payload,
-        error: null,
-      }))
-      .addCase(signOut.rejected, (state, action) => ({
-        ...state,
-        session: null,
-        error: action.payload,
-      }));
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  // .addCase(signIn.fulfilled, (state, action) => ({
+  //   ...state,
+  //   session: action.payload,
+  //   error: null,
+  // }))
+  // .addCase(signIn.rejected, (state, action) => ({
+  //   ...state,
+  //   session: null,
+  //   error: action.payload,
+  // }))
+  // .addCase(signOut.fulfilled, (state, action) => ({
+  //   ...state,
+  //   session: action.payload,
+  //   error: null,
+  // }))
+  // .addCase(signOut.rejected, (state, action) => ({
+  //   ...state,
+  //   session: null,
+  //   error: action.payload,
+  // }));
+  //   },
 });
 
-export const signIn = createAsyncThunk<Session | null, { email: string; password: string }, { rejectValue: ApiError }>(
-  'auth/signIn',
-  async (obj, thunkAPI) => {
-    const { error, session } = await authRest.signIn(obj);
-    if (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-    return session;
-  }
-);
+// export const signIn = createAsyncThunk<Session | null, { email: string; password: string }, { rejectValue: ApiError }>(
+//   'auth/signIn',
+//   async (obj, thunkAPI) => {
+//     const { error, session } = await authRest.signIn(obj);
+//     if (error) {
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//     return session;
+//   }
+// );
 
-export const signOut = createAsyncThunk<Session | null, null, { rejectValue: ApiError }>(
-  'auth/signOut',
-  async (_, thunkAPI) => {
-    const { error } = await authRest.signOut();
-    if (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-    return null;
-  }
-);
+// export const signOut = createAsyncThunk<Session | null, null, { rejectValue: ApiError }>(
+//   'auth/signOut',
+//   async (_, thunkAPI) => {
+//     const { error } = await authRest.signOut();
+//     if (error) {
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//     return null;
+//   }
+// );
 
 export const { setSession } = authSlice.actions;

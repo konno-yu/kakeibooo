@@ -1,6 +1,6 @@
 import { getMonth, getYear } from 'date-fns';
 import { Receipt } from '../reducer/householdBookSlice';
-import { supabase } from '../supabaseClient';
+// import { supabase } from '../supabaseClient';
 
 export interface Get {
   id: number;
@@ -20,14 +20,14 @@ export interface Post {
  * @returns 1ヶ月分の食費データを返す
  */
 export const get = async (targetDate: Date) => {
-  const fromDate = new Date(getYear(targetDate), getMonth(targetDate), 1, 9, 0, 0);
-  const toDate = new Date(getYear(targetDate), getMonth(targetDate) + 1, 1, 9, 0, 0);
-  const response = await supabase
-    .from<Get>('expenses')
-    .select('*')
-    .gte('purchase_date', fromDate.toISOString())
-    .lt('purchase_date', toDate.toISOString());
-  return response;
+  // const fromDate = new Date(getYear(targetDate), getMonth(targetDate), 1, 9, 0, 0);
+  // const toDate = new Date(getYear(targetDate), getMonth(targetDate) + 1, 1, 9, 0, 0);
+  // const response = await supabase
+  //   .from<Get>('expenses')
+  //   .select('*')
+  //   .gte('purchase_date', fromDate.toISOString())
+  //   .lt('purchase_date', toDate.toISOString());
+  // return response;
 };
 
 /**
@@ -37,10 +37,10 @@ export const get = async (targetDate: Date) => {
  * @returns 登録したデータを返す
  */
 export const post = async (targetDate: Date, receipts: Receipt[]) => {
-  const response = await supabase
-    .from<Post>('expenses')
-    .insert({ purchase_date: targetDate, receipts }, { returning: 'representation' });
-  return response;
+  // const response = await supabase
+  //   .from<Post>('expenses')
+  //   .insert({ purchase_date: targetDate, receipts }, { returning: 'representation' });
+  // return response;
 };
 
 /**
@@ -50,9 +50,9 @@ export const post = async (targetDate: Date, receipts: Receipt[]) => {
  * @returns 更新後のデータを返す
  */
 export const put = async (targetDate: Date, receipts: Receipt[]) => {
-  const response = await supabase
-    .from<Post>('expenses')
-    .update({ receipts }, { returning: 'representation' })
-    .match({ purchase_date: targetDate.toUTCString() });
-  return response;
+  // const response = await supabase
+  //   .from<Post>('expenses')
+  //   .update({ receipts }, { returning: 'representation' })
+  //   .match({ purchase_date: targetDate.toUTCString() });
+  // return response;
 };

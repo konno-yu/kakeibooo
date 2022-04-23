@@ -14,7 +14,7 @@ import { LoginView } from './view/LoginView';
 import { SettingsView } from './view/SettingsView';
 import { UtilityCostView } from './view/UtilityCostView';
 import { setSession } from './reducer/authSlice';
-import { supabase } from './supabaseClient';
+// import { supabase } from './supabaseClient';
 
 type Props = {
   children: React.ReactNode;
@@ -22,13 +22,13 @@ type Props = {
 
 export const AuthListener: React.VFC<Props> = ({ children }: Props) => {
   const dispatch = useDispatch();
-  const session = supabase.auth.session();
+  // const session = supabase.auth.session();
 
-  useEffect(() => {
-    if (session) {
-      dispatch(setSession({ session }));
-    }
-  }, [dispatch, session]);
+  // useEffect(() => {
+  //   if (session) {
+  //     dispatch(setSession({ session }));
+  //   }
+  // }, [dispatch, session]);
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{children}</>;
