@@ -25,14 +25,6 @@
     "@emotion/babel-plugin": "^11.7.2",
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/react": "^11.8.1",
-    "@fortawesome/fontawesome-svg-core": "^1.2.35",
-    "@fortawesome/free-brands-svg-icons": "^5.15.3",
-    "@fortawesome/free-regular-svg-icons": "^5.15.3",
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "@fortawesome/react-fontawesome": "^0.1.14",
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/styles": "^4.11.4",
     "@reduxjs/toolkit": "^1.6.1",
     "@storybook/addon-actions": "^6.4.19",
     "@storybook/addon-essentials": "^6.4.19",
@@ -84,8 +76,6 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "@material-ui/lab": "^4.0.0-alpha.60",
-    "axios": "^0.21.1",
     "react-icons": "^4.2.0"
   }
 }
