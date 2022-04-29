@@ -5,27 +5,27 @@ import {
   selectEdittingDate,
   shiftPreviousMonth,
   shiftNextMonth,
-  // fetchMonthlyExpenses,
+  fetchMonthlyExpenses,
 } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { MonthSelector } from '../common/month_selector/MonthSelector';
 import { DayPanel } from './day_panel/DayPanel';
 import { Header } from './header/Header';
 
-interface Props {
+export interface CalendarProps {
   datas: {
     [key: number]: (null | { date: Date; receipts: { storeName: string; cost: number }[] | [] | null })[];
   };
   today: Date;
 }
 
-export const Calendar: React.FC<Props> = ({ datas, today }: Props) => {
+export const Calendar: React.FC<CalendarProps> = ({ datas, today }: CalendarProps) => {
   const dispatch = useAppDispatch();
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
 
   useEffect(() => {
     const fetch = async () => {
-      // await dispatch(fetchMonthlyExpenses());
+      await dispatch(fetchMonthlyExpenses());
     };
     void fetch();
   }, [targetDate, dispatch]);
