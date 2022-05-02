@@ -44,6 +44,3 @@ jobs:
           workingDir: ./src
           token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           projectToken: ${{ secrets.CHROMATIC_SECRET }}
-        env:
-          SUPABASE_URL: ${{ steps.chromatic.outputs.storybookUrl }},
-          SUPABASE_ANON_KEY: dammy_key
