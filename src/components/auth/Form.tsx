@@ -7,7 +7,7 @@ import { Button } from '../common/button/Button';
 import { Input } from '../common/input/Input';
 import ImagePath from '../../images/white_icon.svg';
 import { useAppDispatch } from '../../store';
-// import { signIn } from '../../reducer/authSlice';
+import { signIn } from '../../reducer/authSlice';
 
 interface FormProps {
   error: ApiError | null | undefined;
@@ -27,11 +27,11 @@ export const Form = ({ error }: FormProps) => {
     setPassword(event.target.value);
   };
   const handleLogin = async () => {
-    // await dispatch(signIn({ email: address, password })).then((res) => {
-    //   if (res.payload) {
-    //     navigate('/home');
-    //   }
-    // });
+    await dispatch(signIn({ email: address, password })).then((res) => {
+      if (res.payload) {
+        navigate('/home');
+      }
+    });
   };
 
   return (

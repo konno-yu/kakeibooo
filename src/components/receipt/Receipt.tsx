@@ -3,7 +3,7 @@ import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
 import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
 import styled from 'styled-components';
-import { Receipt as ReceiptDef } from '../../reducer/householdBookSlice';
+import { postDailyExpenses, Receipt as ReceiptDef, updateDailyExpenses } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { extractTargetDayReceipt } from '../../view/HouseholdBookView';
 import { Button } from '../common/button/Button';
@@ -128,17 +128,17 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
    *
    */
   const handleClickRegist = async () => {
-    // if (!validate()) {
-    //   return;
-    // }
-    // const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
-    // if (isPost) {
-    //   // await dispatch(postDailyExpenses(dayReceipts));
-    //   showSuccessSnackbar('登録が完了しました');
-    // } else {
-    //   // await dispatch(updateDailyExpenses(dayReceipts));
-    //   showSuccessSnackbar('登録が完了しました');
-    // }
+    if (!validate()) {
+      return;
+    }
+    const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
+    if (isPost) {
+      await dispatch(postDailyExpenses(dayReceipts));
+      showSuccessSnackbar('登録が完了しました');
+    } else {
+      await dispatch(updateDailyExpenses(dayReceipts));
+      showSuccessSnackbar('登録が完了しました');
+    }
   };
 
   /**
@@ -146,14 +146,14 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
    * 編集日のデータが登録済みかに応じてPOST/PUTを投げ分ける
    */
   const handleClickNoMoney = async () => {
-    // const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
-    // if (isPost) {
-    //   // await dispatch(postDailyExpenses([]));
-    //   showSuccessSnackbar('登録が完了しました');
-    // } else {
-    //   // await dispatch(updateDailyExpenses([]));
-    //   showSuccessSnackbar('登録が完了しました');
-    // }
+    const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
+    if (isPost) {
+      await dispatch(postDailyExpenses([]));
+      showSuccessSnackbar('登録が完了しました');
+    } else {
+      await dispatch(updateDailyExpenses([]));
+      showSuccessSnackbar('登録が完了しました');
+    }
   };
 
   return (

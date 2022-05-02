@@ -10,7 +10,7 @@ import { Account } from './account/Account';
 import { AppTitle } from './app_title/AppTitle';
 import { Menu } from './menu/Menu';
 import { MenuItem } from './menu/MenuItem';
-// import { signOut } from '../../reducer/authSlice';
+import { signOut } from '../../reducer/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { appAction, Tabs } from '../../reducer/appSlice';
 
@@ -25,11 +25,11 @@ export const Drawer = () => {
   };
 
   const logout = async () => {
-    // await dispatch(signOut()).then(() => {
-    //   // ログアウト時にセッションストレージの情報を消しておく
-    //   sessionStorage.removeItem('selectedTab');
-    //   navigate('signin');
-    // });
+    await dispatch(signOut()).then(() => {
+      // ログアウト時にセッションストレージの情報を消しておく
+      sessionStorage.removeItem('selectedTab');
+      navigate('signin');
+    });
   };
 
   return (
