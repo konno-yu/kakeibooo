@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { css } from '@emotion/react';
 
 interface Props {
   value: { [key: string]: number };
@@ -22,14 +22,14 @@ export const Indicator = ({ value, range, showLabel = false, unit }: Props) => {
   let barElement: JSX.Element | JSX.Element[];
 
   if (isLimitOver(values)) {
-    barElement = <LimitOverBar />;
+    barElement = <div css={limitOver} />;
   } else if (keys.length === 1) {
-    barElement = <FirstLastBar width={values[0]} color={keys[0]} />;
+    barElement = <div css={[bar(values[0], keys[0]), firstAndLast]} />;
   } else {
     barElement = keys.map((key, i) => {
-      if (i === 0) return <FirstBar width={displayValue[key]} color={key} />;
-      if (i === keys.length - 1) return <LastBar width={displayValue[key]} color={key} />;
-      return <Bar width={displayValue[key]} color={key} />;
+      if (i === 0) return <div css={[bar(displayValue[key], key), first]} />;
+      if (i === keys.length - 1) return <div css={[bar(displayValue[key], key), last]} />;
+      return <div css={bar(displayValue[key], key)} />;
     });
   }
 
@@ -37,15 +37,15 @@ export const Indicator = ({ value, range, showLabel = false, unit }: Props) => {
     u.type === 'prefix' ? `${u.name}${text}` : `${text}${u.name}`;
 
   return (
-    <Container>
-      {showLabel && <ScaleLabel>{createLabelText(range[0], unit)}</ScaleLabel>}
-      <StyledIndicator>{barElement}</StyledIndicator>
-      {showLabel && <ScaleLabel>{createLabelText(range[1], unit)}</ScaleLabel>}
-    </Container>
+    <div css={container}>
+      {showLabel && <span css={scaleLabel}>{createLabelText(range[0], unit)}</span>}
+      <div css={indicator}>{barElement}</div>
+      {showLabel && <span css={scaleLabel}>{createLabelText(range[1], unit)}</span>}
+    </div>
   );
 };
 
-const Container = styled.div`
+const container = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: 100%;
   height: 50px;
@@ -55,7 +55,7 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const ScaleLabel = styled.span`
+const scaleLabel = css`
   color: #546e7a;
   font-weight: 700;
   font-size: 12px;
@@ -63,7 +63,7 @@ const ScaleLabel = styled.span`
   text-align: center;
 `;
 
-const StyledIndicator = styled.div`
+const indicator = css`
   width: 80%;
   height: 30%;
   background: #eceff1;
@@ -71,28 +71,28 @@ const StyledIndicator = styled.div`
   display: flex;
 `;
 
-const LimitOverBar = styled.div`
+const limitOver = css`
   width: 100%;
   height: 100%;
   background: repeating-linear-gradient(-45deg, #ff8a80, #ff8a80 2px, #ffcdd2 2px, #ffcdd2 4px);
   border-radius: 12px;
 `;
 
-const Bar = styled.div<{ width: number; color: string }>`
-  ${({ width }) => `width: ${width}%`};
+const bar = (width: number, color: string) => css`
+  width: ${width}%;
   height: 100%;
-  ${({ color }) => `background: ${color}`};
+  background: ${color};
   border-radius: 0;
 `;
 
-const FirstLastBar = styled(Bar)`
+const firstAndLast = css`
   border-radius: 12px;
 `;
 
-const LastBar = styled(Bar)`
+const last = css`
   border-radius: 0 12px 12px 0;
 `;
 
-const FirstBar = styled(Bar)`
+const first = css`
   border-radius: 12px 0 0 12px;
 `;

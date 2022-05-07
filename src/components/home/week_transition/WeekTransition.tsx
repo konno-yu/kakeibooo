@@ -1,5 +1,5 @@
+import { css } from '@emotion/react';
 import { FaRegFrown, FaRegGrinSquint, FaRegMeh, FaRegSmile } from 'react-icons/fa';
-import styled from 'styled-components';
 
 interface Props {
   dates: number[];
@@ -15,27 +15,27 @@ const ICONS: { [key in 'zero' | 'low' | 'normal' | 'high']: JSX.Element } = {
 const LABELS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
 export const WeekTransition = ({ dates, types }: Props) => (
-  <Container>
+  <div css={container}>
     {types.map((type, i) => (
-      <Day>
-        <DayHeader>
-          <DayValueText>{dates[i]}</DayValueText>
-          <DayOfWeekLabel>{LABELS[i]}</DayOfWeekLabel>
-        </DayHeader>
+      <div css={day}>
+        <div css={header}>
+          <span css={dayValueText}>{dates[i]}</span>
+          <span css={dayOfWeekLabel}>{LABELS[i]}</span>
+        </div>
         {ICONS[type]}
-      </Day>
+      </div>
     ))}
-  </Container>
+  </div>
 );
 
-const Container = styled.div`
+const container = css`
   height: 10%;
   display: flex;
   justify-content: center;
   font-family: 'M PLUS Rounded 1c', sans-serif;
 `;
 
-const Day = styled.div`
+const day = css`
   width: calc(100% / 7);
   display: flex;
   justify-content: space-evenly;
@@ -44,19 +44,19 @@ const Day = styled.div`
   gap: 4px;
 `;
 
-const DayHeader = styled.div`
+const header = css`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const DayOfWeekLabel = styled.span`
+const dayOfWeekLabel = css`
   color: #546e7a;
   font-weight: 700;
   font-size: 12px;
 `;
 
-const DayValueText = styled.span`
+const dayValueText = css`
   color: #546e7a;
   font-weight: 700;
   font-size: 16px;

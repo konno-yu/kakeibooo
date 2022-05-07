@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { css } from '@emotion/react';
 
 interface Props {
   type: 'solid' | 'dashed' | 'double' | 'dotted';
@@ -6,9 +6,9 @@ interface Props {
   color: string;
 }
 export const Divider = ({ type = 'solid', width = 1, color = '#BDBDBD' }: Props) => (
-  <StyledDivider type={type} width={width} color={color} />
+  <div css={divider(width, type, color)} />
 );
 
-const StyledDivider = styled.div<Props>`
-  ${(props) => `border-top: ${props.width}px ${props.type} ${props.color}`};
+const divider = (width: number, type: string, color: string) => css`
+  border-top: ${width}px ${type} ${color};
 `;

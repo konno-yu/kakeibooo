@@ -1,5 +1,5 @@
+import { css } from '@emotion/react';
 import { FaCalendar } from 'react-icons/fa';
-import styled from 'styled-components';
 import { Indicator } from '../../common/indicator/Indicator';
 import { MonthSelector } from '../../common/month_selector/MonthSelector';
 import { Typography } from '../../common/typography/Typography';
@@ -11,7 +11,7 @@ interface Props {
   datas: { date: Date; totalCost: number }[];
 }
 export const MonthDisplay: React.FC<Props> = ({ targetDate, datas }: Props) => (
-  <Container>
+  <div css={container}>
     <MonthSelector targetDate={targetDate} onPrev={() => alert('')} onNext={() => alert('')} />
     <MonthTransition datas={datas} />
     <div style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
@@ -32,10 +32,10 @@ export const MonthDisplay: React.FC<Props> = ({ targetDate, datas }: Props) => (
         />
       </Card>
     </div>
-  </Container>
+  </div>
 );
 
-const Container = styled.div`
+const container = css`
   display: flex;
   flex-direction: column;
   gap: 20px;

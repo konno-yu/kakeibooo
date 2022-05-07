@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { css } from '@emotion/react';
 
 interface Props {
   value: string;
@@ -35,21 +35,22 @@ const modules = {
 };
 
 export const WeekMemoEditor = ({ value }: Props) => (
-  <Container>
-    <StyledQuill
+  <div css={container}>
+    <ReactQuill
+      css={myQuill}
       placeholder={'1週間のメモを残しておきしょう！\n（ 例： 献立、 気付いたこと など）'}
       value={value}
       modules={modules}
     />
-  </Container>
+  </div>
 );
 
-const Container = styled.div`
+const container = css`
   display: flex;
   flex-direction: column;
 `;
 
-const StyledQuill = styled(ReactQuill)`
+const myQuill = css`
   .ql-toolbar {
     background: #ffffff;
     border: 1px solid #bdbdbd;

@@ -1,46 +1,54 @@
-import styled, { css } from 'styled-components';
+import { css } from '@emotion/react';
 
 type ButtonType = 'filled' | 'outlined';
 // TODO これ以上増やす場合はスタイルの場合分けが必要
 type ColorPattern = 'normal' | 'accent';
 
-interface Props {
+export interface Props {
+  /** ボタンの見た目を指定します */
   variant: ButtonType;
+  /** ボタンに表示するテキストを指定します */
   label: string;
+  /** ボタンの色を指定します */
   color?: ColorPattern;
+  /** 活性/非活性を指定します */
   disabled?: boolean;
+  /** ボタン内に表示するアイコンを指定します */
   icon?: JSX.Element;
+  /** ボタンの幅を指定します */
   width: string | number;
+  /** ボタンをクリックしたときの動作を指定します */
   onClick: () => void;
 }
 
 export const Button = ({ variant, label, color, disabled, icon, width = '100%', onClick }: Props) => {
   if (disabled) {
     return (
-      <Styled.DisabledButton width={width}>
+      <button css={[base(width), disable]} type="button">
         {icon}
         {label}
-      </Styled.DisabledButton>
+      </button>
     );
   }
   if (variant === 'filled') {
     return (
-      <Styled.FilledButton onClick={onClick} width={width} color={color}>
+      <button css={[base(width), filled(color)]} onClick={onClick} type="button">
         {icon}
         {label}
-      </Styled.FilledButton>
+      </button>
     );
   }
   return (
-    <Styled.OutlinedButton onClick={onClick} width={width} color={color}>
+    <button css={[base(width), outlined(color)]} onClick={onClick} type="button">
       {icon}
       {label}
-    </Styled.OutlinedButton>
+    </button>
   );
 };
 
-const baseStyle = css`
+const base = (width: string | number) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
+  width: ${width};
   padding: 8px 12px;
   border-radius: 100px;
   font-weight: 600;
@@ -50,74 +58,69 @@ const baseStyle = css`
   align-items: center;
   justify-content: center;
 `;
-const Styled = {
-  DisabledButton: styled.button<Pick<Props, 'width'>>`
-    ${baseStyle};
-    ${(props) => `width: ${props.width}`};
-    background: #e0e0e0;
-    border: 1px solid #bdbdbd;
-    color: #bdbdbd;
-    cursor: auto;
-  `,
-  FilledButton: styled.button<{ color: ColorPattern; width: string | number }>`
-    ${baseStyle};
-    ${({ width }) => `width: ${width}`};
-    color: #ffffff;
-    ${({ color }) =>
-      color === 'normal'
-        ? css`
-            background: #607d8b;
-            border: 1px solid #607d8b;
-            &:hover {
-              background: #90a4ae;
-              border: 1px solid #90a4ae;
-            }
-            ,
-            &:active {
-              background: #607d8b;
-              border: 1px solid #607d8b;
-            }
-          `
-        : css`
-            background: #f44336;
-            border: 1px solid #f44336;
-            &:hover {
-              background: #e57373;
-              border: 1px solid #e57373;
-            }
-            ,
-            &:active {
-              background: #f44336;
-              border: 1px solid #f44336;
-            }
-          `}
-  `,
-  OutlinedButton: styled.button<{ color: ColorPattern; width: string | number }>`
-    ${baseStyle};
-    ${({ width }) => `width: ${width}`};
-    color: ${({ color }) => (color === 'normal' ? '#607D8B' : '#F44336')};
-    border: ${({ color }) => (color === 'normal' ? '1px solid #607D8B' : '1px solid #F44336')};
-    ${({ color }) =>
-      color === 'normal'
-        ? css`
-            background: #ffffff;
-            &:hover {
-              background: #eceff1;
-            }
-            ,
-            &:active {
-              background: #ffffff;
-            }
-          `
-        : css`
-            background: #ffffff;
-            &:hover {
-              background: #ffebee;
-            }
-            ,
-            &:active {
-              background: #ffffff;
-            }
-          `}
-  `,
-};
+
+const disable = css`
+  background: #e0e0e0;
+  border: 1px solid #bdbdbd;
+  color: #bdbdbd;
+  cursor: auto;
+`;
+
+const filled = (color: ColorPattern) => css`
+  color: #ffffff;
+  ${color === 'normal'
+    ? css`
+        background: #607d8b;
+        border: 1px solid #607d8b;
+        &:hover {
+          background: #90a4ae;
+          border: 1px solid #90a4ae;
+        }
+        ,
+        &:active {
+          background: #607d8b;
+          border: 1px solid #607d8b;
+        }
+      `
+    : css`
+        background: #f44336;
+        border: 1px solid #f44336;
+        &:hover {
+          background: #e57373;
+          border: 1px solid #e57373;
+        }
+        ,
+        &:active {
+          background: #f44336;
+          border: 1px solid #f44336;
+        }
+      `}
+`;
+
+const outlined = (color: ColorPattern) => css`
+  background: #ffffff;
+  ${color === 'normal'
+    ? css`
+        color: #607d8b;
+        border: 1px solid #607d8b;
+        background: #ffffff;
+        &:hover {
+          background: #eceff1;
+        }
+        ,
+        &:active {
+          background: #ffffff;
+        }
+      `
+    : css`
+        color: #f44336;
+        border: 1px solid #f44336;
+        &:hover {
+          background: #ffebee;
+        }
+        ,
+        &:active {
+          background: #ffffff;
+        }
+      `}
+`;

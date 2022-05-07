@@ -1,30 +1,30 @@
+import { css } from '@emotion/react';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { GiPayMoney } from 'react-icons/gi';
-import styled from 'styled-components';
 
 export const WeekSummary = () => (
-  <Card>
-    <Header>
-      <HeaderTitle>
+  <div css={card}>
+    <div css={header}>
+      <div css={headerTitle}>
         <AiOutlineCheckCircle />
         Kakeibooo
-      </HeaderTitle>
+      </div>
       <GiPayMoney size={28} />
-    </Header>
-    <Body>
-      <BodyLabel>
+    </div>
+    <div css={body}>
+      <span css={bodyLabel}>
         <u>PAY THIS WEEK</u>（SHIHARAI）
-      </BodyLabel>
-      <BodyValueText>￥10,000</BodyValueText>
-      <BodyLabel>
+      </span>
+      <div css={bodyValueText}>￥10,000</div>
+      <span css={bodyLabel}>
         <u>DURATION</u>
-      </BodyLabel>
+      </span>
       <span>2021/11/11 - 2021/11/18</span>
-    </Body>
-  </Card>
+    </div>
+  </div>
 );
 
-const Card = styled.div`
+const card = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   border: 2px solid #eceff1;
   border-radius: 8px;
@@ -38,28 +38,28 @@ const Card = styled.div`
   gap: 8px;
 `;
 
-const Header = styled.div`
+const header = css`
   display: flex;
   font-size: 24px;
   justify-content: space-between;
   align-items: center;
 `;
 
-const HeaderTitle = styled.div`
+const headerTitle = css`
   display: flex;
   align-items: center;
   gap: 4px;
 `;
 
-const Body = styled.div`
+const body = css`
   display: flex;
   flex-direction: column;
 `;
 
-const BodyLabel = styled.span`
+const bodyLabel = css`
   color: #e0e0e0;
 `;
 
-const BodyValueText = styled.div`
+const bodyValueText = css`
   font-size: 28px; // TODO Typographyで吸収したい
 `;
