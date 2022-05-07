@@ -11,21 +11,21 @@ export const Normal: ComponentStoryObj<typeof Typography> = {
 
 export const Sub: ComponentStoryObj<typeof Typography> = {
   args: {
-    children: 'サンプル',
+    ...Normal.args,
     type: 'subHeader',
   },
 };
 
 export const Accent: ComponentStoryObj<typeof Typography> = {
   args: {
-    children: 'サンプル',
+    ...Normal.args,
     variant: 'accent',
   },
 };
 
 export const Helper: ComponentStoryObj<typeof Typography> = {
   args: {
-    children: 'サンプル',
+    ...Normal.args,
     variant: 'helper',
   },
 };

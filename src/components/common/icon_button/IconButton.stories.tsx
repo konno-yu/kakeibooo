@@ -12,7 +12,7 @@ export const Pure: ComponentStoryObj<typeof IconButton> = {
 
 export const Disabled: ComponentStoryObj<typeof IconButton> = {
   args: {
-    children: <FaSmile color="#009688" size={30} />,
+    ...Pure.args,
     disabled: true,
   },
 };
