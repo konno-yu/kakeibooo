@@ -1,4 +1,4 @@
-import { RouteProps, Navigate } from 'react-router-dom';
+import { Navigate, RouteProps } from 'react-router-dom';
 import { useAppSelector } from '../store';
 
 export const PrivateRoute = ({ children }: RouteProps) => {

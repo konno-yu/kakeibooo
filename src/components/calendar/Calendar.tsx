@@ -1,6 +1,6 @@
+import { css } from '@emotion/react';
 import { getDate, isEqual } from 'date-fns';
 import { useEffect } from 'react';
-import styled from 'styled-components';
 import {
   selectEdittingDate,
   shiftPreviousMonth,
@@ -12,14 +12,18 @@ import { MonthSelector } from '../common/month_selector/MonthSelector';
 import { DayPanel } from './day_panel/DayPanel';
 import { Header } from './header/Header';
 
-interface Props {
+export interface CalendarProps {
+  /** カレンダーに表示するデータを指定します */
   datas: {
+    // TODO 型もっとキレイに書けるはず
     [key: number]: (null | { date: Date; receipts: { storeName: string; cost: number }[] | [] | null })[];
   };
+  /** 今日の日付を指定します */
+  // TODO 明示的に指定する必要はないかも
   today: Date;
 }
 
-export const Calendar: React.FC<Props> = ({ datas, today }: Props) => {
+export const Calendar: React.FC<CalendarProps> = ({ datas, today }: CalendarProps) => {
   const dispatch = useAppDispatch();
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
 
@@ -57,16 +61,16 @@ export const Calendar: React.FC<Props> = ({ datas, today }: Props) => {
   };
 
   return (
-    <Container>
+    <div css={container}>
       <div>
         <MonthSelector targetDate={targetDate} locale="en" onPrev={handleOnPrev} onNext={handleOnNext} />
       </div>
       <div>
         <Header locale="en" />
       </div>
-      <Sample>
+      <div css={monthContainer}>
         {Object.values(datas).map((week) => (
-          <Week>
+          <div css={weekContainer}>
             {week.map((day) => {
               if (day === null) {
                 return <DayPanel type="normal" dayIndex={null} isSelected={false} isToday={false} />;
@@ -97,14 +101,14 @@ export const Calendar: React.FC<Props> = ({ datas, today }: Props) => {
                 </DayPanel>
               );
             })}
-          </Week>
+          </div>
         ))}
-      </Sample>
-    </Container>
+      </div>
+    </div>
   );
 };
 
-const Container = styled.div`
+const container = css`
   width: 100%;
   height: 100%;
   display: flex;
@@ -112,14 +116,14 @@ const Container = styled.div`
   gap: 8px;
 `;
 
-const Week = styled.div`
+const weekContainer = css`
   width: 100%;
   height: calc(100% / 6);
   display: flex;
   gap: 8px;
 `;
 
-const Sample = styled.div`
+const monthContainer = css`
   height: 100%;
   display: flex;
   flex-direction: column;

@@ -1,5 +1,5 @@
+import { css } from '@emotion/react';
 import { TiChevronLeft, TiChevronRight } from 'react-icons/ti';
-import styled from 'styled-components';
 import { Button } from '../../common/button/Button';
 import { IconButton } from '../../common/icon_button/IconButton';
 import { WeekMemoEditor } from '../week_memo_editor/WeekMemoEditor';
@@ -20,8 +20,8 @@ export const WeekDisplay = () => {
     /** */
   };
   return (
-    <Container>
-      <SummaryContainer>
+    <div css={container}>
+      <div css={summary}>
         <IconButton onClick={handleClickPrevious}>
           <TiChevronLeft size={28} color="#546E7A" />
         </IconButton>
@@ -29,40 +29,40 @@ export const WeekDisplay = () => {
         <IconButton onClick={handleClickNext}>
           <TiChevronRight size={28} color="#546E7A" />
         </IconButton>
-      </SummaryContainer>
+      </div>
       <WeekTransition
         dates={[1, 2, 3, 4, 5, 6, 7]}
         types={['low', 'high', 'normal', 'zero', 'normal', 'high', 'low']}
       />
-      <MemoContainer>
+      <div css={memoEditor}>
         <WeekMemoEditor value="サンプル" />
-        <ButtonContainer>
+        <div css={buttonContainer}>
           <Button onClick={handleClickSave} variant="filled" color="normal" label="保存" width="20%" />
           <Button onClick={handleClickDelete} variant="outlined" color="normal" label="削除" width="20%" />
-        </ButtonContainer>
-      </MemoContainer>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 };
 
-const Container = styled.div`
+const container = css`
   display: flex;
   flex-direction: column;
   gap: 20px;
 `;
 
-const SummaryContainer = styled.div`
+const summary = css`
   display: flex;
   flex-direction: row;
   justify-content: center;
 `;
 
-const MemoContainer = styled.div`
+const memoEditor = css`
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
-const ButtonContainer = styled.div`
+const buttonContainer = css`
   display: flex;
   gap: 4px;
   justify-content: end;

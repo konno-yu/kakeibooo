@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import styled from 'styled-components';
+import { css } from '@emotion/react';
 
 interface Props {
   icon: JSX.Element;
@@ -8,16 +8,16 @@ interface Props {
   children: ReactNode;
 }
 export const Card = ({ icon, title, color, children }: Props) => (
-  <StyledCard>
-    <Header>
-      <Icon color={color}>{icon}</Icon>
-      <Title color={color}>{title}</Title>
-    </Header>
-    <Body>{children}</Body>
-  </StyledCard>
+  <div css={card}>
+    <div css={header}>
+      <div css={iconPart(color)}>{icon}</div>
+      <div css={titlePart(color)}>{title}</div>
+    </div>
+    <div css={body}>{children}</div>
+  </div>
 );
 
-const StyledCard = styled.div`
+const card = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: 100%;
   height: 200px;
@@ -30,30 +30,30 @@ const StyledCard = styled.div`
   flex-direction: column;
 `;
 
-const Header = styled.div`
+const header = css`
   height: 20%;
   display: flex;
   align-items: center;
   gap: 8px;
 `;
 
-const Icon = styled.div<Pick<Props, 'color'>>`
+const iconPart = (color: string) => css`
   width: 40px;
   height: 40px;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  ${({ color }) => `background: ${color}`}
+  background: ${color};
 `;
 
-const Title = styled.div<Pick<Props, 'color'>>`
+const titlePart = (color: string) => css`
   font-weight: 800;
   font-size: 22px;
-  ${({ color }) => `color: ${color}`}
+  color: ${color};
 `;
 
-const Body = styled.div`
+const body = css`
   height: 80%;
   width: 100%;
   display: flex;

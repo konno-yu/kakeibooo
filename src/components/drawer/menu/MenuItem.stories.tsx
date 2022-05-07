@@ -11,13 +11,6 @@ export const Pure: ComponentStoryObj<typeof MenuItem> = {
   args: {
     children: 'サンプル',
   },
-  decorators: [
-    (story) => (
-      <Provider store={store}>
-        <BrowserRouter>{story()}</BrowserRouter>
-      </Provider>
-    ),
-  ],
 };
 
 export const Selected: ComponentStoryObj<typeof MenuItem> = {

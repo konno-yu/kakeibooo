@@ -1,7 +1,13 @@
+import { css } from '@emotion/react';
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { DayPanel } from './DayPanel';
 
 export default { component: DayPanel } as ComponentMeta<typeof DayPanel>;
+
+const decoratorBase = css`
+  width: 75%;
+  background: #eceff1;
+`;
 
 export const Pure: ComponentStoryObj<typeof DayPanel> = {
   args: {
@@ -9,7 +15,7 @@ export const Pure: ComponentStoryObj<typeof DayPanel> = {
     children: 1000,
     type: 'normal',
   },
-  decorators: [(story) => <div style={{ width: '75%', background: '#ECEFF1' }}>{story()}</div>],
+  decorators: [(story) => <div css={decoratorBase}>{story()}</div>],
 };
 
 export const Low: ComponentStoryObj<typeof DayPanel> = {
@@ -18,7 +24,7 @@ export const Low: ComponentStoryObj<typeof DayPanel> = {
     children: 200,
     type: 'low',
   },
-  decorators: [(story) => <div style={{ width: '75%', background: '#ECEFF1' }}>{story()}</div>],
+  decorators: Pure.decorators,
 };
 
 export const High: ComponentStoryObj<typeof DayPanel> = {
@@ -27,7 +33,7 @@ export const High: ComponentStoryObj<typeof DayPanel> = {
     children: 10000,
     type: 'high',
   },
-  decorators: [(story) => <div style={{ width: '75%', background: '#ECEFF1' }}>{story()}</div>],
+  decorators: Pure.decorators,
 };
 
 export const Zero: ComponentStoryObj<typeof DayPanel> = {
@@ -36,14 +42,14 @@ export const Zero: ComponentStoryObj<typeof DayPanel> = {
     children: 0,
     type: 'zero',
   },
-  decorators: [(story) => <div style={{ width: '75%', background: '#ECEFF1' }}>{story()}</div>],
+  decorators: Pure.decorators,
 };
 
 export const Blank: ComponentStoryObj<typeof DayPanel> = {
   args: {
     dayIndex: null,
   },
-  decorators: [(story) => <div style={{ width: '75%', background: '#ECEFF1' }}>{story()}</div>],
+  decorators: Pure.decorators,
 };
 
 export const Today: ComponentStoryObj<typeof DayPanel> = {
@@ -53,7 +59,7 @@ export const Today: ComponentStoryObj<typeof DayPanel> = {
     type: 'normal',
     isToday: true,
   },
-  decorators: [(story) => <div style={{ width: '75%', background: '#ECEFF1' }}>{story()}</div>],
+  decorators: Pure.decorators,
 };
 
 export const Selected: ComponentStoryObj<typeof DayPanel> = {
@@ -63,5 +69,5 @@ export const Selected: ComponentStoryObj<typeof DayPanel> = {
     type: 'low',
     isSelected: true,
   },
-  decorators: [(story) => <div style={{ width: '75%', background: '#ECEFF1' }}>{story()}</div>],
+  decorators: Pure.decorators,
 };

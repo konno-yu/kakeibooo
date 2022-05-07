@@ -1,9 +1,12 @@
 import { cloneElement, ReactElement, ReactNode } from 'react';
-import styled, { css } from 'styled-components';
+import { css } from '@emotion/react';
 
 interface Props {
+  /** 活性/非活性を指定します */
   disabled?: boolean;
+  /** クリック時の動作を指定します */
   onClick: () => void;
+  /** ボタンとして利用するアイコンを指定します */
   children: ReactNode;
 }
 
@@ -12,12 +15,20 @@ export const IconButton = ({ disabled = false, children, onClick }: Props) => {
     const disabledChildren = cloneElement(children as ReactElement, {
       style: { color: '#BDBDBD' },
     });
-    return <Styled.Disabled>{disabledChildren}</Styled.Disabled>;
+    return (
+      <button css={base} type="button">
+        {disabledChildren}
+      </button>
+    );
   }
-  return <Styled.Normal onClick={onClick}>{children}</Styled.Normal>;
+  return (
+    <button css={[base, normal]} onClick={onClick} type="button">
+      {children}
+    </button>
+  );
 };
 
-const baseStyle = css`
+const base = css`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,18 +36,12 @@ const baseStyle = css`
   background: none;
 `;
 
-const Styled = {
-  Disabled: styled.button`
-    ${baseStyle};
-  `,
-  Normal: styled.button`
-    ${baseStyle};
-    cursor: pointer;
-    &:hover {
-      opacity: 0.5;
-    }
-    &:active {
-      opacity: 1;
-    }
-  `,
-};
+const normal = css`
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+  &:active {
+    opacity: 1;
+  }
+`;

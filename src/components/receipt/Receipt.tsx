@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
 import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
-import styled from 'styled-components';
 import { postDailyExpenses, Receipt as ReceiptDef, updateDailyExpenses } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { extractTargetDayReceipt } from '../../view/HouseholdBookView';
@@ -170,7 +169,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
       </div>
       <Divider width={2} type="dashed" color="#CFD8DC" />
       <div css={body}>
-        <Tags>
+        <div css={tag}>
           {dayReceipts &&
             dayReceipts.map((tag) => (
               <Tag
@@ -191,7 +190,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
             label="レシートを追加"
             icon={<HiPlusSm />}
           />
-        </Tags>
+        </div>
         <div css={summartion}>
           <Typography type="subHeader" variant="normal">
             合計
@@ -258,7 +257,7 @@ const body = css`
   align-items: center;
 `;
 
-const Tags = styled.div`
+const tag = css`
   height: 100%;
   width: 100%;
   display: flex;

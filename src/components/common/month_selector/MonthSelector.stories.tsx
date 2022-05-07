@@ -11,7 +11,7 @@ export const Pure: ComponentStoryObj<typeof MonthSelector> = {
 
 export const Locale: ComponentStoryObj<typeof MonthSelector> = {
   args: {
-    targetDate: new Date(2022, 0, 1),
+    ...Pure.args,
     locale: 'en',
   },
 };

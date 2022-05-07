@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import { css } from '@emotion/react';
 
 interface Props {
   type: 'header' | 'subHeader';
@@ -9,35 +9,37 @@ interface Props {
 export const Typography = ({ type = 'header', variant = 'normal', children }: Props) => {
   switch (variant) {
     case 'normal':
-      return <NormalText type={type}>{children}</NormalText>;
+      return <div css={[typoBase(type), normal]}>{children}</div>;
     case 'accent':
-      return <AccentText type={type}>{children}</AccentText>;
+      return <div css={[typoBase(type), accent]}>{children}</div>;
     case 'helper':
-      return <HelperText type={type}>{children}</HelperText>;
+      return <div css={[typoBase(type), helper]}>{children}</div>;
     default:
       return <div />;
   }
 };
 
-const baseStyle = css`
+// TODO Propsの型と連動させたい
+const typoBase = (type: 'header' | 'subHeader') => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-weight: 900;
+  ${type === 'header'
+    ? css`
+        font-size: 24px;
+      `
+    : css`
+        font-size: 18px;
+      `}
 `;
 
-const NormalText = styled.span<Pick<Props, 'type'>>`
-  ${baseStyle};
+const normal = css`
   color: #546e7a;
-  ${({ type }) => (type === 'header' ? 'font-size: 24px;' : 'font-size: 18px;')}
 `;
 
-const AccentText = styled.span<Pick<Props, 'type'>>`
-  ${baseStyle};
+const accent = css`
   color: #4db6ac;
-  ${({ type }) => (type === 'header' ? 'font-size: 24px;' : 'font-size: 18px;')}
 `;
 
-const HelperText = styled.span<Pick<Props, 'type'>>`
-  ${baseStyle};
+const helper = css`
   color: #cecece;
-  ${({ type }) => (type === 'header' ? 'font-size: 24px;' : 'font-size: 18px;')}
 `;

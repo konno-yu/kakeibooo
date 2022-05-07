@@ -1,7 +1,7 @@
 import { ChartData } from 'chart.js';
 import { getDate, getMonth } from 'date-fns';
 import { Bar } from 'react-chartjs-2';
-import styled from 'styled-components';
+import { css } from '@emotion/react';
 import { chartOptions } from '../../../settings/chartOptions';
 
 interface Props {
@@ -63,10 +63,10 @@ export const MonthTransition: React.FC<Props> = ({ datas }: Props) => {
 
   const formattedData: ChartData = formatData();
 
-  return <Container>{/* <Bar data={{ formattedData }} options={chartOptions} height={120} /> */}</Container>;
+  return <div css={container}>{/* <Bar data={{ formattedData }} options={chartOptions} height={120} /> */}</div>;
 };
 
-const Container = styled.div`
+const container = css`
   background: transparent;
   padding: 12px;
 `;
