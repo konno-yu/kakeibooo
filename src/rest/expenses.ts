@@ -4,13 +4,13 @@ import { supabase } from '../supabaseClient';
 
 export interface Get {
   id: number;
-  purchase_date: string;
+  purchased_at: string;
   receipts: Receipt[];
   created_at: Date;
 }
 
 export interface Post {
-  purchase_date: Date;
+  purchased_at: Date;
   receipts: Receipt[];
 }
 
@@ -25,8 +25,8 @@ export const get = async (targetDate: Date) => {
   const response = await supabase
     .from<Get>('expenses')
     .select('*')
-    .gte('purchase_date', fromDate.toISOString())
-    .lt('purchase_date', toDate.toISOString());
+    .gte('purchased_at', fromDate.toISOString())
+    .lt('purchased_at', toDate.toISOString());
   return response;
 };
 
@@ -39,7 +39,7 @@ export const get = async (targetDate: Date) => {
 export const post = async (targetDate: Date, receipts: Receipt[]) => {
   const response = await supabase
     .from<Post>('expenses')
-    .insert({ purchase_date: targetDate, receipts }, { returning: 'representation' });
+    .insert({ purchased_at: targetDate, receipts }, { returning: 'representation' });
   return response;
 };
 
@@ -53,6 +53,6 @@ export const put = async (targetDate: Date, receipts: Receipt[]) => {
   const response = await supabase
     .from<Post>('expenses')
     .update({ receipts }, { returning: 'representation' })
-    .match({ purchase_date: targetDate.toUTCString() });
+    .match({ purchased_at: targetDate.toUTCString() });
   return response;
 };
