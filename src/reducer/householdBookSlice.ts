@@ -59,13 +59,13 @@ export const householdBookSlice = createSlice({
     /** 月の食費を設定する */
     setMonthExpenses: (state: HouseholdBookState, action: PayloadAction<Get[]>) => {
       action.payload.forEach((payload) => {
-        const targetDate = new Date(payload.purchase_date);
+        const targetDate = new Date(payload.purchased_at);
         state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = payload.receipts;
       });
     },
     /** 編集日の食費を設定する */
     setDailyExpense: (state: HouseholdBookState, action: PayloadAction<Post>) => {
-      const targetDate = new Date(action.payload.purchase_date);
+      const targetDate = new Date(action.payload.purchased_at);
       state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = action.payload.receipts;
     },
     /** 前月を表示する */
@@ -83,16 +83,16 @@ export const householdBookSlice = createSlice({
     builder
       .addCase(fetchMonthlyExpenses.fulfilled, (state, action) => {
         action.payload.forEach((payload) => {
-          const targetDate = new Date(payload.purchase_date);
+          const targetDate = new Date(payload.purchased_at);
           state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = payload.receipts;
         });
       })
       .addCase(postDailyExpenses.fulfilled, (state, action) => {
-        const targetDate = new Date(action.payload.purchase_date);
+        const targetDate = new Date(action.payload.purchased_at);
         state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = action.payload.receipts;
       })
       .addCase(updateDailyExpenses.fulfilled, (state, action) => {
-        const targetDate = new Date(action.payload.purchase_date);
+        const targetDate = new Date(action.payload.purchased_at);
         state.expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts = action.payload.receipts;
       });
   },

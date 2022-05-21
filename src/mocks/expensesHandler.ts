@@ -8,7 +8,7 @@ export const expensesHandler = [
 const mockedResponse = [
   {
     id: 1,
-    purchase_date: '2022-04-01',
+    purchased_at: '2022-04-01',
     receipts: [{ cost: 1000, index: 0, storeName: 'サンプル' }],
   },
 ];
