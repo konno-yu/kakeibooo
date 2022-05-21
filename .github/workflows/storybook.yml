@@ -28,6 +28,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           BRANCH: develop
-          FOLDER: docs-build
+          FOLDER: docs
           CLEAN: true
-          TARGET_FOLDER: docs
