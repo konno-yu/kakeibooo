@@ -1,8 +1,11 @@
 import { css } from '@emotion/react';
 
 interface Props {
+  /** 仕切り線の種類を指定します */
   type: 'solid' | 'dashed' | 'double' | 'dotted';
+  /** 仕切り線の太さを指定します */
   width: number;
+  /** 仕切り線の色を指定します */
   color: string;
 }
 export const Divider = ({ type = 'solid', width = 1, color = '#BDBDBD' }: Props) => (
