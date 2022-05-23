@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npx webpack-cli serve --config webpack.config.js --open --mode development",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o docs",
+    "build-storybook": "build-storybook -o docs-build",
     "chromatic": "npx chromatic --project-token=CHROMATIC_SECRET",
     "lint": "eslint --ext .ts,.tsx ./src",
     "fix": "yarn format && yarn lint:fix",
