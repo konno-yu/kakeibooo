@@ -6,11 +6,17 @@ import { IconButton } from '../../common/icon_button/IconButton';
 import { Input } from '../../common/input/Input';
 
 interface Props {
+  /** レシート内のタグの順序を指定します */
   index: number;
+  /** 店舗名を指定します */
   storeName: string;
+  /** 食費を指定します */
   cost: number;
+  /** 店舗名が変更されたときのイベントを指定します */
   onChangeStoreName: (index: number, storeName: string) => void;
+  /** 食費が変更されたときのイベントを指定します */
   onChangeCost: (index: number, cost: number) => void;
+  /** タグが削除されたときのイベントを指定します */
   onDelete: (index: number) => void;
 }
 
