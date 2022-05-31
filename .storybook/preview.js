@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from '../src/store';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
+import { ThemeProvider } from '@emotion/react';
+import { light } from '../src/theme/theme';
 
 if (typeof global.process === 'undefined') {
   const { worker } = require('../src/mocks/browser');
@@ -22,10 +24,12 @@ export const parameters = {
 export const decorators = [
   mswDecorator,
   (Story) => (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Story />
-      </BrowserRouter>
-    </Provider>
+    <ThemeProvider theme={light}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Story />
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   ),
 ];

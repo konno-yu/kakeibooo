@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, ThemeProvider } from '@emotion/react';
 import * as React from 'react';
 import { RiEmotionSadLine } from 'react-icons/ri';
 import { Provider, useDispatch } from 'react-redux';
@@ -15,6 +15,7 @@ import { SettingsView } from './view/SettingsView';
 import { UtilityCostView } from './view/UtilityCostView';
 import { setSession } from './reducer/authSlice';
 import { supabase } from './supabaseClient';
+import { light } from './theme/theme';
 
 type Props = {
   children: React.ReactNode;
@@ -34,59 +35,64 @@ export const AuthListener: React.VFC<Props> = ({ children }: Props) => {
   return <>{children}</>;
 };
 
-export const App: React.FC = () => (
-  <Provider store={store}>
-    <AuthListener>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<RootRoute />} />
-          <Route path="/signin" element={<LoginView />} />
-          <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                <HomeView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/householdbook"
-            element={
-              <PrivateRoute>
-                <HouseholdBookView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/utility-cost"
-            element={
-              <PrivateRoute>
-                <UtilityCostView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/fridge"
-            element={
-              <PrivateRoute>
-                <FridgeView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <PrivateRoute>
-                <SettingsView />
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthListener>
-  </Provider>
-);
+export const App: React.FC = () => {
+  console.log(light);
+  return (
+    <ThemeProvider theme={light}>
+      <Provider store={store}>
+        <AuthListener>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<RootRoute />} />
+              <Route path="/signin" element={<LoginView />} />
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute>
+                    <HomeView />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/householdbook"
+                element={
+                  <PrivateRoute>
+                    <HouseholdBookView />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/utility-cost"
+                element={
+                  <PrivateRoute>
+                    <UtilityCostView />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/fridge"
+                element={
+                  <PrivateRoute>
+                    <FridgeView />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <PrivateRoute>
+                    <SettingsView />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthListener>
+      </Provider>
+    </ThemeProvider>
+  )
+};
 
 // TODO 暫定
 const NotFound = () => (
