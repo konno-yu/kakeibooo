@@ -2,10 +2,12 @@
 export const light = {
     colors: {
         primary: '#FB836F',
+        pPrimary: '#fb836f80',
         secondary: '#6667AB',
-        font: '#3A3A3A',  // メインのフォント色
-        gray: '#EEEEEE', // 濃いグレー、枠線での利用を想定
-        paleGray: '#F6F6F6', // 薄いグレー
+        font: '#3A3A3A',
+        vGray: '#AAAAAA',
+        gray: '#EEEEEE',
+        pGray: '#F6F6F6',
         white: '#FFFFFF'
     },
 }

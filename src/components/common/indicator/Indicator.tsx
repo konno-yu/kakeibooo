@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 
 interface Props {
   value: { [key: string]: number };
@@ -55,26 +55,26 @@ const container = css`
   justify-content: center;
 `;
 
-const scaleLabel = css`
-  color: #546e7a;
+const scaleLabel = (theme: Theme) => css`
+  color: ${theme.colors.font};
   font-weight: 700;
   font-size: 12px;
   width: 10%;
   text-align: center;
 `;
 
-const indicator = css`
+const indicator = (theme: Theme) => css`
   width: 80%;
   height: 30%;
-  background: #eceff1;
+  background: ${theme.colors.gray};
   border-radius: 12px;
   display: flex;
 `;
 
-const limitOver = css`
+const limitOver = (theme: Theme) => css`
   width: 100%;
   height: 100%;
-  background: repeating-linear-gradient(-45deg, #ff8a80, #ff8a80 2px, #ffcdd2 2px, #ffcdd2 4px);
+  background: repeating-linear-gradient(-45deg, ${theme.colors.primary}, ${theme.colors.primary} 2px, ${theme.colors.pPrimary} 2px, ${theme.colors.pPrimary} 4px);
   border-radius: 12px;
 `;
 

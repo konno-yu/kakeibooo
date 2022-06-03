@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { AiFillAccountBook } from 'react-icons/ai';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
@@ -80,10 +80,10 @@ const drawerContainer = css`
   padding: 24px 12px;
 `;
 
-const button = css`
+const button = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-weight: 600;
-  color: #546e7a;
+  color: ${theme.colors.font};
   display: flex;
   justify-content: center;
   align-items: center;

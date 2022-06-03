@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import Logo from '../../../images/icon.svg';
 
 export const AppTitle = () => (
@@ -16,8 +16,8 @@ const container = css`
   gap: 8px;
 `;
 
-const title = css`
-  color: #546e7a;
+const title = (theme: Theme) => css`
+  color: ${theme.colors.font};
   font-weight: 900;
   font-size: 16px;
 `;

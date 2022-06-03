@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 
 interface Props {
   type: 'header' | 'subHeader';
@@ -7,11 +7,12 @@ interface Props {
 }
 
 export const Typography = ({ type = 'header', variant = 'normal', children }: Props) => {
+  const theme = useTheme();
   switch (variant) {
     case 'normal':
-      return <div css={[typoBase(type), normal]}>{children}</div>;
+      return <div css={[typoBase(type), normal(theme)]}>{children}</div>;
     case 'accent':
-      return <div css={[typoBase(type), accent]}>{children}</div>;
+      return <div css={[typoBase(type), accent(theme)]}>{children}</div>;
     case 'helper':
       return <div css={[typoBase(type), helper]}>{children}</div>;
     default:
@@ -32,12 +33,12 @@ const typoBase = (type: 'header' | 'subHeader') => css`
       `}
 `;
 
-const normal = css`
-  color: #546e7a;
+const normal = (theme: Theme) => css`
+  color: ${theme.colors.font};
 `;
 
-const accent = css`
-  color: #4db6ac;
+const accent = (theme: Theme) => css`
+  color: ${theme.colors.primary};
 `;
 
 const helper = css`

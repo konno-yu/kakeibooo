@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 
 const DAY_OF_WEEK_LABEL: { [key in 'ja' | 'en']: string[] } = {
   ja: ['日', '月', '火', '水', '木', '金', '土'],
@@ -26,12 +26,12 @@ const header = css`
   align-items: flex-end;
 `;
 
-const element = css`
+const element = (theme: Theme) => css`
   width: calc(100% / 7);
   padding-bottom: 2px;
   font-size: 14px;
   font-weight: 800;
-  color: #546e7a;
-  border-bottom: 1.5px solid #546e7a;
+  color: ${theme.colors.font};
+  border-bottom: 1.5px solid ${theme.colors.font};
   text-align: center;
 `;

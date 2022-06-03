@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ export interface AProps {
   children: ReactNode;
 }
 export const MenuItem = ({ selected = false, icon, id, children, onChange }: AProps) => {
+  const theme = useTheme();
   const handleOnChange = () => {
     if (onChange) {
       return onChange(id);
@@ -19,7 +20,7 @@ export const MenuItem = ({ selected = false, icon, id, children, onChange }: APr
 
   return (
     <Link css={link} to={`/${id}`}>
-      <button type="button" css={menuItem(selected)} id={id} onClick={handleOnChange}>
+      <button type="button" css={menuItem(theme, selected)} id={id} onClick={handleOnChange}>
         {icon}
         {children}
       </button>
@@ -31,7 +32,7 @@ const link = css`
   text-decoration: none;
 `;
 
-const menuItem = (selected: boolean) => css`
+const menuItem = (theme: Theme, selected: boolean) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   height: 40px;
   width: 160px;
@@ -46,20 +47,20 @@ const menuItem = (selected: boolean) => css`
   cursor: pointer;
   ${selected
     ? css`
-        background: #80cbc4;
-        color: #ffffff;
+        background: ${theme.colors.primary};
+        color: ${theme.colors.white};
         &:hover {
-          background: #b2dfdb;
+          background: ${theme.colors.pPrimary};
         }
         &:active {
-          background: #80cbc4;
+          background: ${theme.colors.primary};
         }
       `
     : css`
         background: none;
-        color: #546e7a;
+        color: ${theme.colors.font};
         &:hover {
-          background: #eeeeee;
+          background: ${theme.colors.pGray};
         }
         &:active {
           background: none;

@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { FaUserEdit } from 'react-icons/fa';
 import ImgPath from '../../../images/medal.svg';
 
@@ -67,13 +67,13 @@ export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = fal
   }
 };
 
-const panelBase = css`
+const panelBase = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: calc(100% / 7);
   height: 100%;
   min-height: 80px;
   border-radius: 8px;
-  color: #546e7a;
+  color: ${theme.colors.font};
   font-weight: 700;
   display: flex;
   flex-direction: column;
@@ -81,13 +81,13 @@ const panelBase = css`
   padding: 0px;
 `;
 
-const blank = css`
-  background: #ffffff;
+const blank = (theme: Theme) => css`
+  background: ${theme.colors.white};
 `;
 
-const normal = css`
+const normal = (theme: Theme) => css`
   cursor: pointer;
-  background: #ffffff;
+  background: ${theme.colors.pGray};
   &:hover {
     background: #f5f5f5;
   }
@@ -153,6 +153,6 @@ const dayValueText = css`
   flex-grow: 1;
 `;
 
-const todayLabel = css`
-  color: #4db6ac;
+const todayLabel = (theme: Theme) => css`
+  color: ${theme.colors.primary};
 `;

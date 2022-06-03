@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
 import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
@@ -22,6 +22,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
   const [snackbarStatus, setSnackbarStatus] = React.useState<SnackbarProps>({ open: false, type: 'success', text: '' });
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   useEffect(() => {
     setDayReceipts(extractTargetDayReceipt(expenses, targetDate));
@@ -167,7 +168,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
             .padStart(2, '0')}`}
         </Typography>
       </div>
-      <Divider width={2} type="dashed" color="#CFD8DC" />
+      <Divider width={2} type="dashed" color={theme.colors.gray} />
       <div css={body}>
         <div css={tag}>
           {dayReceipts &&
@@ -200,7 +201,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           </Typography>
         </div>
       </div>
-      <Divider width={2} type="dashed" color="#CFD8DC" />
+      <Divider width={2} type="dashed" color={theme.colors.gray} />
       <div css={footer}>
         <Button
           disabled={!dayReceipts || dayReceipts.length === 0}
@@ -229,10 +230,10 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
   );
 };
 
-const container = css`
+const container = (theme: Theme) => css`
   height: calc(100vh - 24px);
-  background: #ffffff;
-  border: 2px solid #eceff1;
+  background: ${theme.colors.white};
+  border: 2px solid ${theme.colors.gray};
   border-radius: 8px;
   display: flex;
   flex-direction: column;

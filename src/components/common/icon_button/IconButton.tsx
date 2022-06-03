@@ -1,5 +1,5 @@
 import { cloneElement, ReactElement, ReactNode } from 'react';
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 
 interface Props {
   /** 活性/非活性を指定します */
@@ -11,9 +11,10 @@ interface Props {
 }
 
 export const IconButton = ({ disabled = false, children, onClick }: Props) => {
+  const theme = useTheme();
   if (disabled) {
     const disabledChildren = cloneElement(children as ReactElement, {
-      style: { color: '#BDBDBD' },
+      style: { color: theme.colors.gray },
     });
     return (
       <button css={base} type="button">

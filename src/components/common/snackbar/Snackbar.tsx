@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import ReactDOM from 'react-dom';
 import { RiEmotionSadFill, RiEmotionFill } from 'react-icons/ri';
 
@@ -21,28 +21,32 @@ export interface SnackbarProps {
   subText?: string;
 }
 
-const COLOR_SET: { [key in 'success' | 'error']: string } = {
-  success: '#80cbc4',
-  error: '#EF9A9A',
-};
 
-export const Snackbar = ({ open, type, text, subText }: SnackbarProps) =>
-  ReactDOM.createPortal(
-    <div css={open ? snackbarBase(COLOR_SET[type]) : none}>
-      {type === 'error' && <RiEmotionSadFill color="#FFFFFF" size={24} />}
-      {type === 'success' && <RiEmotionFill color="#FFFFFF" size={24} />}
-      <div
-        css={css`
+export const Snackbar = ({ open, type, text, subText }: SnackbarProps) => {
+  const theme = useTheme();
+  const COLOR_SET: { [key in 'success' | 'error']: string } = {
+  success: theme.colors.font,
+  error: theme.colors.primary,
+};
+  return (
+    ReactDOM.createPortal(
+      <div css={open ? snackbarBase(COLOR_SET[type]) : none}>
+        {type === 'error' && <RiEmotionSadFill color="#FFFFFF" size={24} />}
+        {type === 'success' && <RiEmotionFill color="#FFFFFF" size={24} />}
+        <div
+          css={css`
           display: flex;
           flex-direction: column;
         `}
-      >
-        <span css={textStyle}>{text}</span>
-        <span css={subTextStyle}>{subText}</span>
-      </div>
-    </div>,
-    document.getElementById('root')
-  );
+        >
+          <span css={textStyle}>{text}</span>
+          <span css={subTextStyle}>{subText}</span>
+        </div>
+      </div>,
+      document.getElementById('root')
+    )
+  )
+}
 
 const snackbarBase = (color: string) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
@@ -75,13 +79,13 @@ const none = css`
   display: none;
 `;
 
-const textStyle = css`
+const textStyle = (theme: Theme) => css`
   font-size: 11pt;
   font-weight: 700;
-  color: #ffffff;
+  color: ${theme.colors.white};
 `;
 
-const subTextStyle = css`
+const subTextStyle = (theme: Theme) => css`
   font-size: 9pt;
-  color: #ffffff;
+  color: ${theme.colors.white};
 `;
