@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
 import { FaUserEdit } from 'react-icons/fa';
 import ImgPath from '../../../images/medal.svg';
 
@@ -18,8 +18,10 @@ interface Props {
 }
 
 export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = false, type, onClick }: Props) => {
+  const theme = useTheme();
+  const panelStyle: SerializedStyles[] = [panelBase(theme)];
   if (dayIndex === null) {
-    return <div css={[panelBase, blank]} />;
+    return <div css={[...panelStyle, blank(theme)]} />;
   }
 
   const handleOnClick = () => {
@@ -39,120 +41,94 @@ export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = fal
 
   switch (type) {
     case 'zero':
-      return (
-        <button css={[panelBase, zero]} onClick={handleOnClick} onKeyUp={() => ''} type="button">
-          {PanelBody}
-        </button>
-      );
+      panelStyle.push(zero(theme));
+      break;
     case 'low':
-      return (
-        <button css={[panelBase, low]} onClick={handleOnClick} onKeyUp={() => ''} type="button">
-          {PanelBody}
-        </button>
-      );
+      panelStyle.push(low(theme));
+      break;
     case 'normal':
-      return (
-        <button css={[panelBase, normal]} onClick={handleOnClick} onKeyUp={() => ''} type="button">
-          {PanelBody}
-        </button>
-      );
+      panelStyle.push(normal(theme));
+      break;
     case 'high':
-      return (
-        <button css={[panelBase, high]} onClick={handleOnClick} onKeyUp={() => ''} type="button">
-          {PanelBody}
-        </button>
-      );
+      panelStyle.push(high(theme));
+      break;
     default:
-      return <div />;
+      break;
   }
+
+  return (
+    <button css={panelStyle} onClick={handleOnClick} onKeyUp={() => ''} type="button">
+      {PanelBody}
+    </button>
+  );
 };
 
-const panelBase = css`
+const panelBase = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: calc(100% / 7);
   height: 100%;
   min-height: 80px;
-  border-radius: 8px;
-  color: #546e7a;
-  font-weight: 700;
+  border-radius: ${theme.units.px8};
+  color: ${theme.colors.font};
+  font-weight: ${theme.fontWeights.bold};
   display: flex;
   flex-direction: column;
   border: none;
-  padding: 0px;
+  padding: ${theme.units.px0};
 `;
 
-const blank = css`
-  background: #ffffff;
+const blank = (theme: Theme) => css`
+  background: ${theme.colors.white};
 `;
 
-const normal = css`
+const normal = (theme: Theme) => css`
   cursor: pointer;
-  background: #ffffff;
-  &:hover {
-    background: #f5f5f5;
-  }
-  &:active {
-    background: #ffffff;
-  }
+  color: ${theme.colors.font};
+  background: ${theme.colors.white};
 `;
 
-const low = css`
+const low = (theme: Theme) => css`
   cursor: pointer;
-  background: #b2dfdb;
-  &:hover {
-    background: #e0f2f1;
-  }
-  &:active {
-    background: #b2dfdb;
-  }
+  color: ${theme.colors.secondary};
+  background: ${theme.colors.white};
 `;
 
-const high = css`
+const high = (theme: Theme) => css`
   cursor: pointer;
-  background: #ffcdd2;
-  &:hover {
-    background: #ffebee;
-  }
-  &:active {
-    background: #ffcdd2;
-  }
+  color: ${theme.colors.primary};
+  background: ${theme.colors.white};
 `;
 
-const zero = css`
+const zero = (theme: Theme) => css`
   cursor: pointer;
-  background: #fff9c4;
+  background: ${theme.colors.white};
   background-image: url(${ImgPath});
   background-size: 50% auto;
   background-position: center center;
   background-repeat: no-repeat;
-  &:hover {
-    background: #fffde7;
-  }
-  &:active {
-    background: #fff9c4;
-  }
 `;
 
-const dayLabel = css`
+const dayLabel = (theme: Theme) => css`
   width: calc(100% - 16px);
-  padding: 4px 8px 0 8px;
+  padding: ${theme.units.px4} ${theme.units.px8} ${theme.units.px0} ${theme.units.px8};
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: ${theme.units.px10};
   align-items: flex-start;
-  font-size: 16px;
+  font-size: ${theme.fontSizes.pt12};
+  color: ${theme.colors.paleFont};
 `;
 
-const dayValueText = css`
+const dayValueText = (theme: Theme) => css`
   width: 100%;
-  font-size: 20px;
-  font-weight: 900;
+  font-size: ${theme.fontSizes.pt16};
+  font-weight: ${theme.fontWeights.extraBold};
   display: flex;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
 `;
 
-const todayLabel = css`
-  color: #4db6ac;
+const todayLabel = (theme: Theme) => css`
+  color: ${theme.colors.primary};
 `;

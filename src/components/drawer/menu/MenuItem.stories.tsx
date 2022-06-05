@@ -1,8 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 import { GiFlatfish } from 'react-icons/gi';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { store } from '../../../store';
 import { MenuItem } from './MenuItem';
 
 export default { component: MenuItem } as ComponentMeta<typeof MenuItem>;

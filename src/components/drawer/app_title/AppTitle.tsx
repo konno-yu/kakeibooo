@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import Logo from '../../../images/icon.svg';
 
 export const AppTitle = () => (
@@ -8,16 +8,16 @@ export const AppTitle = () => (
   </div>
 );
 
-const container = css`
+const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: ${theme.units.px8};
 `;
 
-const title = css`
-  color: #546e7a;
-  font-weight: 900;
-  font-size: 16px;
+const title = (theme: Theme) => css`
+  color: ${theme.colors.font};
+  font-weight: ${theme.fontWeights.extraBold};
+  font-size: ${theme.fontSizes.pt12};
 `;

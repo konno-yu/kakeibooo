@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
 import React, { useEffect } from 'react';
 import { HiPlusSm } from 'react-icons/hi';
@@ -22,6 +22,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
   const [snackbarStatus, setSnackbarStatus] = React.useState<SnackbarProps>({ open: false, type: 'success', text: '' });
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   useEffect(() => {
     setDayReceipts(extractTargetDayReceipt(expenses, targetDate));
@@ -167,7 +168,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
             .padStart(2, '0')}`}
         </Typography>
       </div>
-      <Divider width={2} type="dashed" color="#CFD8DC" />
+      <Divider width={2} type="dashed" color={theme.colors.gray} />
       <div css={body}>
         <div css={tag}>
           {dayReceipts &&
@@ -200,7 +201,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           </Typography>
         </div>
       </div>
-      <Divider width={2} type="dashed" color="#CFD8DC" />
+      <Divider width={2} type="dashed" color={theme.colors.gray} />
       <div css={footer}>
         <Button
           disabled={!dayReceipts || dayReceipts.length === 0}
@@ -214,7 +215,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           onClick={handleClickNoMoney}
           width="80%"
           variant="filled"
-          color="accent"
+          color="primary"
           label="Noマネーディとして登録"
           disabled={dayReceipts && dayReceipts.length > 0}
         />
@@ -229,41 +230,41 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
   );
 };
 
-const container = css`
+const container = (theme: Theme) => css`
   height: calc(100vh - 24px);
-  background: #ffffff;
-  border: 2px solid #eceff1;
-  border-radius: 8px;
+  background: ${theme.colors.white};
+  border: 2px solid ${theme.colors.gray};
+  border-radius: ${theme.units.px8};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-const header = css`
+const header = (theme: Theme) => css`
   height: 10%;
-  padding: 8px;
+  padding: ${theme.units.px8};
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
 `;
 
-const body = css`
+const body = (theme: Theme) => css`
   height: 70%;
-  padding: 8px;
+  padding: ${theme.units.px8};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 `;
 
-const tag = css`
+const tag = (theme: Theme) => css`
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: ${theme.units.px8};
 `;
 
 const summartion = css`

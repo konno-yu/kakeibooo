@@ -1,6 +1,6 @@
-import { css } from '@emotion/react';
 import { UnderConstruction } from '../App';
 import { Drawer } from '../components/drawer/Drawer';
+import { drawer } from './HouseholdBookView';
 
 export const SettingsView = () => (
   <>
@@ -10,11 +10,3 @@ export const SettingsView = () => (
     <UnderConstruction />
   </>
 );
-
-// TODO 多重
-const drawer = css`
-  font-family: 'M PLUS Rounded 1c', sans-serif;
-  height: 100vh;
-  width: 15%;
-  border-right: 1px solid #eeeeee;
-`;

@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import { getMonth, getYear } from 'date-fns';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { IconButton } from '../icon_button/IconButton';
@@ -11,6 +11,7 @@ interface Props {
 }
 
 export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPrev, onNext }: Props) => {
+  const theme = useTheme();
   const displayFormat =
     locale === 'ja'
       ? `${getYear(targetDate)}年 ${getMonth(targetDate) + 1}月`
@@ -21,21 +22,21 @@ export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPr
       <span>{displayFormat}</span>
       <div css={monthTransition}>
         <IconButton onClick={onPrev}>
-          <HiArrowCircleLeft size={28} color="#546E7A" />
+          <HiArrowCircleLeft size={28} color={theme.colors.font} />
         </IconButton>
         <IconButton onClick={onNext}>
-          <HiArrowCircleRight size={28} color="#546E7A" />
+          <HiArrowCircleRight size={28} color={theme.colors.font} />
         </IconButton>
       </div>
     </div>
   );
 };
 
-const container = css`
+const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-size: 24px;
-  color: #546e7a;
-  font-weight: 900;
+  font-size: ${theme.fontSizes.pt24};
+  color: ${theme.colors.font};
+  font-weight: ${theme.fontWeights.extraBold};
   display: flex;
   justify-content: space-between;
   align-items: center;

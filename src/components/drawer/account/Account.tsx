@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import IconPath from '../../../images/avatar.svg';
 
 interface Props {
@@ -26,22 +26,22 @@ const container = css`
   align-items: center;
 `;
 
-const image = css`
+const image = (theme: Theme) => css`
   height: 70px;
   width: 70px;
-  border: 3px solid #cfd8dc;
+  border: 3px solid ${theme.colors.paleGray};
   border-radius: 100px;
 `;
 
-const usernameText = css`
-  font-size: 16px;
-  margin-top: 4px;
-  font-weight: 600;
-  color: #546e7a;
+const usernameText = (theme: Theme) => css`
+  font-size: ${theme.fontSizes.pt12};
+  margin-top: ${theme.units.px4};
+  font-weight: ${theme.fontWeights.semiBold};
+  color: ${theme.colors.font};
 `;
 
-const userIdText = css`
-  font-size: 14px;
-  font-weight: 600;
-  color: #90a4ae;
+const userIdText = (theme: Theme) => css`
+  font-size: ${theme.fontSizes.pt10};
+  font-weight: ${theme.fontWeights.semiBold};
+  color: ${theme.colors.vividGray};
 `;

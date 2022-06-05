@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import ReactDOM from 'react-dom';
 import { RiEmotionSadFill, RiEmotionFill } from 'react-icons/ri';
 
@@ -21,16 +21,16 @@ export interface SnackbarProps {
   subText?: string;
 }
 
-const COLOR_SET: { [key in 'success' | 'error']: string } = {
-  success: '#80cbc4',
-  error: '#EF9A9A',
-};
-
-export const Snackbar = ({ open, type, text, subText }: SnackbarProps) =>
-  ReactDOM.createPortal(
-    <div css={open ? snackbarBase(COLOR_SET[type]) : none}>
-      {type === 'error' && <RiEmotionSadFill color="#FFFFFF" size={24} />}
-      {type === 'success' && <RiEmotionFill color="#FFFFFF" size={24} />}
+export const Snackbar = ({ open, type, text, subText }: SnackbarProps) => {
+  const theme = useTheme();
+  const COLOR_SET: { [key in 'success' | 'error']: string } = {
+    success: theme.colors.font,
+    error: theme.colors.primary,
+  };
+  return ReactDOM.createPortal(
+    <div css={open ? snackbarBase(COLOR_SET[type], theme) : none}>
+      {type === 'error' && <RiEmotionSadFill color={theme.colors.white} size={24} />}
+      {type === 'success' && <RiEmotionFill color={theme.colors.white} size={24} />}
       <div
         css={css`
           display: flex;
@@ -43,22 +43,23 @@ export const Snackbar = ({ open, type, text, subText }: SnackbarProps) =>
     </div>,
     document.getElementById('root')
   );
+};
 
-const snackbarBase = (color: string) => css`
+const snackbarBase = (color: string, theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: 280px;
   height: 45px;
   background: ${color};
-  padding: 0 8px;
-  border-radius: 4px;
+  padding: ${theme.units.px0} ${theme.units.px8};
+  border-radius: ${theme.units.px4};
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 8px;
+  gap: ${theme.units.px8};
   position: absolute;
   box-shadow: 3px 3px 3px #9e9e9e;
-  top: 8px;
-  right: 16px;
+  top: ${theme.units.px8};
+  right: ${theme.units.px16};
   animation: fadein 1s forwards;
   @keyframes fadein {
     0% {
@@ -75,13 +76,13 @@ const none = css`
   display: none;
 `;
 
-const textStyle = css`
-  font-size: 11pt;
-  font-weight: 700;
-  color: #ffffff;
+const textStyle = (theme: Theme) => css`
+  font-size: ${theme.fontSizes.pt12};
+  font-weight: ${theme.fontWeights.bold};
+  color: ${theme.colors.white};
 `;
 
-const subTextStyle = css`
-  font-size: 9pt;
-  color: #ffffff;
+const subTextStyle = (theme: Theme) => css`
+  font-size: ${theme.fontSizes.pt08};
+  color: ${theme.colors.white};
 `;

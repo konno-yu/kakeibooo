@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { getDate, isEqual } from 'date-fns';
 import { useEffect } from 'react';
 import {
@@ -108,24 +108,24 @@ export const Calendar: React.FC<CalendarProps> = ({ datas, today }: CalendarProp
   );
 };
 
-const container = css`
+const container = (theme: Theme) => css`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: ${theme.units.px8};
 `;
 
-const weekContainer = css`
+const weekContainer = (theme: Theme) => css`
   width: 100%;
   height: calc(100% / 6);
   display: flex;
-  gap: 8px;
+  gap: ${theme.units.px8};
 `;
 
-const monthContainer = css`
+const monthContainer = (theme: Theme) => css`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: ${theme.units.px8};
 `;

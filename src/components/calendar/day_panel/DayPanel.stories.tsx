@@ -6,7 +6,7 @@ export default { component: DayPanel } as ComponentMeta<typeof DayPanel>;
 
 const decoratorBase = css`
   width: 75%;
-  background: #eceff1;
+  background: #f6f6f6;
 `;
 
 export const Pure: ComponentStoryObj<typeof DayPanel> = {

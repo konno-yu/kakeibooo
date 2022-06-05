@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 
 interface Props {
   /** 入力欄の幅を指定します */
@@ -29,14 +29,15 @@ export const Input = ({
   value,
   onChange,
 }: Props) => {
+  const theme = useTheme();
   if (disabled) {
-    return <input css={base(width)} type="text" placeholder={placeholder} maxLength={maxLength} disabled />;
+    return <input css={base(theme, width)} type="text" placeholder={placeholder} maxLength={maxLength} disabled />;
   }
   return (
     <div css={container}>
       {icon}
       <input
-        css={[base(width), normal]}
+        css={[base(theme, width), normal(theme)]}
         type={type}
         placeholder={placeholder}
         maxLength={maxLength}
@@ -47,32 +48,32 @@ export const Input = ({
   );
 };
 
-const container = css`
+const container = (theme: Theme) => css`
   display: flex;
-  gap: 4px;
+  gap: ${theme.units.px4};
   align-items: center;
 `;
 
-const base = (width: number) => css`
+const base = (theme: Theme, width: number) => css`
   width: ${width}px;
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-size: 16px;
+  font-size: ${theme.fontSizes.pt12};
   height: 1.5rem;
-  font-weight: 700;
+  font-weight: ${theme.fontWeights.bold};
   border: none;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid ${theme.colors.vividGray};
   ::placeholder {
-    font-weight: 400;
-    color: #b0bec5;
-    font-size: 12px;
+    font-weight: ${theme.fontWeights.thin};
+    color: ${theme.colors.vividGray};
+    font-size: ${theme.fontSizes.pt10};
   }
 `;
 
-const normal = css`
-  color: #546e7a;
+const normal = (theme: Theme) => css`
+  color: ${theme.colors.font};
   background: transparent;
   &:focus {
     outline: none;
-    border-bottom: 2px solid #546e7a;
+    border-bottom: 2px solid ${theme.colors.font};
   }
 `;

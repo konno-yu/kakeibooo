@@ -8,7 +8,7 @@ export const Filled: ComponentStoryObj<typeof Button> = {
   args: {
     label: 'これはボタンです',
     variant: 'filled',
-    color: 'normal',
+    color: 'primary',
     width: 200,
   },
 };
@@ -17,8 +17,17 @@ export const Outlined: ComponentStoryObj<typeof Button> = {
   args: {
     label: 'これはボタンです',
     variant: 'outlined',
-    color: 'accent',
+    color: 'secondary',
     width: 200,
+  },
+};
+
+export const TextOnly: ComponentStoryObj<typeof Button> = {
+  args: {
+    label: 'これはボタンです',
+    variant: 'text',
+    color: 'normal',
+    width: 300,
   },
 };
 

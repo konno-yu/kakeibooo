@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import { ChangeEvent, useState } from 'react';
 import { HiMail, HiKey } from 'react-icons/hi';
 import { ApiError } from '@supabase/supabase-js';
@@ -14,6 +14,7 @@ interface FormProps {
 }
 
 export const Form = ({ error }: FormProps) => {
+  const theme = useTheme();
   const dispatch = useAppDispatch();
   const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
@@ -52,7 +53,7 @@ export const Form = ({ error }: FormProps) => {
       <div css={input}>
         <Input
           width={280}
-          icon={<HiMail color="#546e7a" />}
+          icon={<HiMail color={theme.colors.font} />}
           value={address}
           onChange={handleOnChangeAddress}
           placeholder="メールアドレス"
@@ -60,7 +61,7 @@ export const Form = ({ error }: FormProps) => {
         <Input
           width={280}
           type="password"
-          icon={<HiKey color="#546e7a" />}
+          icon={<HiKey color={theme.colors.font} />}
           value={password}
           onChange={handleOnChangePassword}
           placeholder="パスワード"
@@ -74,16 +75,16 @@ export const Form = ({ error }: FormProps) => {
   );
 };
 
-const loginForm = css`
+const loginForm = (theme: Theme) => css`
   height: 500px;
   width: 350px;
-  border: 1px solid #eeeeee;
-  border-radius: 8px;
-  padding: 16px;
+  border: 1px solid ${theme.colors.gray};
+  border-radius: ${theme.units.px8};
+  padding: ${theme.units.px16};
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #ffffff;
+  background: ${theme.colors.white};
 `;
 
 const icon = css`
@@ -93,15 +94,15 @@ const icon = css`
   align-items: center;
 `;
 
-const title = css`
+const title = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   height: 10%;
-  font-weight: 800;
-  font-size: 24pt;
+  font-weight: ${theme.fontWeights.extraBold};
+  font-size: ${theme.fontSizes.pt24};
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #333333;
+  color: ${theme.colors.font};
 `;
 
 const input = css`
@@ -111,13 +112,13 @@ const input = css`
   justify-content: space-evenly;
 `;
 
-const message = css`
+const message = (theme: Theme) => css`
   height: 10%;
   width: 100%;
-  font-size: 10pt;
+  font-size: ${theme.fontSizes.pt10};
   text-align: center;
-  font-weight: 700;
-  color: #ff5252;
+  font-weight: ${theme.fontWeights.bold};
+  color: ${theme.colors.primary};
 `;
 
 const btn = css`
@@ -129,8 +130,8 @@ const btn = css`
   justify-content: space-evenly;
 `;
 
-const circle = css`
-  background: #80cbc4;
+const circle = (theme: Theme) => css`
+  background: ${theme.colors.primary};
   width: 90px;
   height: 90px;
   border-radius: 100px;

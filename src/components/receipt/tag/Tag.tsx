@@ -1,7 +1,8 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import { AiFillShopping } from 'react-icons/ai';
-import { FaCircle, FaTrashAlt } from 'react-icons/fa';
+import { FaCircle } from 'react-icons/fa';
 import { HiCurrencyYen } from 'react-icons/hi';
+import { RiDeleteBack2Fill } from 'react-icons/ri';
 import { IconButton } from '../../common/icon_button/IconButton';
 import { Input } from '../../common/input/Input';
 
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, onDelete }: Props) => {
+  const theme = useTheme();
   const handleStoreNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeStoreName(index, event.target.value);
   };
@@ -36,7 +38,7 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
   return (
     <div css={container}>
       <div css={label}>
-        <FaCircle color="#F5F5F5" size={12} />
+        <FaCircle color={theme.colors.white} size={12} />
       </div>
       <div css={input}>
         <Input
@@ -44,50 +46,50 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
           width={150}
           value={storeName}
           placeholder="店舗名"
-          icon={<AiFillShopping size={16} color="#9E9E9E" />}
+          icon={<AiFillShopping size={16} color={theme.colors.font} />}
         />
         <Input
           onChange={handleCostChange}
           width={150}
           value={cost}
           placeholder="使った金額"
-          icon={<HiCurrencyYen size={16} color="#9E9E9E" />}
+          icon={<HiCurrencyYen size={16} color={theme.colors.font} />}
         />
       </div>
       <div css={dustbox}>
         <IconButton onClick={handleDelete}>
-          <FaTrashAlt size={20} color="#546E7A" />
+          <RiDeleteBack2Fill size={20} color={theme.colors.font} />
         </IconButton>
       </div>
     </div>
   );
 };
 
-const container = css`
+const container = (theme: Theme) => css`
   width: 100%;
   height: 18%;
-  background: #f5f5f5;
+  background: ${theme.colors.white};
   display: flex;
   justify-content: space-between;
-  gap: 4px;
+  gap: ${theme.units.px4};
 `;
 
-const label = css`
+const label = (theme: Theme) => css`
   width: 10%;
-  background: #4db6ac;
+  background: ${theme.colors.primary};
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const input = css`
+const input = (theme: Theme) => css`
   width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 8px;
-  gap: 4px;
+  padding: ${theme.units.px8};
+  gap: ${theme.units.px4};
 `;
 
 const dustbox = css`
