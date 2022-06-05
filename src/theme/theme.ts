@@ -26,9 +26,21 @@ export const light = {
     bold: 700,
     extraBold: 900,
   },
+  units: {
+    px0: '0px',
+    px2: '2px',
+    px4: '4px',
+    px8: '8px',
+    px10: '10px',
+    px12: '12px',
+    px16: '16px',
+    px20: '20px',
+    px24: '24px',
+  },
 };
 
 // TODO ライトテーマ以外が入ると破綻する
 export type Colors = keyof typeof light['colors'];
 export type FontSizes = keyof typeof light['fontSizes'];
 export type FontWeights = keyof typeof light['fontWeights'];
+export type Units = keyof typeof light['units'];
