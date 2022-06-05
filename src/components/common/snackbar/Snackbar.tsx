@@ -77,12 +77,12 @@ const none = css`
 `;
 
 const textStyle = (theme: Theme) => css`
-  font-size: 11pt;
+  font-size: ${theme.fontSizes.pt12};
   font-weight: 700;
   color: ${theme.colors.white};
 `;
 
 const subTextStyle = (theme: Theme) => css`
-  font-size: 9pt;
+  font-size: ${theme.fontSizes.pt08};
   color: ${theme.colors.white};
 `;

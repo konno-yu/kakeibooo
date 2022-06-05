@@ -57,7 +57,7 @@ const container = css`
 const base = (theme: Theme, width: number) => css`
   width: ${width}px;
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-size: 16px;
+  font-size: ${theme.fontSizes.pt12};
   height: 1.5rem;
   font-weight: 700;
   border: none;
@@ -65,7 +65,7 @@ const base = (theme: Theme, width: number) => css`
   ::placeholder {
     font-weight: 400;
     color: ${theme.colors.vividGray};
-    font-size: 12px;
+    font-size: ${theme.fontSizes.pt10};
   }
 `;
 

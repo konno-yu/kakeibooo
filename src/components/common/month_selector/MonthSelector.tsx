@@ -34,7 +34,7 @@ export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPr
 
 const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-size: 24px;
+  font-size: ${theme.fontSizes.pt24};
   color: ${theme.colors.font};
   font-weight: 900;
   display: flex;

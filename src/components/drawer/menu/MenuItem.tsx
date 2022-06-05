@@ -40,7 +40,7 @@ const menuItem = (theme: Theme, selected: boolean) => css`
   padding: 0 12px 0 12px;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: ${theme.fontSizes.pt10};
   font-weight: 600;
   border-radius: 4px;
   border: none;

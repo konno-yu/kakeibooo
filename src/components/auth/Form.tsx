@@ -98,7 +98,7 @@ const title = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   height: 10%;
   font-weight: 800;
-  font-size: 24pt;
+  font-size: ${theme.fontSizes.pt24};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,7 +115,7 @@ const input = css`
 const message = (theme: Theme) => css`
   height: 10%;
   width: 100%;
-  font-size: 10pt;
+  font-size: ${theme.fontSizes.pt10};
   text-align: center;
   font-weight: 700;
   color: ${theme.colors.primary};

@@ -115,7 +115,7 @@ const dayLabel = (theme: Theme) => css`
   justify-content: space-between;
   gap: 10px;
   align-items: flex-start;
-  font-size: 16px;
+  font-size: ${theme.fontSizes.pt12};
   color: ${theme.colors.paleFont};
 `;
 

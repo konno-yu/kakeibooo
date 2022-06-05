@@ -8,7 +8,7 @@ interface Props {
 
 export const Typography = ({ type = 'header', variant = 'normal', children }: Props) => {
   const theme = useTheme();
-  const typoStyle: SerializedStyles[] = [typoBase(type)];
+  const typoStyle: SerializedStyles[] = [typoBase(type, theme)];
   switch (variant) {
     case 'normal':
       typoStyle.push(normal(theme));
@@ -26,15 +26,15 @@ export const Typography = ({ type = 'header', variant = 'normal', children }: Pr
 };
 
 // TODO Propsの型と連動させたい
-const typoBase = (type: 'header' | 'subHeader') => css`
+const typoBase = (type: 'header' | 'subHeader', theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-weight: 900;
   ${type === 'header'
     ? css`
-        font-size: 24px;
+        font-size: ${theme.fontSizes.pt18};
       `
     : css`
-        font-size: 18px;
+        font-size: ${theme.fontSizes.pt12};
       `}
 `;
 
