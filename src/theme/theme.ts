@@ -12,7 +12,16 @@ export const light = {
     paleGray: '#F6F6F6',
     white: '#FFFFFF',
   },
+  fontSizes: {
+    pt24: '24pt',
+    pt18: '18pt',
+    pt16: '16pt',
+    pt12: '12pt',
+    pt10: '10pt',
+    pt08: '8pt',
+  },
 };
 
 // TODO ライトテーマ以外が入ると破綻する
 export type Colors = keyof typeof light['colors'];
+export type FontSizes = keyof typeof light['fontSizes'];
