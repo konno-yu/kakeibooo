@@ -39,7 +39,7 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
   return (
     <div css={container}>
       <div css={label}>
-        <FaCircle color="#FFFFFF" size={12} />
+        <FaCircle color={theme.colors.white} size={12} />
       </div>
       <div css={input}>
         <Input

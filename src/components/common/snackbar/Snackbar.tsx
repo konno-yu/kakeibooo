@@ -21,32 +21,29 @@ export interface SnackbarProps {
   subText?: string;
 }
 
-
 export const Snackbar = ({ open, type, text, subText }: SnackbarProps) => {
   const theme = useTheme();
   const COLOR_SET: { [key in 'success' | 'error']: string } = {
-  success: theme.colors.font,
-  error: theme.colors.primary,
-};
-  return (
-    ReactDOM.createPortal(
-      <div css={open ? snackbarBase(COLOR_SET[type]) : none}>
-        {type === 'error' && <RiEmotionSadFill color="#FFFFFF" size={24} />}
-        {type === 'success' && <RiEmotionFill color="#FFFFFF" size={24} />}
-        <div
-          css={css`
+    success: theme.colors.font,
+    error: theme.colors.primary,
+  };
+  return ReactDOM.createPortal(
+    <div css={open ? snackbarBase(COLOR_SET[type]) : none}>
+      {type === 'error' && <RiEmotionSadFill color={theme.colors.white} size={24} />}
+      {type === 'success' && <RiEmotionFill color={theme.colors.white} size={24} />}
+      <div
+        css={css`
           display: flex;
           flex-direction: column;
         `}
-        >
-          <span css={textStyle}>{text}</span>
-          <span css={subTextStyle}>{subText}</span>
-        </div>
-      </div>,
-      document.getElementById('root')
-    )
-  )
-}
+      >
+        <span css={textStyle}>{text}</span>
+        <span css={subTextStyle}>{subText}</span>
+      </div>
+    </div>,
+    document.getElementById('root')
+  );
+};
 
 const snackbarBase = (color: string) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;

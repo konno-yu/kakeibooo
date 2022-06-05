@@ -1,4 +1,4 @@
-import { css, Theme, useTheme } from '@emotion/react';
+import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
 
 interface Props {
   type: 'header' | 'subHeader';
@@ -8,16 +8,21 @@ interface Props {
 
 export const Typography = ({ type = 'header', variant = 'normal', children }: Props) => {
   const theme = useTheme();
+  const typoStyle: SerializedStyles[] = [typoBase(type)];
   switch (variant) {
     case 'normal':
-      return <div css={[typoBase(type), normal(theme)]}>{children}</div>;
+      typoStyle.push(normal(theme));
+      break;
     case 'accent':
-      return <div css={[typoBase(type), accent(theme)]}>{children}</div>;
+      typoStyle.push(accent(theme));
+      break;
     case 'helper':
-      return <div css={[typoBase(type), helper]}>{children}</div>;
+      typoStyle.push(helper(theme));
+      break;
     default:
-      return <div />;
+      break;
   }
+  return <div css={typoStyle}>{children}</div>;
 };
 
 // TODO Propsの型と連動させたい
@@ -41,6 +46,6 @@ const accent = (theme: Theme) => css`
   color: ${theme.colors.primary};
 `;
 
-const helper = css`
-  color: #cecece;
+const helper = (theme: Theme) => css`
+  color: ${theme.colors.vividGray};
 `;
