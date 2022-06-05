@@ -215,7 +215,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           onClick={handleClickNoMoney}
           width="80%"
           variant="filled"
-          color="accent"
+          color="primary"
           label="Noマネーディとして登録"
           disabled={dayReceipts && dayReceipts.length > 0}
         />
