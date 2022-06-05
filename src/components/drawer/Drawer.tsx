@@ -1,4 +1,4 @@
-import { css, Theme } from '@emotion/react';
+import { css } from '@emotion/react';
 import { AiFillAccountBook } from 'react-icons/ai';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';

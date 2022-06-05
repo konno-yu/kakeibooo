@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary -- ButtonのスタイルがLint違反しているが良いアイデアがないので一旦無効化 */
 import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
 
 type ButtonType = 'filled' | 'outlined' | 'text';

@@ -1,7 +1,6 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import { AiFillShopping } from 'react-icons/ai';
-import { FaCircle, FaTrashAlt } from 'react-icons/fa';
-import { FiDelete } from 'react-icons/fi';
+import { FaCircle } from 'react-icons/fa';
 import { HiCurrencyYen } from 'react-icons/hi';
 import { RiDeleteBack2Fill } from 'react-icons/ri';
 import { IconButton } from '../../common/icon_button/IconButton';
