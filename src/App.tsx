@@ -91,7 +91,7 @@ export const App: React.FC = () => {
         </AuthListener>
       </Provider>
     </ThemeProvider>
-  )
+  );
 };
 
 // TODO 暫定
@@ -103,14 +103,15 @@ const NotFound = () => (
 );
 
 export const UnderConstruction = () => (
+  // TODO どうせ消すのでテーマではなく固定値をあてておく
   <div css={notFound}>
-    <RiEmotionSadLine color="#009688" size={48} />
+    <RiEmotionSadLine color="#FB836F" size={48} />
     <h3>準備中</h3>
   </div>
 );
 
 const notFound = css`
-  background: #eceff1;
+  background: #f6f6f6;
   height: calc(100vh - 24px);
   width: calc(85% - 24px);
   padding: 12px;

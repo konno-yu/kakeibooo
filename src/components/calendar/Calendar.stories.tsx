@@ -61,6 +61,6 @@ export const Pure: ComponentStoryObj<typeof Calendar> = {
 
 const decorator = css`
   width: 75%;
-  background: #eceff1;
+  /* background: #FEFEFE; */
   padding: 8px;
 `;

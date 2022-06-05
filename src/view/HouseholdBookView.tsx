@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { getWeekOfMonth, isEqual } from 'date-fns';
 import { Calendar } from '../components/calendar/Calendar';
 import { Receipt } from '../components/receipt/Receipt';
@@ -49,15 +49,15 @@ export const HouseholdBookView = () => {
   );
 };
 
-const drawer = css`
+export const drawer = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   height: 100vh;
   width: 15%;
-  border-right: 1px solid #eeeeee;
+  border-right: 1px solid ${theme.colors.gray};
 `;
 
-const householdBookContainer = css`
-  background: #eceff1;
+const householdBookContainer = (theme: Theme) => css`
+  background: ${theme.colors.paleGray};
   height: calc(100vh - 24px);
   width: calc(85% - 24px);
   padding: 12px;

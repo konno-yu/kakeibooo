@@ -10,7 +10,7 @@ export const Pure: ComponentStoryObj<typeof Input> = {
 
 export const Icon: ComponentStoryObj<typeof Input> = {
   args: {
-    icon: <FaSmileWink color="#009688" />,
+    icon: <FaSmileWink color="#FB836F" />,
   },
 };
 
