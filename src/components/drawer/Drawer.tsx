@@ -13,6 +13,7 @@ import { MenuItem } from './menu/MenuItem';
 import { signOut } from '../../reducer/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { appAction, Tabs } from '../../reducer/appSlice';
+import { Button } from '../common/button/Button';
 
 export const Drawer = () => {
   const dispatch = useAppDispatch();
@@ -62,10 +63,7 @@ export const Drawer = () => {
           </MenuItem>
         </Menu>
       </div>
-      <button css={button} type="button" onClick={logout}>
-        <GoSignOut />
-        ログアウト
-      </button>
+      <Button onClick={logout} variant="text" color="normal" icon={<GoSignOut />} label="ログアウト" />
     </div>
   );
 };
@@ -78,17 +76,4 @@ const drawerContainer = css`
   height: calc(100% - 48px);
   gap: 20px;
   padding: 24px 12px;
-`;
-
-const button = (theme: Theme) => css`
-  font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-weight: 600;
-  color: ${theme.colors.font};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
 `;
