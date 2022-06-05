@@ -1,8 +1,7 @@
-import { css } from '@emotion/react';
+import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
 
-type ButtonType = 'filled' | 'outlined';
-// TODO これ以上増やす場合はスタイルの場合分けが必要
-type ColorPattern = 'normal' | 'accent';
+type ButtonType = 'filled' | 'outlined' | 'text';
+type ColorPattern = 'normal' | 'primary' | 'secondary';
 
 export interface Props {
   /** ボタンの見た目を指定します */
@@ -10,7 +9,7 @@ export interface Props {
   /** ボタンに表示するテキストを指定します */
   label: string;
   /** ボタンの色を指定します */
-  color?: ColorPattern;
+  color: ColorPattern;
   /** 活性/非活性を指定します */
   disabled?: boolean;
   /** ボタン内に表示するアイコンを指定します */
@@ -22,24 +21,31 @@ export interface Props {
 }
 
 export const Button = ({ variant, label, color, disabled, icon, width = '100%', onClick }: Props) => {
+  const theme = useTheme();
   if (disabled) {
     return (
-      <button css={[base(width), disable]} type="button">
+      <button css={[base(width), disable(theme)]} type="button">
         {icon}
         {label}
       </button>
     );
   }
-  if (variant === 'filled') {
-    return (
-      <button css={[base(width), filled(color)]} onClick={onClick} type="button">
-        {icon}
-        {label}
-      </button>
-    );
+  const buttonStyle: SerializedStyles[] = [base(width)];
+  switch (variant) {
+    case 'filled':
+      buttonStyle.push(filled(color, theme));
+      break;
+    case 'outlined':
+      buttonStyle.push(outlined(color, theme));
+      break;
+    case 'text':
+      buttonStyle.push(text(color, theme));
+      break;
+    default:
+      break;
   }
   return (
-    <button css={[base(width), outlined(color)]} onClick={onClick} type="button">
+    <button css={buttonStyle} onClick={onClick} type="button">
       {icon}
       {label}
     </button>
@@ -59,68 +65,138 @@ const base = (width: string | number) => css`
   justify-content: center;
 `;
 
-const disable = css`
-  background: #e0e0e0;
-  border: 1px solid #bdbdbd;
-  color: #bdbdbd;
+const disable = (theme: Theme) => css`
+  background: ${theme.colors.gray};
+  border: 1px solid ${theme.colors.vividGray};
+  color: ${theme.colors.vividGray};
   cursor: auto;
 `;
 
-const filled = (color: ColorPattern) => css`
-  color: #ffffff;
-  ${color === 'normal'
+// TODO もっとよい書き方ありそう...
+const text = (color: ColorPattern, theme: Theme) => css`
+  border-radius: 8px;
+  border: none;
+  background: none;
+  ${color === 'primary'
     ? css`
-        background: #607d8b;
-        border: 1px solid #607d8b;
+        color: ${theme.colors.primary};
         &:hover {
-          background: #90a4ae;
-          border: 1px solid #90a4ae;
+          color: ${theme.colors.palePrimary};
         }
         ,
         &:active {
-          background: #607d8b;
-          border: 1px solid #607d8b;
+          color: ${theme.colors.primary};
+        }
+      `
+    : color === 'secondary'
+    ? css`
+        color: ${theme.colors.secondary};
+        &:hover {
+          color: ${theme.colors.paleSecondary};
+        }
+        ,
+        &:active {
+          color: ${theme.colors.secondary};
         }
       `
     : css`
-        background: #f44336;
-        border: 1px solid #f44336;
+        color: ${theme.colors.font};
         &:hover {
-          background: #e57373;
-          border: 1px solid #e57373;
+          color: ${theme.colors.paleFont};
         }
         ,
         &:active {
-          background: #f44336;
-          border: 1px solid #f44336;
+          color: ${theme.colors.font};
         }
       `}
 `;
 
-const outlined = (color: ColorPattern) => css`
-  background: #ffffff;
-  ${color === 'normal'
+const filled = (color: ColorPattern, theme: Theme) => css`
+  color: ${theme.colors.white};
+  ${color === 'primary'
     ? css`
-        color: #607d8b;
-        border: 1px solid #607d8b;
-        background: #ffffff;
+        background: ${theme.colors.primary};
+        border: 1px solid ${theme.colors.primary};
         &:hover {
-          background: #eceff1;
+          background: ${theme.colors.palePrimary};
+          border: 1px solid ${theme.colors.palePrimary};
         }
         ,
         &:active {
-          background: #ffffff;
+          background: ${theme.colors.primary};
+          border: 1px solid ${theme.colors.primary};
+        }
+      `
+    : color === 'secondary'
+    ? css`
+        background: ${theme.colors.secondary};
+        border: 1px solid ${theme.colors.secondary};
+        &:hover {
+          background: ${theme.colors.paleSecondary};
+          border: 1px solid ${theme.colors.paleSecondary};
+        }
+        ,
+        &:active {
+          background: ${theme.colors.secondary};
+          border: 1px solid ${theme.colors.secondary};
         }
       `
     : css`
-        color: #f44336;
-        border: 1px solid #f44336;
+        background: ${theme.colors.font};
+        border: 1px solid ${theme.colors.font};
         &:hover {
-          background: #ffebee;
+          background: ${theme.colors.paleFont};
+          border: 1px solid ${theme.colors.paleFont};
         }
         ,
         &:active {
-          background: #ffffff;
+          background: ${theme.colors.font};
+          border: 1px solid ${theme.colors.font};
+        }
+      `}
+`;
+
+const outlined = (color: ColorPattern, theme: Theme) => css`
+  background: ${theme.colors.white};
+  ${color === 'primary'
+    ? css`
+        color: ${theme.colors.primary};
+        border: 1px solid ${theme.colors.primary};
+        &:hover {
+          background: ${theme.colors.paleGray};
+          border: 1px solid ${theme.colors.palePrimary};
+        }
+        ,
+        &:active {
+          background: ${theme.colors.white};
+          border: 1px solid ${theme.colors.primary};
+        }
+      `
+    : color === 'secondary'
+    ? css`
+        color: ${theme.colors.secondary};
+        border: 1px solid ${theme.colors.secondary};
+        &:hover {
+          background: ${theme.colors.paleGray};
+          border: 1px solid ${theme.colors.paleSecondary};
+        }
+        ,
+        &:active {
+          background: ${theme.colors.white};
+          border: 1px solid ${theme.colors.secondary};
+        }
+      `
+    : css`
+        color: ${theme.colors.font};
+        border: 1px solid ${theme.colors.font};
+        &:hover {
+          background: ${theme.colors.paleGray};
+          border: 1px solid ${theme.colors.paleFont};
+        }
+        ,
+        &:active {
+          background: ${theme.colors.white};
+          border: 1px solid ${theme.colors.font};
         }
       `}
 `;
