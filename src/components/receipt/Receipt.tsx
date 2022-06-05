@@ -234,37 +234,37 @@ const container = (theme: Theme) => css`
   height: calc(100vh - 24px);
   background: ${theme.colors.white};
   border: 2px solid ${theme.colors.gray};
-  border-radius: 8px;
+  border-radius: ${theme.units.px8};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-const header = css`
+const header = (theme: Theme) => css`
   height: 10%;
-  padding: 8px;
+  padding: ${theme.units.px8};
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
 `;
 
-const body = css`
+const body = (theme: Theme) => css`
   height: 70%;
-  padding: 8px;
+  padding: ${theme.units.px8};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 `;
 
-const tag = css`
+const tag = (theme: Theme) => css`
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: ${theme.units.px8};
 `;
 
 const summartion = css`

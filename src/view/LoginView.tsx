@@ -13,7 +13,7 @@ export const LoginView = () => {
 const loginContainer = (theme: Theme) => css`
   height: calc(100vh - 24px);
   width: calc(100% - 24px);
-  padding: 12px;
+  padding: ${theme.units.px12};
   display: flex;
   align-items: center;
   flex-direction: column;

@@ -71,7 +71,7 @@ const container = (theme: Theme) => css`
   background: ${theme.colors.white};
   display: flex;
   justify-content: space-between;
-  gap: 4px;
+  gap: ${theme.units.px4};
 `;
 
 const label = (theme: Theme) => css`
@@ -82,14 +82,14 @@ const label = (theme: Theme) => css`
   align-items: center;
 `;
 
-const input = css`
+const input = (theme: Theme) => css`
   width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 8px;
-  gap: 4px;
+  padding: ${theme.units.px8};
+  gap: ${theme.units.px4};
 `;
 
 const dustbox = css`

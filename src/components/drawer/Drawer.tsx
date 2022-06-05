@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import { AiFillAccountBook } from 'react-icons/ai';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
@@ -16,6 +16,7 @@ import { appAction, Tabs } from '../../reducer/appSlice';
 import { Button } from '../common/button/Button';
 
 export const Drawer = () => {
+  const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // TODO ここの値はReduxで管理する
@@ -40,7 +41,7 @@ export const Drawer = () => {
           height: 100%;
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: ${theme.units.px20};
         `}
       >
         <AppTitle />
@@ -68,12 +69,12 @@ export const Drawer = () => {
   );
 };
 
-const drawerContainer = css`
+const drawerContainer = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: calc(100% - 24px);
   height: calc(100% - 48px);
-  gap: 20px;
-  padding: 24px 12px;
+  gap: ${theme.units.px20};
+  padding: ${theme.units.px24} ${theme.units.px12};
 `;

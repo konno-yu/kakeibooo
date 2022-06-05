@@ -60,10 +60,10 @@ const householdBookContainer = (theme: Theme) => css`
   background: ${theme.colors.paleGray};
   height: calc(100vh - 24px);
   width: calc(85% - 24px);
-  padding: 12px;
+  padding: ${theme.units.px12};
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  gap: ${theme.units.px8};
 `;
 
 const calendarContainer = css`

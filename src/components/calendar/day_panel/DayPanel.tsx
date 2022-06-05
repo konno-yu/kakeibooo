@@ -68,13 +68,13 @@ const panelBase = (theme: Theme) => css`
   width: calc(100% / 7);
   height: 100%;
   min-height: 80px;
-  border-radius: 8px;
+  border-radius: ${theme.units.px8};
   color: ${theme.colors.font};
   font-weight: ${theme.fontWeights.bold};
   display: flex;
   flex-direction: column;
   border: none;
-  padding: 0px;
+  padding: ${theme.units.px0};
 `;
 
 const blank = (theme: Theme) => css`
@@ -110,10 +110,10 @@ const zero = (theme: Theme) => css`
 
 const dayLabel = (theme: Theme) => css`
   width: calc(100% - 16px);
-  padding: 4px 8px 0 8px;
+  padding: ${theme.units.px4} ${theme.units.px8} ${theme.units.px0} ${theme.units.px8};
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: ${theme.units.px10};
   align-items: flex-start;
   font-size: ${theme.fontSizes.pt12};
   color: ${theme.colors.paleFont};

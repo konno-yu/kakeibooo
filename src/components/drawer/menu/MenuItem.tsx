@@ -37,12 +37,12 @@ const menuItem = (theme: Theme, selected: boolean) => css`
   height: 40px;
   width: 160px;
   display: flex;
-  padding: 0 12px 0 12px;
+  padding: ${theme.units.px0} ${theme.units.px12};
   align-items: center;
-  gap: 8px;
+  gap: ${theme.units.px8};
   font-size: ${theme.fontSizes.pt10};
   font-weight: ${theme.fontWeights.semiBold};
-  border-radius: 4px;
+  border-radius: ${theme.units.px4};
   border: none;
   cursor: pointer;
   ${selected

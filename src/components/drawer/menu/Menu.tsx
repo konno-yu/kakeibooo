@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { cloneElement, ReactElement, useState } from 'react';
 import { AProps } from './MenuItem';
 
@@ -27,8 +27,8 @@ export const Menu: React.FC<Props> = ({ value, onChange, children }: Props) => {
   );
 };
 
-const container = css`
+const container = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: ${theme.units.px16};
 `;

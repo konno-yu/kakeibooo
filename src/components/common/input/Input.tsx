@@ -48,9 +48,9 @@ export const Input = ({
   );
 };
 
-const container = css`
+const container = (theme: Theme) => css`
   display: flex;
-  gap: 4px;
+  gap: ${theme.units.px4};
   align-items: center;
 `;
 

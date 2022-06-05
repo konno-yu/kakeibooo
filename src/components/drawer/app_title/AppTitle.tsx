@@ -8,12 +8,12 @@ export const AppTitle = () => (
   </div>
 );
 
-const container = css`
+const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: ${theme.units.px8};
 `;
 
 const title = (theme: Theme) => css`

@@ -1,4 +1,4 @@
-import { css, Theme } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 
 interface Props {
   value: { [key: string]: number };
@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const Indicator = ({ value, range, showLabel = false, unit }: Props) => {
+  const theme = useTheme();
   const displayValue: { [key: string]: number } = {};
   Object.keys(value).forEach((key) => {
     if (value[key] > 0) {
@@ -24,12 +25,12 @@ export const Indicator = ({ value, range, showLabel = false, unit }: Props) => {
   if (isLimitOver(values)) {
     barElement = <div css={limitOver} />;
   } else if (keys.length === 1) {
-    barElement = <div css={[bar(values[0], keys[0]), firstAndLast]} />;
+    barElement = <div css={[bar(values[0], keys[0], theme), firstAndLast(theme)]} />;
   } else {
     barElement = keys.map((key, i) => {
-      if (i === 0) return <div css={[bar(displayValue[key], key), first]} />;
-      if (i === keys.length - 1) return <div css={[bar(displayValue[key], key), last]} />;
-      return <div css={bar(displayValue[key], key)} />;
+      if (i === 0) return <div css={[bar(displayValue[key], key, theme), first(theme)]} />;
+      if (i === keys.length - 1) return <div css={[bar(displayValue[key], key, theme), last(theme)]} />;
+      return <div css={bar(displayValue[key], key, theme)} />;
     });
   }
 
@@ -45,13 +46,13 @@ export const Indicator = ({ value, range, showLabel = false, unit }: Props) => {
   );
 };
 
-const container = css`
+const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: 100%;
   height: 50px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: ${theme.units.px4};
   justify-content: center;
 `;
 
@@ -67,7 +68,7 @@ const indicator = (theme: Theme) => css`
   width: 80%;
   height: 30%;
   background: ${theme.colors.gray};
-  border-radius: 12px;
+  border-radius: ${theme.units.px12};
   display: flex;
 `;
 
@@ -77,28 +78,28 @@ const limitOver = (theme: Theme) => css`
   background: repeating-linear-gradient(
     -45deg,
     ${theme.colors.primary},
-    ${theme.colors.primary} 2px,
-    ${theme.colors.palePrimary} 2px,
-    ${theme.colors.palePrimary} 4px
+    ${theme.colors.primary} ${theme.units.px2},
+    ${theme.colors.palePrimary} ${theme.units.px2},
+    ${theme.colors.palePrimary} ${theme.units.px4}
   );
-  border-radius: 12px;
+  border-radius: ${theme.units.px12};
 `;
 
-const bar = (width: number, color: string) => css`
+const bar = (width: number, color: string, theme: Theme) => css`
   width: ${width}%;
   height: 100%;
   background: ${color};
-  border-radius: 0;
+  border-radius: ${theme.units.px0};
 `;
 
-const firstAndLast = css`
-  border-radius: 12px;
+const firstAndLast = (theme: Theme) => css`
+  border-radius: ${theme.units.px12}; ;
 `;
 
-const last = css`
-  border-radius: 0 12px 12px 0;
+const last = (theme: Theme) => css`
+  border-radius: ${theme.units.px0} ${theme.units.px12} ${theme.units.px12} ${theme.units.px0};
 `;
 
-const first = css`
-  border-radius: 12px 0 0 12px;
+const first = (theme: Theme) => css`
+  border-radius: ${theme.units.px12} ${theme.units.px0} ${theme.units.px0} ${theme.units.px12}; ;
 `;

@@ -35,7 +35,7 @@ const image = (theme: Theme) => css`
 
 const usernameText = (theme: Theme) => css`
   font-size: ${theme.fontSizes.pt12};
-  margin-top: 4px;
+  margin-top: ${theme.units.px4};
   font-weight: ${theme.fontWeights.semiBold};
   color: ${theme.colors.font};
 `;

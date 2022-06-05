@@ -56,12 +56,12 @@ export const Button = ({ variant, label, color, disabled, icon, width = '100%', 
 const base = (width: string | number, theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: ${width};
-  padding: 8px 12px;
+  padding: ${theme.units.px8} ${theme.units.px12};
   border-radius: 100px;
   font-weight: ${theme.fontWeights.semiBold};
   cursor: pointer;
   display: flex;
-  gap: 5px;
+  gap: ${theme.units.px4};
   align-items: center;
   justify-content: center;
 `;
@@ -75,7 +75,7 @@ const disable = (theme: Theme) => css`
 
 // TODO もっとよい書き方ありそう...
 const text = (color: ColorPattern, theme: Theme) => css`
-  border-radius: 8px;
+  border-radius: ${theme.units.px8};
   border: none;
   background: none;
   ${color === 'primary'

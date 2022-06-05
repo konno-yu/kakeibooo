@@ -79,8 +79,8 @@ const loginForm = (theme: Theme) => css`
   height: 500px;
   width: 350px;
   border: 1px solid ${theme.colors.gray};
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: ${theme.units.px8};
+  padding: ${theme.units.px16};
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -28,7 +28,7 @@ export const Snackbar = ({ open, type, text, subText }: SnackbarProps) => {
     error: theme.colors.primary,
   };
   return ReactDOM.createPortal(
-    <div css={open ? snackbarBase(COLOR_SET[type]) : none}>
+    <div css={open ? snackbarBase(COLOR_SET[type], theme) : none}>
       {type === 'error' && <RiEmotionSadFill color={theme.colors.white} size={24} />}
       {type === 'success' && <RiEmotionFill color={theme.colors.white} size={24} />}
       <div
@@ -45,21 +45,21 @@ export const Snackbar = ({ open, type, text, subText }: SnackbarProps) => {
   );
 };
 
-const snackbarBase = (color: string) => css`
+const snackbarBase = (color: string, theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: 280px;
   height: 45px;
   background: ${color};
-  padding: 0 8px;
-  border-radius: 4px;
+  padding: ${theme.units.px0} ${theme.units.px8};
+  border-radius: ${theme.units.px4};
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 8px;
+  gap: ${theme.units.px8};
   position: absolute;
   box-shadow: 3px 3px 3px #9e9e9e;
-  top: 8px;
-  right: 16px;
+  top: ${theme.units.px8};
+  right: ${theme.units.px16};
   animation: fadein 1s forwards;
   @keyframes fadein {
     0% {

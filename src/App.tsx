@@ -108,6 +108,7 @@ export const UnderConstruction = () => (
 );
 
 const notFound = css`
+  // TODO どうせ消すのでテーマはあてない
   background: #f6f6f6;
   height: calc(100vh - 24px);
   width: calc(85% - 24px);
