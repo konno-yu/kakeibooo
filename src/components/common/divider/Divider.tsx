@@ -12,7 +12,7 @@ interface Props {
 export const Divider = ({ type = 'solid', width = 1, color }: Props) => {
   const theme = useTheme();
   if (!color) {
-    color = theme.colors.vGray;
+    color = theme.colors.vividGray;
   }
   return (
     <div css={divider(width, type, color)} />

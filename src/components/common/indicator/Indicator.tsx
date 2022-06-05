@@ -74,7 +74,7 @@ const indicator = (theme: Theme) => css`
 const limitOver = (theme: Theme) => css`
   width: 100%;
   height: 100%;
-  background: repeating-linear-gradient(-45deg, ${theme.colors.primary}, ${theme.colors.primary} 2px, ${theme.colors.pPrimary} 2px, ${theme.colors.pPrimary} 4px);
+  background: repeating-linear-gradient(-45deg, ${theme.colors.primary}, ${theme.colors.primary} 2px, ${theme.colors.palePrimary} 2px, ${theme.colors.palePrimary} 4px);
   border-radius: 12px;
 `;
 

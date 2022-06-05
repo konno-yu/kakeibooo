@@ -37,7 +37,7 @@ export const Input = ({
     <div css={container}>
       {icon}
       <input
-        css={[base(theme, width), normal]}
+        css={[base(theme, width), normal(theme)]}
         type={type}
         placeholder={placeholder}
         maxLength={maxLength}
@@ -61,10 +61,10 @@ const base = (theme: Theme, width: number) => css`
   height: 1.5rem;
   font-weight: 700;
   border: none;
-  border-bottom: 1px solid ${theme.colors.vGray};
+  border-bottom: 1px solid ${theme.colors.vividGray};
   ::placeholder {
     font-weight: 400;
-    color: ${theme.colors.vGray};
+    color: ${theme.colors.vividGray};
     font-size: 12px;
   }
 `;

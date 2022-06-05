@@ -29,7 +29,7 @@ const container = css`
 const image = (theme: Theme) => css`
   height: 70px;
   width: 70px;
-  border: 3px solid ${theme.colors.pGray};
+  border: 3px solid ${theme.colors.paleGray};
   border-radius: 100px;
 `;
 
@@ -43,5 +43,5 @@ const usernameText = (theme: Theme) => css`
 const userIdText = (theme: Theme) => css`
   font-size: 14px;
   font-weight: 600;
-  color: ${theme.colors.vGray};
+  color: ${theme.colors.vividGray};
 `;

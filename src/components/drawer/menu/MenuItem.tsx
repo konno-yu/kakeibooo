@@ -50,7 +50,7 @@ const menuItem = (theme: Theme, selected: boolean) => css`
         background: ${theme.colors.primary};
         color: ${theme.colors.white};
         &:hover {
-          background: ${theme.colors.pPrimary};
+          background: ${theme.colors.palePrimary};
         }
         &:active {
           background: ${theme.colors.primary};
@@ -60,7 +60,7 @@ const menuItem = (theme: Theme, selected: boolean) => css`
         background: none;
         color: ${theme.colors.font};
         &:hover {
-          background: ${theme.colors.pGray};
+          background: ${theme.colors.paleGray};
         }
         &:active {
           background: none;
