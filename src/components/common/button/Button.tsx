@@ -15,7 +15,7 @@ export interface Props {
   /** ボタン内に表示するアイコンを指定します */
   icon?: JSX.Element;
   /** ボタンの幅を指定します */
-  width: string | number;
+  width?: string | number;
   /** ボタンをクリックしたときの動作を指定します */
   onClick: () => void;
 }
