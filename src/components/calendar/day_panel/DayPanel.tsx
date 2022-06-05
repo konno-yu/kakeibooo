@@ -41,7 +41,7 @@ export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = fal
 
   switch (type) {
     case 'zero':
-      panelStyle.push(zero);
+      panelStyle.push(zero(theme));
       break;
     case 'low':
       panelStyle.push(low(theme));
