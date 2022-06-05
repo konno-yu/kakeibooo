@@ -1,4 +1,4 @@
-import { css, Theme } from '@emotion/react';
+import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
 import { FaUserEdit } from 'react-icons/fa';
 import ImgPath from '../../../images/medal.svg';
 
@@ -18,8 +18,10 @@ interface Props {
 }
 
 export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = false, type, onClick }: Props) => {
+  const theme = useTheme();
+  const panelStyle: SerializedStyles[] = [panelBase(theme)];
   if (dayIndex === null) {
-    return <div css={[panelBase, blank]} />;
+    return <div css={[...panelStyle, blank(theme)]} />;
   }
 
   const handleOnClick = () => {
@@ -39,32 +41,26 @@ export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = fal
 
   switch (type) {
     case 'zero':
-      return (
-        <button css={[panelBase, zero]} onClick={handleOnClick} onKeyUp={() => ''} type="button">
-          {PanelBody}
-        </button>
-      );
+      panelStyle.push(zero);
+      break;
     case 'low':
-      return (
-        <button css={[panelBase, low]} onClick={handleOnClick} onKeyUp={() => ''} type="button">
-          {PanelBody}
-        </button>
-      );
+      panelStyle.push(low(theme));
+      break;
     case 'normal':
-      return (
-        <button css={[panelBase, normal]} onClick={handleOnClick} onKeyUp={() => ''} type="button">
-          {PanelBody}
-        </button>
-      );
+      panelStyle.push(normal(theme));
+      break;
     case 'high':
-      return (
-        <button css={[panelBase, high]} onClick={handleOnClick} onKeyUp={() => ''} type="button">
-          {PanelBody}
-        </button>
-      );
+      panelStyle.push(high(theme));
+      break;
     default:
-      return <div />;
+      break;
   }
+
+  return (
+    <button css={panelStyle} onClick={handleOnClick} onKeyUp={() => ''} type="button">
+      {PanelBody}
+    </button>
+  );
 };
 
 const panelBase = (theme: Theme) => css`
@@ -87,53 +83,32 @@ const blank = (theme: Theme) => css`
 
 const normal = (theme: Theme) => css`
   cursor: pointer;
-  background: ${theme.colors.pGray};
-  &:hover {
-    background: #f5f5f5;
-  }
-  &:active {
-    background: #ffffff;
-  }
+  color: ${theme.colors.font};
+  background: ${theme.colors.white};
 `;
 
-const low = css`
+const low = (theme: Theme) => css`
   cursor: pointer;
-  background: #b2dfdb;
-  &:hover {
-    background: #e0f2f1;
-  }
-  &:active {
-    background: #b2dfdb;
-  }
+  color: ${theme.colors.secondary};
+  background: ${theme.colors.white};
 `;
 
-const high = css`
+const high = (theme: Theme) => css`
   cursor: pointer;
-  background: #ffcdd2;
-  &:hover {
-    background: #ffebee;
-  }
-  &:active {
-    background: #ffcdd2;
-  }
+  color: ${theme.colors.primary};
+  background: ${theme.colors.white};
 `;
 
-const zero = css`
+const zero = (theme: Theme) => css`
   cursor: pointer;
-  background: #fff9c4;
+  background: ${theme.colors.white};
   background-image: url(${ImgPath});
   background-size: 50% auto;
   background-position: center center;
   background-repeat: no-repeat;
-  &:hover {
-    background: #fffde7;
-  }
-  &:active {
-    background: #fff9c4;
-  }
 `;
 
-const dayLabel = css`
+const dayLabel = (theme: Theme) => css`
   width: calc(100% - 16px);
   padding: 4px 8px 0 8px;
   display: flex;
@@ -141,6 +116,7 @@ const dayLabel = css`
   gap: 10px;
   align-items: flex-start;
   font-size: 16px;
+  color: ${theme.colors.paleFont};
 `;
 
 const dayValueText = css`
