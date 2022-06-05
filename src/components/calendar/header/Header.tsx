@@ -30,7 +30,7 @@ const element = (theme: Theme) => css`
   width: calc(100% / 7);
   padding-bottom: 2px;
   font-size: ${theme.fontSizes.pt10};
-  font-weight: 800;
+  font-weight: ${theme.fontWeights.extraBold};
   color: ${theme.colors.font};
   border-bottom: 1.5px solid ${theme.colors.font};
   text-align: center;

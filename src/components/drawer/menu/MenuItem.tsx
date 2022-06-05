@@ -41,7 +41,7 @@ const menuItem = (theme: Theme, selected: boolean) => css`
   align-items: center;
   gap: 8px;
   font-size: ${theme.fontSizes.pt10};
-  font-weight: 600;
+  font-weight: ${theme.fontWeights.semiBold};
   border-radius: 4px;
   border: none;
   cursor: pointer;

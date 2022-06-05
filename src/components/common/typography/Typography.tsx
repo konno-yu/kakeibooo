@@ -28,7 +28,7 @@ export const Typography = ({ type = 'header', variant = 'normal', children }: Pr
 // TODO Propsの型と連動させたい
 const typoBase = (type: 'header' | 'subHeader', theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-weight: 900;
+  font-weight: ${theme.fontWeights.extraBold};
   ${type === 'header'
     ? css`
         font-size: ${theme.fontSizes.pt18};

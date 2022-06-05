@@ -57,7 +57,7 @@ const container = css`
 
 const scaleLabel = (theme: Theme) => css`
   color: ${theme.colors.font};
-  font-weight: 700;
+  font-weight: ${theme.fontWeights.bold};
   font-size: ${theme.fontSizes.pt08};
   width: 10%;
   text-align: center;

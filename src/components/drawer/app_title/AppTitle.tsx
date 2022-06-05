@@ -18,6 +18,6 @@ const container = css`
 
 const title = (theme: Theme) => css`
   color: ${theme.colors.font};
-  font-weight: 900;
+  font-weight: ${theme.fontWeights.extraBold};
   font-size: ${theme.fontSizes.pt12};
 `;

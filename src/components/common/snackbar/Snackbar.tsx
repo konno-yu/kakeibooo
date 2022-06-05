@@ -78,7 +78,7 @@ const none = css`
 
 const textStyle = (theme: Theme) => css`
   font-size: ${theme.fontSizes.pt12};
-  font-weight: 700;
+  font-weight: ${theme.fontWeights.bold};
   color: ${theme.colors.white};
 `;
 

@@ -70,7 +70,7 @@ const panelBase = (theme: Theme) => css`
   min-height: 80px;
   border-radius: 8px;
   color: ${theme.colors.font};
-  font-weight: 700;
+  font-weight: ${theme.fontWeights.bold};
   display: flex;
   flex-direction: column;
   border: none;
@@ -119,10 +119,10 @@ const dayLabel = (theme: Theme) => css`
   color: ${theme.colors.paleFont};
 `;
 
-const dayValueText = css`
+const dayValueText = (theme: Theme) => css`
   width: 100%;
-  font-size: 20px;
-  font-weight: 900;
+  font-size: ${theme.fontSizes.pt16};
+  font-weight: ${theme.fontWeights.extraBold};
   display: flex;
   justify-content: center;
   align-items: center;

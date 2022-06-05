@@ -25,13 +25,13 @@ export const Button = ({ variant, label, color, disabled, icon, width = '100%', 
   const theme = useTheme();
   if (disabled) {
     return (
-      <button css={[base(width), disable(theme)]} type="button">
+      <button css={[base(width, theme), disable(theme)]} type="button">
         {icon}
         {label}
       </button>
     );
   }
-  const buttonStyle: SerializedStyles[] = [base(width)];
+  const buttonStyle: SerializedStyles[] = [base(width, theme)];
   switch (variant) {
     case 'filled':
       buttonStyle.push(filled(color, theme));
@@ -53,12 +53,12 @@ export const Button = ({ variant, label, color, disabled, icon, width = '100%', 
   );
 };
 
-const base = (width: string | number) => css`
+const base = (width: string | number, theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: ${width};
   padding: 8px 12px;
   border-radius: 100px;
-  font-weight: 600;
+  font-weight: ${theme.fontWeights.semiBold};
   cursor: pointer;
   display: flex;
   gap: 5px;

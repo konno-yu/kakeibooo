@@ -97,7 +97,7 @@ const icon = css`
 const title = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   height: 10%;
-  font-weight: 800;
+  font-weight: ${theme.fontWeights.extraBold};
   font-size: ${theme.fontSizes.pt24};
   display: flex;
   justify-content: center;
@@ -117,7 +117,7 @@ const message = (theme: Theme) => css`
   width: 100%;
   font-size: ${theme.fontSizes.pt10};
   text-align: center;
-  font-weight: 700;
+  font-weight: ${theme.fontWeights.bold};
   color: ${theme.colors.primary};
 `;
 

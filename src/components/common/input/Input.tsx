@@ -59,11 +59,11 @@ const base = (theme: Theme, width: number) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: ${theme.fontSizes.pt12};
   height: 1.5rem;
-  font-weight: 700;
+  font-weight: ${theme.fontWeights.bold};
   border: none;
   border-bottom: 1px solid ${theme.colors.vividGray};
   ::placeholder {
-    font-weight: 400;
+    font-weight: ${theme.fontWeights.thin};
     color: ${theme.colors.vividGray};
     font-size: ${theme.fontSizes.pt10};
   }

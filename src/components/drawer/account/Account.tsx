@@ -36,12 +36,12 @@ const image = (theme: Theme) => css`
 const usernameText = (theme: Theme) => css`
   font-size: ${theme.fontSizes.pt12};
   margin-top: 4px;
-  font-weight: 600;
+  font-weight: ${theme.fontWeights.semiBold};
   color: ${theme.colors.font};
 `;
 
 const userIdText = (theme: Theme) => css`
   font-size: ${theme.fontSizes.pt10};
-  font-weight: 600;
+  font-weight: ${theme.fontWeights.semiBold};
   color: ${theme.colors.vividGray};
 `;
