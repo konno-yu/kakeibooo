@@ -20,8 +20,15 @@ export const light = {
     pt10: '10pt',
     pt08: '8pt',
   },
+  fontWeights: {
+    thin: 400,
+    semiBold: 600,
+    bold: 700,
+    extraBold: 900,
+  },
 };
 
 // TODO ライトテーマ以外が入ると破綻する
 export type Colors = keyof typeof light['colors'];
 export type FontSizes = keyof typeof light['fontSizes'];
+export type FontWeights = keyof typeof light['fontWeights'];
