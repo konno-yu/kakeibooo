@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { Form } from '../components/auth/Form';
 import { useAppSelector } from '../store';
 
@@ -10,7 +10,7 @@ export const LoginView = () => {
     </div>
   );
 };
-const loginContainer = css`
+const loginContainer = (theme: Theme) => css`
   height: calc(100vh - 24px);
   width: calc(100% - 24px);
   padding: 12px;
@@ -18,5 +18,5 @@ const loginContainer = css`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  background-image: linear-gradient(to top, #80cbc4, #8dd0ca, #9ad5d0, #a6dad5, #b2dfdb);
+  background-image: linear-gradient(to top, ${theme.colors.primary}, ${theme.colors.palePrimary});
 `;
