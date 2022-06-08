@@ -1,24 +1,25 @@
 import { css, Theme } from '@emotion/react';
+import { useTranslation } from 'react-i18next';
 
-const DAY_OF_WEEK_LABEL: { [key in 'ja' | 'en']: string[] } = {
-  ja: ['日', '月', '火', '水', '木', '金', '土'],
-  en: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+export const Header = () => {
+  const { t } = useTranslation();
+  const DAY_OF_WEEK_LABEL: string[] = [
+    t('SUNDAY'),
+    t('MONDAY'),
+    t('TUESDAY'),
+    t('WEDNESDAY'),
+    t('THURSDAY'),
+    t('FRIDAY'),
+    t('SATURDAY'),
+  ];
+  return (
+    <div css={header}>
+      {DAY_OF_WEEK_LABEL.map((elm) => (
+        <div css={element}>{elm}</div>
+      ))}
+    </div>
+  );
 };
-
-interface Props {
-  /**
-   * 表示言語を指定します。 <br/>
-   * 省略した場合は「日本語」になります。
-   */
-  locale?: 'ja' | 'en';
-}
-export const Header = ({ locale = 'ja' }: Props) => (
-  <div css={header}>
-    {DAY_OF_WEEK_LABEL[locale].map((elm) => (
-      <div css={element}>{elm}</div>
-    ))}
-  </div>
-);
 
 const header = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;

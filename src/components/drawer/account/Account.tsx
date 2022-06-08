@@ -1,4 +1,5 @@
 import { css, Theme } from '@emotion/react';
+import { useTranslation } from 'react-i18next';
 import IconPath from '../../../images/avatar.svg';
 
 interface Props {
@@ -7,17 +8,23 @@ interface Props {
   userId: string;
 }
 
-export const Account = ({ iconOnly = false, username, userId }: Props) => (
-  <div css={container}>
-    <img css={image} src={IconPath} alt="account" />
-    {iconOnly === false && (
-      <>
-        <div css={usernameText}>{username}</div>
-        <div css={userIdText}>@{userId}</div>
-      </>
-    )}
-  </div>
-);
+export const Account = ({ iconOnly = false, username, userId }: Props) => {
+  const { t } = useTranslation();
+  return (
+    <div css={container}>
+      <img css={image} src={IconPath} alt="account" />
+      {iconOnly === false && (
+        <>
+          <div css={usernameText}>{username}</div>
+          <div css={userIdText}>
+            {t('AT_SIGN')}
+            {userId}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 const container = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;

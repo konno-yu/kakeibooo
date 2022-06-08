@@ -1,4 +1,5 @@
 import { css, Theme, useTheme } from '@emotion/react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   /** 入力欄の幅を指定します */
@@ -21,7 +22,7 @@ interface Props {
 
 export const Input = ({
   width = 200,
-  placeholder = '文字を入力してください',
+  placeholder,
   type = 'text',
   maxLength = 100,
   icon,
@@ -29,7 +30,12 @@ export const Input = ({
   value,
   onChange,
 }: Props) => {
+  const { t } = useTranslation();
   const theme = useTheme();
+  if (!placeholder) {
+    // eslint-disable-next-line no-param-reassign -- あとで解決
+    placeholder = t('INPUT_PLACEHOLDER');
+  }
   if (disabled) {
     return <input css={base(theme, width)} type="text" placeholder={placeholder} maxLength={maxLength} disabled />;
   }
