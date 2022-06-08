@@ -77,6 +77,8 @@
     "webpack-dev-server": "3.11.3"
   },
   "dependencies": {
+    "i18next": "^21.8.9",
+    "react-i18next": "^11.17.0",
     "react-icons": "^4.3.1"
   }
 }
