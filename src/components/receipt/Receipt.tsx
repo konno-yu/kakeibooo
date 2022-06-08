@@ -186,8 +186,8 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
             disabled={dayReceipts && dayReceipts.length >= 4}
             onClick={handleClickAdd}
             width="80%"
-            variant="outlined"
-            color="normal"
+            variant="text"
+            color="primary"
             label="レシートを追加"
             icon={<HiPlusSm />}
           />
