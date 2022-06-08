@@ -22,10 +22,10 @@ export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPr
       <span>{displayFormat}</span>
       <div css={monthTransition}>
         <IconButton onClick={onPrev}>
-          <HiArrowCircleLeft size={28} color={theme.colors.font} />
+          <HiArrowCircleLeft size={28} color={theme.colors.black_400} />
         </IconButton>
         <IconButton onClick={onNext}>
-          <HiArrowCircleRight size={28} color={theme.colors.font} />
+          <HiArrowCircleRight size={28} color={theme.colors.black_400} />
         </IconButton>
       </div>
     </div>
@@ -35,7 +35,7 @@ export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPr
 const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: ${theme.fontSizes.pt24};
-  color: ${theme.colors.font};
+  color: ${theme.colors.black_400};
   font-weight: ${theme.fontWeights.extraBold};
   display: flex;
   justify-content: space-between;

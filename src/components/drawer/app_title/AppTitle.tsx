@@ -17,7 +17,7 @@ const container = (theme: Theme) => css`
 `;
 
 const title = (theme: Theme) => css`
-  color: ${theme.colors.font};
+  color: ${theme.colors.black_400};
   font-weight: ${theme.fontWeights.extraBold};
   font-size: ${theme.fontSizes.pt12};
 `;

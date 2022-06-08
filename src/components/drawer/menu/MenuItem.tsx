@@ -47,20 +47,20 @@ const menuItem = (theme: Theme, selected: boolean) => css`
   cursor: pointer;
   ${selected
     ? css`
-        background: ${theme.colors.primary};
+        background: ${theme.colors.primary_400};
         color: ${theme.colors.white};
         &:hover {
-          background: ${theme.colors.palePrimary};
+          background: ${theme.colors.primary_200};
         }
         &:active {
-          background: ${theme.colors.primary};
+          background: ${theme.colors.primary_400};
         }
       `
     : css`
         background: none;
-        color: ${theme.colors.font};
+        color: ${theme.colors.black_400};
         &:hover {
-          background: ${theme.colors.paleGray};
+          background: ${theme.colors.gray_200};
         }
         &:active {
           background: none;

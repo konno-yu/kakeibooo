@@ -39,13 +39,13 @@ const typoBase = (type: 'header' | 'subHeader', theme: Theme) => css`
 `;
 
 const normal = (theme: Theme) => css`
-  color: ${theme.colors.font};
+  color: ${theme.colors.black_400};
 `;
 
 const accent = (theme: Theme) => css`
-  color: ${theme.colors.primary};
+  color: ${theme.colors.primary_400};
 `;
 
 const helper = (theme: Theme) => css`
-  color: ${theme.colors.vividGray};
+  color: ${theme.colors.gray_400};
 `;

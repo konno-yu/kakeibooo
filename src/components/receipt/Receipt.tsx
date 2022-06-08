@@ -168,7 +168,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
             .padStart(2, '0')}`}
         </Typography>
       </div>
-      <Divider width={2} type="dashed" color={theme.colors.gray} />
+      <Divider width={2} type="dashed" color={theme.colors.gray_200} />
       <div css={body}>
         <div css={tag}>
           {dayReceipts &&
@@ -186,8 +186,8 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
             disabled={dayReceipts && dayReceipts.length >= 4}
             onClick={handleClickAdd}
             width="80%"
-            variant="outlined"
-            color="normal"
+            variant="text"
+            color="primary"
             label="レシートを追加"
             icon={<HiPlusSm />}
           />
@@ -201,7 +201,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           </Typography>
         </div>
       </div>
-      <Divider width={2} type="dashed" color={theme.colors.gray} />
+      <Divider width={2} type="dashed" color={theme.colors.gray_200} />
       <div css={footer}>
         <Button
           disabled={!dayReceipts || dayReceipts.length === 0}
@@ -233,7 +233,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
 const container = (theme: Theme) => css`
   height: calc(100vh - 24px);
   background: ${theme.colors.white};
-  border: 2px solid ${theme.colors.gray};
+  border: 2px solid ${theme.colors.gray_200};
   border-radius: ${theme.units.px8};
   display: flex;
   flex-direction: column;

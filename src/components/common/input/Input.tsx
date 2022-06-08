@@ -61,19 +61,19 @@ const base = (theme: Theme, width: number) => css`
   height: 1.5rem;
   font-weight: ${theme.fontWeights.bold};
   border: none;
-  border-bottom: 1px solid ${theme.colors.vividGray};
+  border-bottom: 1px solid ${theme.colors.gray_400};
   ::placeholder {
     font-weight: ${theme.fontWeights.thin};
-    color: ${theme.colors.vividGray};
+    color: ${theme.colors.gray_400};
     font-size: ${theme.fontSizes.pt10};
   }
 `;
 
 const normal = (theme: Theme) => css`
-  color: ${theme.colors.font};
+  color: ${theme.colors.black_400};
   background: transparent;
   &:focus {
     outline: none;
-    border-bottom: 2px solid ${theme.colors.font};
+    border-bottom: 2px solid ${theme.colors.black_400};
   }
 `;
