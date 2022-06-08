@@ -25,7 +25,7 @@ export const Button = ({ variant, label, color, disabled, icon, width = '100%', 
   const theme = useTheme();
   if (disabled) {
     return (
-      <button css={[base(width, theme), disable(theme)]} type="button">
+      <button css={[base(width, theme), disable(variant, theme)]} type="button">
         {icon}
         {label}
       </button>
@@ -66,9 +66,9 @@ const base = (width: string | number, theme: Theme) => css`
   justify-content: center;
 `;
 
-const disable = (theme: Theme) => css`
-  background: ${theme.colors.gray_300};
-  border: 1px solid ${theme.colors.gray_400};
+const disable = (variant: ButtonType, theme: Theme) => css`
+  background: ${variant === 'text' ? 'none' : `${theme.colors.gray_300}`};
+  border: ${variant === 'text' ? 'none' : `1px solid ${theme.colors.gray_400}`};
   color: ${theme.colors.gray_400};
   cursor: auto;
 `;
