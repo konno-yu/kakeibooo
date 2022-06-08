@@ -24,8 +24,8 @@ export interface SnackbarProps {
 export const Snackbar = ({ open, type, text, subText }: SnackbarProps) => {
   const theme = useTheme();
   const COLOR_SET: { [key in 'success' | 'error']: string } = {
-    success: theme.colors.font,
-    error: theme.colors.primary,
+    success: theme.colors.black_400,
+    error: theme.colors.primary_400,
   };
   return ReactDOM.createPortal(
     <div css={open ? snackbarBase(COLOR_SET[type], theme) : none}>

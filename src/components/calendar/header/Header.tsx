@@ -31,7 +31,7 @@ const element = (theme: Theme) => css`
   padding-bottom: 2px;
   font-size: ${theme.fontSizes.pt10};
   font-weight: ${theme.fontWeights.extraBold};
-  color: ${theme.colors.font};
-  border-bottom: 1.5px solid ${theme.colors.font};
+  color: ${theme.colors.black_400};
+  border-bottom: 1.5px solid ${theme.colors.black_400};
   text-align: center;
 `;

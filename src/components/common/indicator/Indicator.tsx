@@ -57,7 +57,7 @@ const container = (theme: Theme) => css`
 `;
 
 const scaleLabel = (theme: Theme) => css`
-  color: ${theme.colors.font};
+  color: ${theme.colors.black_400};
   font-weight: ${theme.fontWeights.bold};
   font-size: ${theme.fontSizes.pt08};
   width: 10%;
@@ -67,7 +67,7 @@ const scaleLabel = (theme: Theme) => css`
 const indicator = (theme: Theme) => css`
   width: 80%;
   height: 30%;
-  background: ${theme.colors.gray};
+  background: ${theme.colors.gray_300};
   border-radius: ${theme.units.px12};
   display: flex;
 `;
@@ -77,10 +77,10 @@ const limitOver = (theme: Theme) => css`
   height: 100%;
   background: repeating-linear-gradient(
     -45deg,
-    ${theme.colors.primary},
-    ${theme.colors.primary} ${theme.units.px2},
-    ${theme.colors.palePrimary} ${theme.units.px2},
-    ${theme.colors.palePrimary} ${theme.units.px4}
+    ${theme.colors.primary_400},
+    ${theme.colors.primary_400} ${theme.units.px2},
+    ${theme.colors.primary_200} ${theme.units.px2},
+    ${theme.colors.primary_200} ${theme.units.px4}
   );
   border-radius: ${theme.units.px12};
 `;

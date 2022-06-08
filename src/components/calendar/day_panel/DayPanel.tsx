@@ -69,7 +69,7 @@ const panelBase = (theme: Theme) => css`
   height: 100%;
   min-height: 80px;
   border-radius: ${theme.units.px8};
-  color: ${theme.colors.font};
+  color: ${theme.colors.black_400};
   font-weight: ${theme.fontWeights.bold};
   display: flex;
   flex-direction: column;
@@ -83,19 +83,19 @@ const blank = (theme: Theme) => css`
 
 const normal = (theme: Theme) => css`
   cursor: pointer;
-  color: ${theme.colors.font};
+  color: ${theme.colors.black_400};
   background: ${theme.colors.white};
 `;
 
 const low = (theme: Theme) => css`
   cursor: pointer;
-  color: ${theme.colors.secondary};
+  color: ${theme.colors.secondary_400};
   background: ${theme.colors.white};
 `;
 
 const high = (theme: Theme) => css`
   cursor: pointer;
-  color: ${theme.colors.primary};
+  color: ${theme.colors.primary_400};
   background: ${theme.colors.white};
 `;
 
@@ -116,7 +116,7 @@ const dayLabel = (theme: Theme) => css`
   gap: ${theme.units.px10};
   align-items: flex-start;
   font-size: ${theme.fontSizes.pt12};
-  color: ${theme.colors.paleFont};
+  color: ${theme.colors.black_200};
 `;
 
 const dayValueText = (theme: Theme) => css`
@@ -130,5 +130,5 @@ const dayValueText = (theme: Theme) => css`
 `;
 
 const todayLabel = (theme: Theme) => css`
-  color: ${theme.colors.primary};
+  color: ${theme.colors.primary_400};
 `;

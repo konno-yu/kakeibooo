@@ -53,7 +53,7 @@ export const Form = ({ error }: FormProps) => {
       <div css={input}>
         <Input
           width={280}
-          icon={<HiMail color={theme.colors.font} />}
+          icon={<HiMail color={theme.colors.black_400} />}
           value={address}
           onChange={handleOnChangeAddress}
           placeholder="メールアドレス"
@@ -61,7 +61,7 @@ export const Form = ({ error }: FormProps) => {
         <Input
           width={280}
           type="password"
-          icon={<HiKey color={theme.colors.font} />}
+          icon={<HiKey color={theme.colors.black_400} />}
           value={password}
           onChange={handleOnChangePassword}
           placeholder="パスワード"
@@ -78,7 +78,7 @@ export const Form = ({ error }: FormProps) => {
 const loginForm = (theme: Theme) => css`
   height: 500px;
   width: 350px;
-  border: 1px solid ${theme.colors.gray};
+  border: 1px solid ${theme.colors.gray_200};
   border-radius: ${theme.units.px8};
   padding: ${theme.units.px16};
   display: flex;
@@ -102,7 +102,7 @@ const title = (theme: Theme) => css`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${theme.colors.font};
+  color: ${theme.colors.black_400};
 `;
 
 const input = css`
@@ -118,7 +118,7 @@ const message = (theme: Theme) => css`
   font-size: ${theme.fontSizes.pt10};
   text-align: center;
   font-weight: ${theme.fontWeights.bold};
-  color: ${theme.colors.primary};
+  color: ${theme.colors.primary_400};
 `;
 
 const btn = css`
@@ -131,7 +131,7 @@ const btn = css`
 `;
 
 const circle = (theme: Theme) => css`
-  background: ${theme.colors.primary};
+  background: ${theme.colors.primary_400};
   width: 90px;
   height: 90px;
   border-radius: 100px;

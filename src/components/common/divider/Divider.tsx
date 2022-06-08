@@ -13,7 +13,7 @@ export const Divider = ({ type = 'solid', width = 1, color }: Props) => {
   const theme = useTheme();
   if (!color) {
     // eslint-disable-next-line no-param-reassign -- TODO あとでちゃんと書く
-    color = theme.colors.vividGray;
+    color = theme.colors.gray_400;
   }
   return <div css={divider(width, type, color)} />;
 };

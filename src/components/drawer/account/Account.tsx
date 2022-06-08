@@ -29,7 +29,7 @@ const container = css`
 const image = (theme: Theme) => css`
   height: 70px;
   width: 70px;
-  border: 3px solid ${theme.colors.paleGray};
+  border: 3px solid ${theme.colors.gray_200};
   border-radius: 100px;
 `;
 
@@ -37,11 +37,11 @@ const usernameText = (theme: Theme) => css`
   font-size: ${theme.fontSizes.pt12};
   margin-top: ${theme.units.px4};
   font-weight: ${theme.fontWeights.semiBold};
-  color: ${theme.colors.font};
+  color: ${theme.colors.black_400};
 `;
 
 const userIdText = (theme: Theme) => css`
   font-size: ${theme.fontSizes.pt10};
   font-weight: ${theme.fontWeights.semiBold};
-  color: ${theme.colors.vividGray};
+  color: ${theme.colors.gray_400};
 `;

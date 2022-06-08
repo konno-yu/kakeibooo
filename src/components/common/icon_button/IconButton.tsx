@@ -14,7 +14,7 @@ export const IconButton = ({ disabled = false, children, onClick }: Props) => {
   const theme = useTheme();
   if (disabled) {
     const disabledChildren = cloneElement(children as ReactElement, {
-      style: { color: theme.colors.gray },
+      style: { color: theme.colors.gray_300 },
     });
     return (
       <button css={base} type="button">

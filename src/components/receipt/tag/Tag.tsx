@@ -46,19 +46,19 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
           width={150}
           value={storeName}
           placeholder="店舗名"
-          icon={<AiFillShopping size={16} color={theme.colors.font} />}
+          icon={<AiFillShopping size={16} color={theme.colors.black_400} />}
         />
         <Input
           onChange={handleCostChange}
           width={150}
           value={cost}
           placeholder="使った金額"
-          icon={<HiCurrencyYen size={16} color={theme.colors.font} />}
+          icon={<HiCurrencyYen size={16} color={theme.colors.black_400} />}
         />
       </div>
       <div css={dustbox}>
         <IconButton onClick={handleDelete}>
-          <RiDeleteBack2Fill size={20} color={theme.colors.font} />
+          <RiDeleteBack2Fill size={20} color={theme.colors.black_400} />
         </IconButton>
       </div>
     </div>
@@ -76,7 +76,7 @@ const container = (theme: Theme) => css`
 
 const label = (theme: Theme) => css`
   width: 10%;
-  background: ${theme.colors.primary};
+  background: ${theme.colors.primary_400};
   display: flex;
   justify-content: center;
   align-items: center;

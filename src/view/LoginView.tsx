@@ -18,5 +18,11 @@ const loginContainer = (theme: Theme) => css`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  background-image: linear-gradient(to top, ${theme.colors.primary}, ${theme.colors.palePrimary});
+  background-image: linear-gradient(
+    to top,
+    ${theme.colors.primary_400},
+    ${theme.colors.primary_300},
+    ${theme.colors.primary_200},
+    ${theme.colors.primary_100}
+  );
 `;

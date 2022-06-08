@@ -67,9 +67,9 @@ const base = (width: string | number, theme: Theme) => css`
 `;
 
 const disable = (theme: Theme) => css`
-  background: ${theme.colors.gray};
-  border: 1px solid ${theme.colors.vividGray};
-  color: ${theme.colors.vividGray};
+  background: ${theme.colors.gray_300};
+  border: 1px solid ${theme.colors.gray_400};
+  color: ${theme.colors.gray_400};
   cursor: auto;
 `;
 
@@ -80,34 +80,34 @@ const text = (color: ColorPattern, theme: Theme) => css`
   background: none;
   ${color === 'primary'
     ? css`
-        color: ${theme.colors.primary};
+        color: ${theme.colors.primary_400};
         &:hover {
-          color: ${theme.colors.palePrimary};
+          color: ${theme.colors.primary_200};
         }
         ,
         &:active {
-          color: ${theme.colors.primary};
+          color: ${theme.colors.primary_400};
         }
       `
     : color === 'secondary'
     ? css`
-        color: ${theme.colors.secondary};
+        color: ${theme.colors.secondary_400};
         &:hover {
-          color: ${theme.colors.paleSecondary};
+          color: ${theme.colors.secondary_200};
         }
         ,
         &:active {
-          color: ${theme.colors.secondary};
+          color: ${theme.colors.secondary_400};
         }
       `
     : css`
-        color: ${theme.colors.font};
+        color: ${theme.colors.black_400};
         &:hover {
-          color: ${theme.colors.paleFont};
+          color: ${theme.colors.black_200};
         }
         ,
         &:active {
-          color: ${theme.colors.font};
+          color: ${theme.colors.black_400};
         }
       `}
 `;
@@ -116,43 +116,43 @@ const filled = (color: ColorPattern, theme: Theme) => css`
   color: ${theme.colors.white};
   ${color === 'primary'
     ? css`
-        background: ${theme.colors.primary};
-        border: 1px solid ${theme.colors.primary};
+        background: ${theme.colors.primary_400};
+        border: 1px solid ${theme.colors.primary_400};
         &:hover {
-          background: ${theme.colors.palePrimary};
-          border: 1px solid ${theme.colors.palePrimary};
+          background: ${theme.colors.primary_200};
+          border: 1px solid ${theme.colors.primary_200};
         }
         ,
         &:active {
-          background: ${theme.colors.primary};
-          border: 1px solid ${theme.colors.primary};
+          background: ${theme.colors.primary_400};
+          border: 1px solid ${theme.colors.primary_400};
         }
       `
     : color === 'secondary'
     ? css`
-        background: ${theme.colors.secondary};
-        border: 1px solid ${theme.colors.secondary};
+        background: ${theme.colors.secondary_400};
+        border: 1px solid ${theme.colors.secondary_400};
         &:hover {
-          background: ${theme.colors.paleSecondary};
-          border: 1px solid ${theme.colors.paleSecondary};
+          background: ${theme.colors.secondary_200};
+          border: 1px solid ${theme.colors.secondary_200};
         }
         ,
         &:active {
-          background: ${theme.colors.secondary};
-          border: 1px solid ${theme.colors.secondary};
+          background: ${theme.colors.secondary_400};
+          border: 1px solid ${theme.colors.secondary_400};
         }
       `
     : css`
-        background: ${theme.colors.font};
-        border: 1px solid ${theme.colors.font};
+        background: ${theme.colors.black_400};
+        border: 1px solid ${theme.colors.black_400};
         &:hover {
-          background: ${theme.colors.paleFont};
-          border: 1px solid ${theme.colors.paleFont};
+          background: ${theme.colors.black_200};
+          border: 1px solid ${theme.colors.black_200};
         }
         ,
         &:active {
-          background: ${theme.colors.font};
-          border: 1px solid ${theme.colors.font};
+          background: ${theme.colors.black_400};
+          border: 1px solid ${theme.colors.black_400};
         }
       `}
 `;
@@ -161,43 +161,43 @@ const outlined = (color: ColorPattern, theme: Theme) => css`
   background: ${theme.colors.white};
   ${color === 'primary'
     ? css`
-        color: ${theme.colors.primary};
-        border: 1px solid ${theme.colors.primary};
+        color: ${theme.colors.primary_400};
+        border: 1px solid ${theme.colors.primary_400};
         &:hover {
-          background: ${theme.colors.paleGray};
-          border: 1px solid ${theme.colors.palePrimary};
+          background: ${theme.colors.gray_200};
+          border: 1px solid ${theme.colors.primary_200};
         }
         ,
         &:active {
           background: ${theme.colors.white};
-          border: 1px solid ${theme.colors.primary};
+          border: 1px solid ${theme.colors.primary_400};
         }
       `
     : color === 'secondary'
     ? css`
-        color: ${theme.colors.secondary};
-        border: 1px solid ${theme.colors.secondary};
+        color: ${theme.colors.secondary_400};
+        border: 1px solid ${theme.colors.secondary_400};
         &:hover {
-          background: ${theme.colors.paleGray};
-          border: 1px solid ${theme.colors.paleSecondary};
+          background: ${theme.colors.gray_200};
+          border: 1px solid ${theme.colors.secondary_200};
         }
         ,
         &:active {
           background: ${theme.colors.white};
-          border: 1px solid ${theme.colors.secondary};
+          border: 1px solid ${theme.colors.secondary_400};
         }
       `
     : css`
-        color: ${theme.colors.font};
-        border: 1px solid ${theme.colors.font};
+        color: ${theme.colors.black_400};
+        border: 1px solid ${theme.colors.black_400};
         &:hover {
-          background: ${theme.colors.paleGray};
-          border: 1px solid ${theme.colors.paleFont};
+          background: ${theme.colors.gray_200};
+          border: 1px solid ${theme.colors.black_200};
         }
         ,
         &:active {
           background: ${theme.colors.white};
-          border: 1px solid ${theme.colors.font};
+          border: 1px solid ${theme.colors.black_400};
         }
       `}
 `;
