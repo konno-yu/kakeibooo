@@ -67,7 +67,7 @@ const base = (width: string | number, theme: Theme) => css`
 `;
 
 const disable = (variant: ButtonType, theme: Theme) => css`
-  background: ${variant === 'text' ? 'none' : `${theme.colors.gray_300}`};
+  background: ${variant === 'text' ? 'none' : `${theme.colors.gray_200}`};
   border: ${variant === 'text' ? 'none' : `1px solid ${theme.colors.gray_400}`};
   color: ${theme.colors.gray_400};
   cursor: auto;

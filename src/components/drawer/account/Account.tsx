@@ -29,7 +29,7 @@ const container = css`
 const image = (theme: Theme) => css`
   height: 70px;
   width: 70px;
-  border: 3px solid ${theme.colors.gray_200};
+  border: 3px solid ${theme.colors.gray_100};
   border-radius: 100px;
 `;
 

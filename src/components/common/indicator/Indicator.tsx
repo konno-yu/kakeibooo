@@ -67,7 +67,7 @@ const scaleLabel = (theme: Theme) => css`
 const indicator = (theme: Theme) => css`
   width: 80%;
   height: 30%;
-  background: ${theme.colors.gray_300};
+  background: ${theme.colors.gray_100};
   border-radius: ${theme.units.px12};
   display: flex;
 `;
