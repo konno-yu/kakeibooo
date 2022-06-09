@@ -1,13 +1,21 @@
-## What's Kakeibooo
-
-###### **Kakeibooo** は食費の管理に特化した家計簿アプリケーションです。<br/>
-
+<div align="center">
+<img width="400" alt="スクリーンショット 2022-06-09 23 58 49" src="https://user-images.githubusercontent.com/51043054/172878559-be791065-215f-44c0-add1-3b17374cd4d3.png">
+  
 <a href="https://konno-yu.github.io/kakeibooo/" target="_blank"><img src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg"></a>
-
 [![CodeFactor](https://www.codefactor.io/repository/github/konno-yu/kakeibooo/badge)](https://www.codefactor.io/repository/github/konno-yu/kakeibooo)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e273030c86ca10cbcd0d/maintainability)](https://codeclimate.com/github/konno-yu/kakeibooo/maintainability)
+</div>
 
-<img width="1426" alt="スクリーンショット 2022-04-23 20 25 35" src="https://user-images.githubusercontent.com/51043054/164892504-6523b890-fd2b-4e91-b9aa-87393850f8df.png">
+## What is Kakeibooo?
+
+**Kakeibooo**は食費管理にフォーカスした家計簿アプリケーションです。<br/>
+**思わず入力したくなるようなユーザーインタフェース**を追求して開発しています。
+
+<div align="center">
+<img width="1431" alt="スクリーンショット 2022-06-10 0 06 59" src="https://user-images.githubusercontent.com/51043054/172880414-a9498b20-7ee2-460b-8cde-f627622ff32e.png">
+</div>
+
+
 
 ## Features
 
@@ -29,4 +37,4 @@
 
 ## Welcome!
 
-###### 一緒に開発してくれる開発者＆ユーザーを募集しています！
+###### 一緒に開発してくれる開発者/デザイナー＆ユーザーを募集しています！
