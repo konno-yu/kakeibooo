@@ -5,6 +5,7 @@ import { store } from '../src/store';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { ThemeProvider } from '@emotion/react';
 import { light } from '../src/theme/theme';
+import { i18n } from './i18next.js';
 
 if (typeof global.process === 'undefined') {
   const { worker } = require('../src/mocks/browser');
@@ -18,6 +19,12 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  i18n,
+  locale: 'ja',
+  locales: {
+    en: '英語',
+    ja: '日本語',
   },
 };
 
