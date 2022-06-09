@@ -1,6 +1,6 @@
 import 'react-i18next';
-import { resources as ns1 } from '../locale/resouces_ja';
-import { resources as ns2 } from '../locale/resources_en';
+import ns1 from '../locale/resources_ja.json';
+import ns2 from '../locale/resources_en.json';
 
 declare module 'react-i18next' {
   interface CustomTypeOptions {

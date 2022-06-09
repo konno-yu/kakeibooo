@@ -1,13 +1,15 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { resources as resourcesJa } from './locale/resouces_ja';
-import { resources as resourcesEn } from './locale/resources_en';
+import resourcesJa from './locale/resources_ja.json';
+import resourcesEn from './locale/resources_en.json';
 
 const resources = {
   en: {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     translation: resourcesEn,
   },
   ja: {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     translation: resourcesJa,
   },
 };
