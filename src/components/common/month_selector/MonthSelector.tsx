@@ -16,7 +16,7 @@ export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPr
   const { t } = useTranslation();
   const displayFormat =
     locale === 'ja'
-      ? `${getYear(targetDate)}${t('YEAR')} ${getMonth(targetDate) + 1}${t('MONTH')}`
+      ? t('common.format_year_month', { year: getYear(targetDate), month: getMonth(targetDate) })
       : `${targetDate.toLocaleDateString('en-US', { month: 'long' })} ${getYear(targetDate)}`;
 
   return (

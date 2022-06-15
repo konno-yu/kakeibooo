@@ -7,7 +7,7 @@ export const AppTitle = () => {
   return (
     <div css={container}>
       <img src={Logo} width={30} alt="logo" />
-      <div css={title}>{t('APPLICATION_TITLE')}</div>
+      <div css={title}>{t('common.application_title')}</div>
     </div>
   );
 };

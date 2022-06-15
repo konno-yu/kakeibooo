@@ -47,14 +47,14 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
           onChange={handleStoreNameChange}
           width={150}
           value={storeName}
-          placeholder={t('STORE_NAME')}
+          placeholder={t('calendar.store_name')}
           icon={<AiFillShopping size={16} color={theme.colors.black_400} />}
         />
         <Input
           onChange={handleCostChange}
           width={150}
           value={cost}
-          placeholder={t('USING_EXPENSE')}
+          placeholder={t('calendar.using_expense')}
           icon={<HiCurrencyYen size={16} color={theme.colors.black_400} />}
         />
       </div>

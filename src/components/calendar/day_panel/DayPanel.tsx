@@ -34,10 +34,12 @@ export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = fal
     <>
       <div css={dayLabel} key={dayIndex}>
         {String(dayIndex).padStart(2, '0')}
-        {isToday && !isSelected && <span css={todayLabel}>{t('TODAY')}</span>}
+        {isToday && !isSelected && <span css={todayLabel}>{t('calendar.today')}</span>}
         {isSelected && <FaUserEdit size={24} />}
       </div>
-      <div css={dayValueText}>{children === null ? '' : `${t('YEN_SIGN')}${children.toLocaleString()}`}</div>
+      <div css={dayValueText}>
+        {children === null ? '' : `${t('common.yen', { money: children.toLocaleString() })}`}
+      </div>
     </>
   );
 

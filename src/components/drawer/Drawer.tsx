@@ -50,23 +50,23 @@ export const Drawer = () => {
         <Account username="かけい坊" userId="kakeiboy" />
         <Menu value={selectedTab} onChange={handleChange}>
           <MenuItem id="home" icon={<TiHome />}>
-            {t('HOME')}
+            {t('common.home')}
           </MenuItem>
           <MenuItem id="householdbook" icon={<AiFillAccountBook />}>
-            {t('CALENDAR')}
+            {t('common.calendar')}
           </MenuItem>
           <MenuItem id="utility-cost" icon={<FaRegLightbulb />}>
-            {t('PASS_BOOK')}
+            {t('common.pass_book')}
           </MenuItem>
           <MenuItem id="fridge" icon={<RiFridgeFill />}>
-            {t('FRIDGE')}
+            {t('common.fridge')}
           </MenuItem>
           <MenuItem id="settings" icon={<IoSettingsSharp />}>
-            {t('SETTINGS')}
+            {t('common.settings')}
           </MenuItem>
         </Menu>
       </div>
-      <Button onClick={logout} variant="text" color="normal" icon={<GoSignOut />} label={t('LOG_OUT')} />
+      <Button onClick={logout} variant="text" color="normal" icon={<GoSignOut />} label={t('common.log_out')} />
     </div>
   );
 };

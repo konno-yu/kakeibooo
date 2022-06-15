@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 export const Header = () => {
   const { t } = useTranslation();
   const DAY_OF_WEEK_LABEL: string[] = [
-    t('SUNDAY'),
-    t('MONDAY'),
-    t('TUESDAY'),
-    t('WEDNESDAY'),
-    t('THURSDAY'),
-    t('FRIDAY'),
-    t('SATURDAY'),
+    t('calendar.sunday'),
+    t('calendar.monday'),
+    t('calendar.tuesday'),
+    t('calendar.wednesday'),
+    t('calendar.thursday'),
+    t('calendar.friday'),
+    t('calendar.saturday'),
   ];
   return (
     <div css={header}>

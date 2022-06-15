@@ -34,7 +34,7 @@ export const Input = ({
   const theme = useTheme();
   if (!placeholder) {
     // eslint-disable-next-line no-param-reassign -- あとで解決
-    placeholder = t('INPUT_PLACEHOLDER');
+    placeholder = t('common.input_placeholder');
   }
   if (disabled) {
     return <input css={base(theme, width)} type="text" placeholder={placeholder} maxLength={maxLength} disabled />;

@@ -51,14 +51,14 @@ export const Form = ({ error }: FormProps) => {
           />
         </div>
       </div>
-      <div css={title}>{t('WELCOME_BACK')}</div>
+      <div css={title}>{t('login.welcome_banner')}</div>
       <div css={input}>
         <Input
           width={280}
           icon={<HiMail color={theme.colors.black_400} />}
           value={address}
           onChange={handleOnChangeAddress}
-          placeholder={t('MAIL_ADDRESS')}
+          placeholder={t('login.mail_address')}
         />
         <Input
           width={280}
@@ -66,12 +66,12 @@ export const Form = ({ error }: FormProps) => {
           icon={<HiKey color={theme.colors.black_400} />}
           value={password}
           onChange={handleOnChangePassword}
-          placeholder={t('PASSWORD')}
+          placeholder={t('login.password')}
         />
-        <div css={message}>{error && <span>{t('LOGIN_FAILURE')}</span>}</div>
+        <div css={message}>{error && <span>{t('login.login_failure')}</span>}</div>
       </div>
       <div css={btn}>
-        <Button width="80%" variant="filled" color="normal" onClick={handleLogin} label={t('LOG_IN')} />
+        <Button width="80%" variant="filled" color="normal" onClick={handleLogin} label={t('login.log_in')} />
       </div>
     </div>
   );

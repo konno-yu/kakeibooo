@@ -16,10 +16,7 @@ export const Account = ({ iconOnly = false, username, userId }: Props) => {
       {iconOnly === false && (
         <>
           <div css={usernameText}>{username}</div>
-          <div css={userIdText}>
-            {t('AT_SIGN')}
-            {userId}
-          </div>
+          <div css={userIdText}>{t('common.user_id', { userName: userId })}</div>
         </>
       )}
     </div>

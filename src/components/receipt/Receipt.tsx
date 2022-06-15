@@ -105,20 +105,20 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
    */
   const validate = () => {
     if (dayReceipts?.filter((receipt) => receipt.cost === null).length > 0) {
-      showErrorSnackbar(t('REGISTRATION_INCOMPLETE'), t('EXPENSE_IS_NOT_ENTERED'));
+      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.expense_is_not_entered'));
       return false;
     }
     if (dayReceipts?.filter((receipt) => receipt.storeName === '').length > 0) {
-      showErrorSnackbar(t('REGISTRATION_INCOMPLETE'), t('STORE_NAME_IS_NOT_ENTERED'));
+      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.store_name_is_not_entered'));
       return false;
     }
     if (dayReceipts.filter((receipt) => Number.isNaN(receipt.cost)).length > 0) {
-      showErrorSnackbar(t('REGISTRATION_INCOMPLETE'), t('EXPENSE_IS_NOT_NUMBER'));
+      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.expense_is_not_number'));
       return false;
     }
     const storeNames = dayReceipts?.map((receipt) => receipt.storeName);
     if ([...new Set(storeNames)].length !== storeNames.length) {
-      showErrorSnackbar(t('REGISTRATION_INCOMPLETE'), t('EXISTS_DUPLICATE_RECEIPTS'));
+      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.exists_duplicate_receipts'));
       return false;
     }
     return true;
@@ -136,10 +136,10 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
     const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
     if (isPost) {
       await dispatch(postDailyExpenses(dayReceipts));
-      showSuccessSnackbar(t('REGISTRATION_COMPLETE'));
+      showSuccessSnackbar(t('calendar.registration_complete'));
     } else {
       await dispatch(updateDailyExpenses(dayReceipts));
-      showSuccessSnackbar(t('REGISTRATION_COMPLETE'));
+      showSuccessSnackbar(t('calendar.registration_complete'));
     }
   };
 
@@ -151,10 +151,10 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
     const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
     if (isPost) {
       await dispatch(postDailyExpenses([]));
-      showSuccessSnackbar(t('REGISTRATION_COMPLETE'));
+      showSuccessSnackbar(t('calendar.registration_complete'));
     } else {
       await dispatch(updateDailyExpenses([]));
-      showSuccessSnackbar(t('REGISTRATION_COMPLETE'));
+      showSuccessSnackbar(t('calendar.registration_complete'));
     }
   };
 
@@ -165,9 +165,11 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           Kakeibooo
         </Typography>
         <Typography type="subHeader" variant="accent">
-          {`${getYear(targetDate)}${t('SLASH_SIGN')}${(getMonth(targetDate) + 1).toString().padStart(2, '0')}${t(
-            'SLASH_SIGN'
-          )}${getDate(targetDate).toString().padStart(2, '0')}`}
+          {t('common.format_year_month_day', {
+            year: getYear(targetDate),
+            month: (getMonth(targetDate) + 1).toString().padStart(2, '0'),
+            day: getDate(targetDate).toString().padStart(2, '0'),
+          })}
         </Typography>
       </div>
       <Divider width={2} type="dashed" color={theme.colors.gray_200} />
@@ -190,13 +192,13 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
             width="80%"
             variant="text"
             color="primary"
-            label={t('ADD_RECEIPTS')}
+            label={t('calendar.add_receipts')}
             icon={<HiPlusSm />}
           />
         </div>
         <div css={summartion}>
           <Typography type="subHeader" variant="normal">
-            {t('SUMMARTION')}
+            {t('calendar.summartion')}
           </Typography>
           <Typography type="header" variant="normal">
             {calcDailySummartion()}
@@ -211,14 +213,14 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           width="80%"
           variant="filled"
           color="normal"
-          label={t('REGISTER_EXPENSE')}
+          label={t('calendar.register_expense')}
         />
         <Button
           onClick={handleClickNoMoney}
           width="80%"
           variant="filled"
           color="primary"
-          label={t('REGISTER_FOR_NO_MONEY_DAY')}
+          label={t('calendar.register_for_no_money_day')}
           disabled={dayReceipts && dayReceipts.length > 0}
         />
       </div>
