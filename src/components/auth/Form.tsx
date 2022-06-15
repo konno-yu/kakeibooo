@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from 'react';
 import { HiMail, HiKey } from 'react-icons/hi';
 import { ApiError } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../common/button/Button';
 import { Input } from '../common/input/Input';
 import ImagePath from '../../images/white_icon.svg';
@@ -15,6 +16,7 @@ interface FormProps {
 
 export const Form = ({ error }: FormProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
@@ -49,14 +51,14 @@ export const Form = ({ error }: FormProps) => {
           />
         </div>
       </div>
-      <div css={title}>Welcome Back!</div>
+      <div css={title}>{t('login.welcome_banner')}</div>
       <div css={input}>
         <Input
           width={280}
           icon={<HiMail color={theme.colors.black_400} />}
           value={address}
           onChange={handleOnChangeAddress}
-          placeholder="メールアドレス"
+          placeholder={t('login.mail_address')}
         />
         <Input
           width={280}
@@ -64,12 +66,12 @@ export const Form = ({ error }: FormProps) => {
           icon={<HiKey color={theme.colors.black_400} />}
           value={password}
           onChange={handleOnChangePassword}
-          placeholder="パスワード"
+          placeholder={t('login.password')}
         />
-        <div css={message}>{error && <span>メールアドレスかパスワードが間違っています</span>}</div>
+        <div css={message}>{error && <span>{t('login.login_failure')}</span>}</div>
       </div>
       <div css={btn}>
-        <Button width="80%" variant="filled" color="normal" onClick={handleLogin} label="Log In" />
+        <Button width="80%" variant="filled" color="normal" onClick={handleLogin} label={t('login.log_in')} />
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { css, Theme, useTheme } from '@emotion/react';
+import { useTranslation } from 'react-i18next';
 import { AiFillShopping } from 'react-icons/ai';
 import { FaCircle } from 'react-icons/fa';
 import { HiCurrencyYen } from 'react-icons/hi';
@@ -23,6 +24,7 @@ interface Props {
 
 export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, onDelete }: Props) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const handleStoreNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeStoreName(index, event.target.value);
   };
@@ -45,14 +47,14 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
           onChange={handleStoreNameChange}
           width={150}
           value={storeName}
-          placeholder="店舗名"
+          placeholder={t('calendar.store_name')}
           icon={<AiFillShopping size={16} color={theme.colors.black_400} />}
         />
         <Input
           onChange={handleCostChange}
           width={150}
           value={cost}
-          placeholder="使った金額"
+          placeholder={t('calendar.using_expense')}
           icon={<HiCurrencyYen size={16} color={theme.colors.black_400} />}
         />
       </div>

@@ -1,5 +1,6 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import { getMonth, getYear } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 import { IconButton } from '../icon_button/IconButton';
 
@@ -12,9 +13,10 @@ interface Props {
 
 export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPrev, onNext }: Props) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const displayFormat =
     locale === 'ja'
-      ? `${getYear(targetDate)}年 ${getMonth(targetDate) + 1}月`
+      ? t('common.format_year_month', { year: getYear(targetDate), month: getMonth(targetDate) + 1 })
       : `${targetDate.toLocaleDateString('en-US', { month: 'long' })} ${getYear(targetDate)}`;
 
   return (

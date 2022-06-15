@@ -66,7 +66,7 @@ export const Calendar: React.FC<CalendarProps> = ({ datas, today }: CalendarProp
         <MonthSelector targetDate={targetDate} locale="en" onPrev={handleOnPrev} onNext={handleOnNext} />
       </div>
       <div>
-        <Header locale="en" />
+        <Header />
       </div>
       <div css={monthContainer}>
         {Object.values(datas).map((week) => (

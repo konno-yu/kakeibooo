@@ -57,7 +57,7 @@ export const drawer = (theme: Theme) => css`
 `;
 
 const householdBookContainer = (theme: Theme) => css`
-  background: ${theme.colors.gray_200};
+  background: ${theme.colors.gray_100};
   height: calc(100vh - 24px);
   width: calc(85% - 24px);
   padding: ${theme.units.px12};

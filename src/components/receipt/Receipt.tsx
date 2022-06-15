@@ -1,6 +1,7 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HiPlusSm } from 'react-icons/hi';
 import { postDailyExpenses, Receipt as ReceiptDef, updateDailyExpenses } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -23,6 +24,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
   const [snackbarStatus, setSnackbarStatus] = React.useState<SnackbarProps>({ open: false, type: 'success', text: '' });
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setDayReceipts(extractTargetDayReceipt(expenses, targetDate));
@@ -103,20 +105,20 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
    */
   const validate = () => {
     if (dayReceipts?.filter((receipt) => receipt.cost === null).length > 0) {
-      showErrorSnackbar('登録に失敗しました', '金額が未入力のレシートがあるようです');
+      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.expense_is_not_entered'));
       return false;
     }
     if (dayReceipts?.filter((receipt) => receipt.storeName === '').length > 0) {
-      showErrorSnackbar('登録に失敗しました', '店舗名が未入力のレシートがあるようです');
+      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.store_name_is_not_entered'));
       return false;
     }
     if (dayReceipts.filter((receipt) => Number.isNaN(receipt.cost)).length > 0) {
-      showErrorSnackbar('登録に失敗しました', '金額が数値ではないレシートがあるようです');
+      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.expense_is_not_number'));
       return false;
     }
     const storeNames = dayReceipts?.map((receipt) => receipt.storeName);
     if ([...new Set(storeNames)].length !== storeNames.length) {
-      showErrorSnackbar('登録に失敗しました', '同じ店舗のレシートが複数あるようです');
+      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.exists_duplicate_receipts'));
       return false;
     }
     return true;
@@ -134,10 +136,10 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
     const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
     if (isPost) {
       await dispatch(postDailyExpenses(dayReceipts));
-      showSuccessSnackbar('登録が完了しました');
+      showSuccessSnackbar(t('calendar.registration_complete'));
     } else {
       await dispatch(updateDailyExpenses(dayReceipts));
-      showSuccessSnackbar('登録が完了しました');
+      showSuccessSnackbar(t('calendar.registration_complete'));
     }
   };
 
@@ -149,10 +151,10 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
     const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
     if (isPost) {
       await dispatch(postDailyExpenses([]));
-      showSuccessSnackbar('登録が完了しました');
+      showSuccessSnackbar(t('calendar.registration_complete'));
     } else {
       await dispatch(updateDailyExpenses([]));
-      showSuccessSnackbar('登録が完了しました');
+      showSuccessSnackbar(t('calendar.registration_complete'));
     }
   };
 
@@ -163,9 +165,11 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           Kakeibooo
         </Typography>
         <Typography type="subHeader" variant="accent">
-          {`${getYear(targetDate)}/${(getMonth(targetDate) + 1).toString().padStart(2, '0')}/${getDate(targetDate)
-            .toString()
-            .padStart(2, '0')}`}
+          {t('common.format_year_month_day', {
+            year: getYear(targetDate),
+            month: (getMonth(targetDate) + 1).toString().padStart(2, '0'),
+            day: getDate(targetDate).toString().padStart(2, '0'),
+          })}
         </Typography>
       </div>
       <Divider width={2} type="dashed" color={theme.colors.gray_200} />
@@ -188,13 +192,13 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
             width="80%"
             variant="text"
             color="primary"
-            label="レシートを追加"
+            label={t('calendar.add_receipts')}
             icon={<HiPlusSm />}
           />
         </div>
         <div css={summartion}>
           <Typography type="subHeader" variant="normal">
-            合計
+            {t('calendar.summartion')}
           </Typography>
           <Typography type="header" variant="normal">
             {calcDailySummartion()}
@@ -209,14 +213,14 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           width="80%"
           variant="filled"
           color="normal"
-          label="食費を登録"
+          label={t('calendar.register_expense')}
         />
         <Button
           onClick={handleClickNoMoney}
           width="80%"
           variant="filled"
           color="primary"
-          label="Noマネーディとして登録"
+          label={t('calendar.register_for_no_money_day')}
           disabled={dayReceipts && dayReceipts.length > 0}
         />
       </div>

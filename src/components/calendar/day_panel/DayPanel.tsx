@@ -1,4 +1,5 @@
 import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
+import { useTranslation } from 'react-i18next';
 import { FaUserEdit } from 'react-icons/fa';
 import ImgPath from '../../../images/medal.svg';
 
@@ -19,6 +20,7 @@ interface Props {
 
 export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = false, type, onClick }: Props) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const panelStyle: SerializedStyles[] = [panelBase(theme)];
   if (dayIndex === null) {
     return <div css={[...panelStyle, blank(theme)]} />;
@@ -32,10 +34,12 @@ export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = fal
     <>
       <div css={dayLabel} key={dayIndex}>
         {String(dayIndex).padStart(2, '0')}
-        {isToday && !isSelected && <span css={todayLabel}>今日</span>}
+        {isToday && !isSelected && <span css={todayLabel}>{t('calendar.today')}</span>}
         {isSelected && <FaUserEdit size={24} />}
       </div>
-      <div css={dayValueText}>{children === null ? '' : `¥${children.toLocaleString()}`}</div>
+      <div css={dayValueText}>
+        {children === null ? '' : `${t('common.yen', { money: children.toLocaleString() })}`}
+      </div>
     </>
   );
 

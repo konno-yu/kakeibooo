@@ -6,6 +6,7 @@ import { RiFridgeFill } from 'react-icons/ri';
 import { TiHome } from 'react-icons/ti';
 import { GoSignOut } from 'react-icons/go';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Account } from './account/Account';
 import { AppTitle } from './app_title/AppTitle';
 import { Menu } from './menu/Menu';
@@ -17,6 +18,7 @@ import { Button } from '../common/button/Button';
 
 export const Drawer = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // TODO ここの値はReduxで管理する
@@ -48,23 +50,23 @@ export const Drawer = () => {
         <Account username="かけい坊" userId="kakeiboy" />
         <Menu value={selectedTab} onChange={handleChange}>
           <MenuItem id="home" icon={<TiHome />}>
-            ホーム
+            {t('common.home')}
           </MenuItem>
           <MenuItem id="householdbook" icon={<AiFillAccountBook />}>
-            家計簿
+            {t('common.calendar')}
           </MenuItem>
           <MenuItem id="utility-cost" icon={<FaRegLightbulb />}>
-            光熱費
+            {t('common.pass_book')}
           </MenuItem>
           <MenuItem id="fridge" icon={<RiFridgeFill />}>
-            冷蔵庫
+            {t('common.fridge')}
           </MenuItem>
           <MenuItem id="settings" icon={<IoSettingsSharp />}>
-            設定
+            {t('common.settings')}
           </MenuItem>
         </Menu>
       </div>
-      <Button onClick={logout} variant="text" color="normal" icon={<GoSignOut />} label="ログアウト" />
+      <Button onClick={logout} variant="text" color="normal" icon={<GoSignOut />} label={t('common.log_out')} />
     </div>
   );
 };
