@@ -14,7 +14,7 @@ export const resourceJap = {
     settings: '設定',
     yen: '¥{{money}}',
     input_placeholder: '文字を入力してください',
-    format_year_month: '{{year}}年{{month}}月',
+    format_year_month: '{{year}}年 {{month}}月',
     format_year_month_day: '{{year}}/{{month}}/{{day}}',
   },
   login: {
