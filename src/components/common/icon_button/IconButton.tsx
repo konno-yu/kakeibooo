@@ -10,20 +10,20 @@ interface Props {
   children: ReactNode;
 }
 
-export const IconButton = ({ disabled = false, children, onClick }: Props) => {
+export const IconButton = ({ disabled = false, children, onClick, ...props }: Props) => {
   const theme = useTheme();
   if (disabled) {
     const disabledChildren = cloneElement(children as ReactElement, {
       style: { color: theme.colors.gray_300 },
     });
     return (
-      <button css={base} type="button">
+      <button css={base} type="button" {...props}>
         {disabledChildren}
       </button>
     );
   }
   return (
-    <button css={[base, normal]} onClick={onClick} type="button">
+    <button css={[base, normal]} onClick={onClick} type="button" {...props}>
       {children}
     </button>
   );

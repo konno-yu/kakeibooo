@@ -23,10 +23,10 @@ export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPr
     <div css={container}>
       <span>{displayFormat}</span>
       <div css={monthTransition}>
-        <IconButton onClick={onPrev}>
+        <IconButton data-testid="button-prev" onClick={onPrev}>
           <HiArrowCircleLeft size={28} color={theme.colors.black_400} />
         </IconButton>
-        <IconButton onClick={onNext}>
+        <IconButton data-testid="button-next" onClick={onNext}>
           <HiArrowCircleRight size={28} color={theme.colors.black_400} />
         </IconButton>
       </div>
