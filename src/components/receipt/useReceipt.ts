@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getDate, getDay, getMonth, getWeekOfMonth, getYear, isEqual } from 'date-fns';
 import { SnackbarProps } from '../common/snackbar/Snackbar';
 import { Receipt } from '../../reducer/householdBookSlice';
 import { useAppSelector } from '../../store';
 
-export const useReceipt = (receipts: Receipt[] | [] | null) => {
-  const expenses = useAppSelector((state) => state.householdBook.expenses);
-  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
+export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnType => {
+  // const expenses = useAppSelector((state) => state.householdBook.expenses);
+  // const targetDate = useAppSelector((state) => state.householdBook.targetDate);
   const { t } = useTranslation();
   const [dailyReceipt, setDailyReceipt] = useState<Receipt[] | [] | null>(receipts);
   const [snackbarStatus, setSnackbarStatus] = useState<SnackbarProps>({
@@ -16,17 +16,8 @@ export const useReceipt = (receipts: Receipt[] | [] | null) => {
     text: '',
   });
 
-  useEffect(() => {
-    const weeklyReceipts = expenses[getWeekOfMonth(targetDate)].filter((r) => r);
-    setDailyReceipt(weeklyReceipts.filter((wr) => wr.date && isEqual(wr.date, targetDate))[0].receipts);
-  }, [expenses, targetDate]);
-
   const onReceiptAdd = useCallback(() => {
-    if (dailyReceipt == null) {
-      setDailyReceipt([{ index: 0, storeName: '', cost: null }]);
-    } else {
-      setDailyReceipt([...dailyReceipt, { index: dailyReceipt.length, storeName: '', cost: null }]);
-    }
+    setDailyReceipt((prev) => [...prev, { index: dailyReceipt.length, storeName: '', cost: 100 }]);
   }, [dailyReceipt]);
 
   const onChangeStoreName = useCallback(
@@ -74,13 +65,13 @@ export const useReceipt = (receipts: Receipt[] | [] | null) => {
   const canRegistReceipt = dailyReceipt && dailyReceipt.length >= 1;
   /** ノーマネーデーで登録できる条件 = レシートが0枚 */
   const canRegistNoMoney = dailyReceipt && dailyReceipt.length === 0;
-  const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
+  // const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
 
-  const formattedDate = {
-    year: getYear(targetDate),
-    month: (getMonth(targetDate) + 1).toString().padStart(2, '0'),
-    day: getDate(targetDate).toString().padStart(2, '0'),
-  };
+  // const formattedDate = {
+  //   year: getYear(targetDate).toString(),
+  //   month: (getMonth(targetDate) + 1).toString().padStart(2, '0'),
+  //   day: getDate(targetDate).toString().padStart(2, '0'),
+  // };
 
   /**
    * レシートをDBに登録する前の入力バリデーションを行う
@@ -120,8 +111,9 @@ export const useReceipt = (receipts: Receipt[] | [] | null) => {
     return { isOk: true };
   };
 
-  return [
+  return {
     dailyReceipt,
+    setDailyReceipt,
     snackbarStatus,
     calcSummartion,
     onReceiptAdd,
@@ -133,7 +125,25 @@ export const useReceipt = (receipts: Receipt[] | [] | null) => {
     canRegistReceipt,
     canRegistNoMoney,
     validate,
-    formattedDate,
-    isPost,
-  ] as const;
+    // formattedDate,
+    // isPost,
+  };
+};
+
+export type UseReceiptReturnType = {
+  dailyReceipt: Receipt[] | [];
+  setDailyReceipt: Dispatch<SetStateAction<Receipt[] | []>>;
+  snackbarStatus: SnackbarProps;
+  calcSummartion: () => string;
+  onReceiptAdd: () => void;
+  onChangeStoreName: (index: number, storeName: string) => void;
+  onChangeCost: (index: number, cost: number) => void;
+  onReceiptDelete: (ordinary: number) => void;
+  showSnackbar: (status: SnackbarProps) => void;
+  canAddReceipt: boolean;
+  canRegistReceipt: boolean;
+  canRegistNoMoney: boolean;
+  validate: () => { isOk: boolean; text: string; subText: string } | { isOk: boolean; text?: string; subText?: string };
+  // formattedDate: { year: string; month: string; day: string };
+  // isPost: boolean;
 };
