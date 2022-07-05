@@ -1,14 +1,17 @@
 /** @jest-environment jsdom */
 import { act, renderHook } from '@testing-library/react-hooks';
+import { useTranslation } from 'react-i18next';
 import { useReceipt } from './useReceipt';
 
-jest.mock('react-i18next', (): any => ({
-  useTranslation: (): any => ({
+// TODO カスタムフック全般で使うので、いずれは共通的なところに置きたい
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
     t: (key: string): string => key.toUpperCase(),
   }),
 }));
 
 describe('useReceipt', () => {
+  const { t } = useTranslation();
   test('onReceiptAddが呼ばれたらレシートが追加される（0 → 1）', () => {
     const { result } = renderHook(() => useReceipt([]));
     act(() => {
@@ -74,5 +77,59 @@ describe('useReceipt', () => {
       ])
     );
     expect(result.current.canAddReceipt).toBeFalsy();
+  });
+  test('レシートが0枚の場合は食費を登録できない', () => {
+    const { result } = renderHook(() => useReceipt([]));
+    expect(result.current.canRegistReceipt).toBeFalsy();
+  });
+  test('レシートが1枚でもある場合はノーマネーデイとして登録できない', () => {
+    const { result } = renderHook(() => useReceipt([{ index: 1, storeName: 'a', cost: 100 }]));
+    expect(result.current.canRegistNoMoney).toBeFalsy();
+  });
+  test('食費が入力されていないレシートがあったらエラーになる', () => {
+    const { result } = renderHook(() =>
+      useReceipt([
+        { index: 1, storeName: 'a', cost: null },
+        { index: 2, storeName: 'b', cost: 100 },
+      ])
+    );
+    expect(result.current.validate().subText).toBe(t('calendar.expense_is_not_entered'));
+  });
+  test('店舗名が入力されていないレシートがあったらエラーになる', () => {
+    const { result } = renderHook(() =>
+      useReceipt([
+        { index: 1, storeName: 'a', cost: 50 },
+        { index: 2, storeName: '', cost: 100 },
+      ])
+    );
+    expect(result.current.validate().subText).toBe(t('calendar.store_name_is_not_entered'));
+  });
+  test('食費に数値以外が指定されたレシートがあったらエラーになる', () => {
+    const { result } = renderHook(() =>
+      useReceipt([
+        { index: 1, storeName: 'a', cost: NaN },
+        { index: 2, storeName: 'b', cost: 100 },
+      ])
+    );
+    expect(result.current.validate().subText).toBe(t('calendar.expense_is_not_number'));
+  });
+  test('同じ店舗のレシートが複数枚あったらエラーになる', () => {
+    const { result } = renderHook(() =>
+      useReceipt([
+        { index: 1, storeName: 'a', cost: 200 },
+        { index: 2, storeName: 'b', cost: 100 },
+        { index: 2, storeName: 'b', cost: 100 },
+      ])
+    );
+    expect(result.current.validate().subText).toBe(t('calendar.exists_duplicate_receipts'));
+  });
+  test('レシートに不備がなければバリデーションを通過できる', () => {
+    const { result } = renderHook(() =>
+      useReceipt([
+        { index: 1, storeName: 'a', cost: 100 },
+        { index: 2, storeName: 'b', cost: 200 },
+      ])
+    );
+    expect(result.current.validate().isOk).toBeTruthy();
   });
 });

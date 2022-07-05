@@ -1,9 +1,7 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getDate, getDay, getMonth, getWeekOfMonth, getYear, isEqual } from 'date-fns';
 import { SnackbarProps } from '../common/snackbar/Snackbar';
 import { Receipt } from '../../reducer/householdBookSlice';
-import { useAppSelector } from '../../store';
 
 export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnType => {
   // const expenses = useAppSelector((state) => state.householdBook.expenses);
