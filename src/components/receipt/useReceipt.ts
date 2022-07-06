@@ -1,11 +1,9 @@
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SnackbarProps } from '../common/snackbar/Snackbar';
 import { Receipt } from '../../reducer/householdBookSlice';
 
 export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnType => {
-  // const expenses = useAppSelector((state) => state.householdBook.expenses);
-  // const targetDate = useAppSelector((state) => state.householdBook.targetDate);
   const { t } = useTranslation();
   const [dailyReceipt, setDailyReceipt] = useState<Receipt[] | [] | null>(receipts);
   const [snackbarStatus, setSnackbarStatus] = useState<SnackbarProps>({
@@ -63,13 +61,6 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
   const canRegistReceipt = dailyReceipt && dailyReceipt.length >= 1;
   /** ノーマネーデーで登録できる条件 = レシートが0枚 */
   const canRegistNoMoney = dailyReceipt && dailyReceipt.length === 0;
-  // const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
-
-  // const formattedDate = {
-  //   year: getYear(targetDate).toString(),
-  //   month: (getMonth(targetDate) + 1).toString().padStart(2, '0'),
-  //   day: getDate(targetDate).toString().padStart(2, '0'),
-  // };
 
   /**
    * レシートをDBに登録する前の入力バリデーションを行う
@@ -111,7 +102,6 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
 
   return {
     dailyReceipt,
-    setDailyReceipt,
     snackbarStatus,
     calcSummartion,
     onReceiptAdd,
@@ -123,14 +113,11 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
     canRegistReceipt,
     canRegistNoMoney,
     validate,
-    // formattedDate,
-    // isPost,
   };
 };
 
 export type UseReceiptReturnType = {
   dailyReceipt: Receipt[] | [];
-  setDailyReceipt: Dispatch<SetStateAction<Receipt[] | []>>;
   snackbarStatus: SnackbarProps;
   calcSummartion: () => string;
   onReceiptAdd: () => void;
@@ -142,6 +129,4 @@ export type UseReceiptReturnType = {
   canRegistReceipt: boolean;
   canRegistNoMoney: boolean;
   validate: () => { isOk: boolean; text: string; subText: string } | { isOk: boolean; text?: string; subText?: string };
-  // formattedDate: { year: string; month: string; day: string };
-  // isPost: boolean;
 };

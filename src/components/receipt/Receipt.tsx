@@ -1,8 +1,9 @@
 import { css, Theme, useTheme } from '@emotion/react';
+import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { HiPlusSm } from 'react-icons/hi';
 import { postDailyExpenses, Receipt as ReceiptDef, updateDailyExpenses } from '../../reducer/householdBookSlice';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { Button } from '../common/button/Button';
 import { Divider } from '../common/divider/Divider';
 import { Snackbar } from '../common/snackbar/Snackbar';
@@ -20,7 +21,10 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
   const theme = useTheme();
   const { t } = useTranslation();
 
-  const [
+  const expenses = useAppSelector((state) => state.householdBook.expenses);
+  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
+
+  const {
     dailyReceipt,
     snackbarStatus,
     calcSummartion,
@@ -33,10 +37,14 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
     canRegistReceipt,
     canRegistNoMoney,
     validate,
-    formattedDate,
-    isPost,
-  ] = useReceipt(receipts);
+  } = useReceipt(receipts);
 
+  // useEffect(() => {
+  //   const weeklyReceipts = expenses[getWeekOfMonth(targetDate)].filter((r) => r);
+  //   setDailyReceipt(weeklyReceipts.filter((wr) => wr.date && isEqual(wr.date, targetDate))[0].receipts);
+  // }, [setDailyReceipt, expenses, targetDate]);
+
+  const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts == null;
   /**
    * レシートを追加する
    */
@@ -124,13 +132,16 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           {t('common.application_title')}
         </Typography>
         <Typography type="subHeader" variant="accent">
-          {t('common.format_year_month_day', formattedDate)}
+          {t('common.format_year_month_day', {
+            year: getYear(targetDate).toString(),
+            month: (getMonth(targetDate) + 1).toString().padStart(2, '0'),
+            day: getDate(targetDate).toString().padStart(2, '0'),
+          })}
         </Typography>
       </div>
       <Divider width={2} type="dashed" color={theme.colors.gray_200} />
       <div css={body}>
         <div css={tag}>
-          {String(canAddReceipt)}
           {dailyReceipt &&
             dailyReceipt.map((tag) => (
               <Tag
