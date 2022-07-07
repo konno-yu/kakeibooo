@@ -76,15 +76,15 @@ describe('useReceipt', () => {
         { index: 4, storeName: 'd', cost: 1300 },
       ])
     );
-    expect(result.current.canAddReceipt).toBeFalsy();
+    expect(result.current.cannotAddReceipt).toBeTruthy();
   });
   test('レシートが0枚の場合は食費を登録できない', () => {
     const { result } = renderHook(() => useReceipt([]));
-    expect(result.current.canRegistReceipt).toBeFalsy();
+    expect(result.current.cannotRegistReceipt).toBeTruthy();
   });
   test('レシートが1枚でもある場合はノーマネーデイとして登録できない', () => {
     const { result } = renderHook(() => useReceipt([{ index: 1, storeName: 'a', cost: 100 }]));
-    expect(result.current.canRegistNoMoney).toBeFalsy();
+    expect(result.current.cannotRegistNoMoney).toBeTruthy();
   });
   test('食費が入力されていないレシートがあったらエラーになる', () => {
     const { result } = renderHook(() =>

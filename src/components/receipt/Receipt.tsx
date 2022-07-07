@@ -15,7 +15,6 @@ export interface ReceiptProps {
   receipts: ReceiptDef[] | [] | null;
 }
 
-// TODO カスタムフック切り出し
 export const Receipt = ({ receipts }: ReceiptProps) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
@@ -33,9 +32,9 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
     onChangeCost,
     onReceiptDelete,
     showSnackbar,
-    canAddReceipt,
-    canRegistReceipt,
-    canRegistNoMoney,
+    cannotAddReceipt,
+    cannotRegistReceipt,
+    cannotRegistNoMoney,
     validate,
   } = useReceipt(receipts);
 
@@ -154,7 +153,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
               />
             ))}
           <Button
-            disabled={!canAddReceipt}
+            disabled={cannotAddReceipt}
             onClick={handleClickAdd}
             width="80%"
             variant="text"
@@ -175,7 +174,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
       <Divider width={2} type="dashed" color={theme.colors.gray_200} />
       <div css={footer}>
         <Button
-          disabled={!canRegistReceipt}
+          disabled={cannotRegistReceipt}
           onClick={handleClickRegist}
           width="80%"
           variant="filled"
@@ -188,7 +187,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           variant="filled"
           color="primary"
           label={t('calendar.register_for_no_money_day')}
-          disabled={!canRegistNoMoney}
+          disabled={cannotRegistNoMoney}
         />
       </div>
       <Snackbar {...snackbarStatus} />

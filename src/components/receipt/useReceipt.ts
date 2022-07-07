@@ -13,8 +13,9 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
   });
 
   const onReceiptAdd = useCallback(() => {
-    setDailyReceipt((prev) => [...prev, { index: dailyReceipt.length, storeName: '', cost: 100 }]);
-  }, [dailyReceipt]);
+    const receiptTemplate: Receipt = { index: 0, storeName: '', cost: null };
+    setDailyReceipt((prev) => (prev === null ? [receiptTemplate] : [...prev, receiptTemplate]));
+  }, []);
 
   const onChangeStoreName = useCallback(
     (index: number, storeName: string) => {
@@ -55,12 +56,12 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
     return '¥0';
   };
 
-  /** レシートを追加できる条件 = レシートが4枚以下 */
-  const canAddReceipt = dailyReceipt && dailyReceipt.length < 4;
-  /** レシートをDBに登録できる条件 = レシートが1枚以上 */
-  const canRegistReceipt = dailyReceipt && dailyReceipt.length >= 1;
-  /** ノーマネーデーで登録できる条件 = レシートが0枚 */
-  const canRegistNoMoney = dailyReceipt && dailyReceipt.length === 0;
+  /** レシートを追加できない条件 = レシートが4枚ある */
+  const cannotAddReceipt = dailyReceipt && dailyReceipt.length === 4;
+  /** レシートをDBに登録できない条件 = レシートが0枚ある */
+  const cannotRegistReceipt = dailyReceipt === null || dailyReceipt?.length === 0;
+  /** ノーマネーデーで登録できない条件 = レシートが存在する */
+  const cannotRegistNoMoney = dailyReceipt && dailyReceipt.length > 0;
 
   /**
    * レシートをDBに登録する前の入力バリデーションを行う
@@ -109,9 +110,9 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
     onChangeCost,
     onReceiptDelete,
     showSnackbar,
-    canAddReceipt,
-    canRegistReceipt,
-    canRegistNoMoney,
+    cannotAddReceipt,
+    cannotRegistReceipt,
+    cannotRegistNoMoney,
     validate,
   };
 };
@@ -125,8 +126,8 @@ export type UseReceiptReturnType = {
   onChangeCost: (index: number, cost: number) => void;
   onReceiptDelete: (ordinary: number) => void;
   showSnackbar: (status: SnackbarProps) => void;
-  canAddReceipt: boolean;
-  canRegistReceipt: boolean;
-  canRegistNoMoney: boolean;
+  cannotAddReceipt: boolean;
+  cannotRegistReceipt: boolean;
+  cannotRegistNoMoney: boolean;
   validate: () => { isOk: boolean; text: string; subText: string } | { isOk: boolean; text?: string; subText?: string };
 };
