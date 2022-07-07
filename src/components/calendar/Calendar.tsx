@@ -12,19 +12,10 @@ import { MonthSelector } from '../common/month_selector/MonthSelector';
 import { DayPanel } from './day_panel/DayPanel';
 import { Header } from './header/Header';
 
-export interface CalendarProps {
-  /** カレンダーに表示するデータを指定します */
-  datas: {
-    // TODO 型もっとキレイに書けるはず
-    [key: number]: (null | { date: Date; receipts: { storeName: string; cost: number }[] | [] | null })[];
-  };
-  /** 今日の日付を指定します */
-  // TODO 明示的に指定する必要はないかも
-  today: Date;
-}
-
-export const Calendar: React.FC<CalendarProps> = ({ datas, today }: CalendarProps) => {
+export const Calendar = () => {
   const dispatch = useAppDispatch();
+  const today = new Date(new Date().setHours(9, 0, 0, 0));
+  const expenses = useAppSelector((state) => state.householdBook.expenses);
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
 
   useEffect(() => {
@@ -69,7 +60,7 @@ export const Calendar: React.FC<CalendarProps> = ({ datas, today }: CalendarProp
         <Header />
       </div>
       <div css={monthContainer}>
-        {Object.values(datas).map((week) => (
+        {Object.values(expenses).map((week) => (
           <div css={weekContainer}>
             {week.map((day) => {
               if (day === null) {

@@ -1,8 +1,9 @@
 import { css, Theme, useTheme } from '@emotion/react';
-import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
+import { getDate, getDay, getMonth, getWeekOfMonth, getYear, isEqual } from 'date-fns';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HiPlusSm } from 'react-icons/hi';
-import { postDailyExpenses, Receipt as ReceiptDef, updateDailyExpenses } from '../../reducer/householdBookSlice';
+import { postDailyExpenses, updateDailyExpenses } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { Button } from '../common/button/Button';
 import { Divider } from '../common/divider/Divider';
@@ -11,11 +12,7 @@ import { Typography } from '../common/typography/Typography';
 import { Tag } from './tag/Tag';
 import { useReceipt } from './useReceipt';
 
-export interface ReceiptProps {
-  receipts: ReceiptDef[] | [] | null;
-}
-
-export const Receipt = ({ receipts }: ReceiptProps) => {
+export const Receipt = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const { t } = useTranslation();
@@ -23,8 +20,14 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
   const expenses = useAppSelector((state) => state.householdBook.expenses);
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
 
+  const extractDailyReceipt = useCallback(() => {
+    const weeklyReceipts = expenses[getWeekOfMonth(targetDate)].filter((r) => r);
+    return weeklyReceipts.filter((wr) => wr.date && isEqual(wr.date, targetDate))[0].receipts;
+  }, [expenses, targetDate]);
+
   const {
     dailyReceipt,
+    setDailyReceipt,
     snackbarStatus,
     calcSummartion,
     onReceiptAdd,
@@ -36,12 +39,11 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
     cannotRegistReceipt,
     cannotRegistNoMoney,
     validate,
-  } = useReceipt(receipts);
+  } = useReceipt(extractDailyReceipt());
 
-  // useEffect(() => {
-  //   const weeklyReceipts = expenses[getWeekOfMonth(targetDate)].filter((r) => r);
-  //   setDailyReceipt(weeklyReceipts.filter((wr) => wr.date && isEqual(wr.date, targetDate))[0].receipts);
-  // }, [setDailyReceipt, expenses, targetDate]);
+  useEffect(() => {
+    setDailyReceipt(extractDailyReceipt());
+  }, [setDailyReceipt, extractDailyReceipt]);
 
   const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts == null;
   /**

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SnackbarProps } from '../common/snackbar/Snackbar';
 import { Receipt } from '../../reducer/householdBookSlice';
@@ -103,6 +103,7 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
 
   return {
     dailyReceipt,
+    setDailyReceipt,
     snackbarStatus,
     calcSummartion,
     onReceiptAdd,
@@ -119,6 +120,7 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
 
 export type UseReceiptReturnType = {
   dailyReceipt: Receipt[] | [];
+  setDailyReceipt: Dispatch<SetStateAction<[] | Receipt[]>>;
   snackbarStatus: SnackbarProps;
   calcSummartion: () => string;
   onReceiptAdd: () => void;

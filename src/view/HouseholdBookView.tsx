@@ -1,11 +1,9 @@
-import * as React from 'react';
 import { css, Theme } from '@emotion/react';
 import { getWeekOfMonth, isEqual } from 'date-fns';
 import { Calendar } from '../components/calendar/Calendar';
-import { Receipt } from '../components/receipt/Receipt';
-import { useAppDispatch, useAppSelector } from '../store';
-import { Expenses, fetchMonthlyExpenses } from '../reducer/householdBookSlice';
+import { Expenses } from '../reducer/householdBookSlice';
 import { Drawer } from '../components/drawer/Drawer';
+import { Receipt } from '../components/receipt/Receipt';
 
 /**
  * 特定の日のレシートだけ抽出する
@@ -17,37 +15,21 @@ export const extractTargetDayReceipt = (expenses: Expenses, targetDate: Date) =>
   return dailyReceipt;
 };
 
-export const HouseholdBookView = () => {
-  const expenses = useAppSelector((state) => state.householdBook.expenses);
-  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
-  const today = new Date(new Date().setHours(9, 0, 0, 0));
-  const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    const fetch = async () => {
-      await dispatch(fetchMonthlyExpenses());
-    };
-    void fetch();
-  }, [dispatch]);
-
-  const getReceipts = () => extractTargetDayReceipt(expenses, targetDate);
-
-  return (
-    <>
-      <div css={drawer}>
-        <Drawer />
+export const HouseholdBookView = () => (
+  <>
+    <div css={drawer}>
+      <Drawer />
+    </div>
+    <div css={householdBookContainer}>
+      <div css={calendarContainer}>
+        <Calendar />
       </div>
-      <div css={householdBookContainer}>
-        <div css={calendarContainer}>
-          <Calendar today={today} datas={expenses} />
-        </div>
-        <div css={receiptContainer}>
-          <Receipt receipts={getReceipts()} />
-        </div>
+      <div css={receiptContainer}>
+        <Receipt />
       </div>
-    </>
-  );
-};
+    </div>
+  </>
+);
 
 export const drawer = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
