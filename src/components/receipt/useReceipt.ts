@@ -13,9 +13,12 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
   });
 
   const onReceiptAdd = useCallback(() => {
-    const receiptTemplate: Receipt = { index: 0, storeName: '', cost: null };
-    setDailyReceipt((prev) => (prev === null ? [receiptTemplate] : [...prev, receiptTemplate]));
-  }, []);
+    setDailyReceipt((prev) =>
+      prev === null
+        ? [{ index: 0, storeName: '', cost: null }]
+        : [...prev, { index: dailyReceipt.length, storeName: '', cost: null }]
+    );
+  }, [dailyReceipt]);
 
   const onChangeStoreName = useCallback(
     (index: number, storeName: string) => {
