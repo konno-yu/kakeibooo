@@ -22,7 +22,7 @@ interface Props {
   onDelete: (index: number) => void;
 }
 
-export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, onDelete }: Props) => {
+export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, onDelete, ...props }: Props) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const handleStoreNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
   };
 
   return (
-    <div css={container}>
+    <div css={container} {...props}>
       <div css={label}>
         <FaCircle color={theme.colors.white} size={12} />
       </div>
