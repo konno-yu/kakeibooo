@@ -155,6 +155,7 @@ export const Receipt = ({ receipts, targetDate, isPost }: ReceiptProps) => {
             color="primary"
             label={t('calendar.add_receipts')}
             icon={<HiPlusSm />}
+            data-testid="btn-add"
           />
         </div>
         <div css={summartion}>
@@ -175,6 +176,7 @@ export const Receipt = ({ receipts, targetDate, isPost }: ReceiptProps) => {
           variant="filled"
           color="normal"
           label={t('calendar.register_expense')}
+          data-testid="btn-regist"
         />
         <Button
           onClick={handleClickNoMoney}
@@ -183,9 +185,10 @@ export const Receipt = ({ receipts, targetDate, isPost }: ReceiptProps) => {
           color="primary"
           label={t('calendar.register_for_no_money_day')}
           disabled={cannotRegistNoMoney}
+          data-testid="btn-no-money"
         />
       </div>
-      <Snackbar {...snackbarStatus} />
+      {/* <Snackbar {...snackbarStatus} /> */}
     </div>
   );
 };
