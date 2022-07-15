@@ -3,7 +3,7 @@ import { getDate, getDay, getMonth, getWeekOfMonth, getYear, isEqual } from 'dat
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HiPlusSm } from 'react-icons/hi';
-import { postDailyExpenses, updateDailyExpenses } from '../../reducer/householdBookSlice';
+import { postDailyExpenses, Receipt as ReceiptDef, updateDailyExpenses } from '../../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { Button } from '../common/button/Button';
 import { Divider } from '../common/divider/Divider';
@@ -12,22 +12,19 @@ import { Typography } from '../common/typography/Typography';
 import { Tag } from './tag/Tag';
 import { useReceipt } from './useReceipt';
 
-export const Receipt = () => {
+interface ReceiptProps {
+  receipts: ReceiptDef[] | [] | null;
+  targetDate: Date;
+  isPost: boolean;
+}
+
+export const Receipt = ({ receipts, targetDate, isPost }: ReceiptProps) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const { t } = useTranslation();
 
-  const expenses = useAppSelector((state) => state.householdBook.expenses);
-  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
-
-  const extractDailyReceipt = useCallback(() => {
-    const weeklyReceipts = expenses[getWeekOfMonth(targetDate)].filter((r) => r);
-    return weeklyReceipts.filter((wr) => wr.date && isEqual(wr.date, targetDate))[0].receipts;
-  }, [expenses, targetDate]);
-
   const {
     dailyReceipt,
-    setDailyReceipt,
     snackbarStatus,
     calcSummartion,
     onReceiptAdd,
@@ -39,13 +36,8 @@ export const Receipt = () => {
     cannotRegistReceipt,
     cannotRegistNoMoney,
     validate,
-  } = useReceipt(extractDailyReceipt());
+  } = useReceipt(receipts);
 
-  useEffect(() => {
-    setDailyReceipt(extractDailyReceipt());
-  }, [setDailyReceipt, extractDailyReceipt]);
-
-  const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts == null;
   /**
    * レシートを追加する
    */
@@ -146,6 +138,7 @@ export const Receipt = () => {
           {dailyReceipt &&
             dailyReceipt.map((tag) => (
               <Tag
+                key={tag.index}
                 index={tag.index}
                 storeName={tag.storeName}
                 cost={tag.cost}

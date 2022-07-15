@@ -15,8 +15,8 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
   const onReceiptAdd = useCallback(() => {
     setDailyReceipt((prev) =>
       prev === null
-        ? [{ index: 0, storeName: '', cost: null }]
-        : [...prev, { index: dailyReceipt.length, storeName: '', cost: null }]
+        ? [{ index: 0, storeName: '', cost: 0 }]
+        : [...prev, { index: dailyReceipt.length, storeName: '', cost: 0 }]
     );
   }, [dailyReceipt]);
 
@@ -106,7 +106,6 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
 
   return {
     dailyReceipt,
-    setDailyReceipt,
     snackbarStatus,
     calcSummartion,
     onReceiptAdd,
@@ -123,7 +122,6 @@ export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnTyp
 
 export type UseReceiptReturnType = {
   dailyReceipt: Receipt[] | [];
-  setDailyReceipt: Dispatch<SetStateAction<[] | Receipt[]>>;
   snackbarStatus: SnackbarProps;
   calcSummartion: () => string;
   onReceiptAdd: () => void;
