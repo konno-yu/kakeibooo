@@ -9,6 +9,7 @@ const {
   ClickAddReceipt,
   ClickAddReceiptDisabled,
   ClickRegist,
+  ClickRegistWithDefect,
   ClickRegistDisabled,
   ClickNoMoney,
   ClickNoMoneyDisabled,
@@ -48,13 +49,45 @@ describe('Receiptコンポーネント', () => {
     await ClickAddReceiptDisabled.play({ canvasElement: container });
     expect(clickListener).not.toHaveBeenCalled();
   });
-  // it('レシートが1枚以上ある場合、「食費を登録」をクリックするとメソッドが呼ばれる', async () => {
-  //   const clickListener = jest.fn();
-  //   useReceiptSpy.mockReturnValue({ ...mockResponse, onR: clickListener });
-  //   const { container } = render(<ClickRegist />);
-  //   await ClickAddReceiptDisabled.play({ canvasElement: container });
-  //   expect(clickListener).not.toHaveBeenCalled();
-  // });
+  it('正しく入力されたレシートが1枚以上ある場合、「食費を登録」をクリックするとメソッドが呼ばれる', async () => {
+    const mockOnClick = jest.fn();
+    // TODO validateメソッドをカスタムフックから剥がせれば...
+    useReceiptSpy.mockReturnValue({ ...mockResponse, cannotRegistReceipt: false, validate: () => ({ isOk: true }) });
+    const { container } = render(<ClickRegist onClickRegist={mockOnClick} />);
+    await ClickRegist.play({ canvasElement: container });
+    expect(mockOnClick).toHaveBeenCalled();
+  });
+  it('入力不備のレシートが1枚でもある場合、「食費を登録」をクリックしてもメソッドは呼ばれない', async () => {
+    const mockOnClick = jest.fn();
+    // TODO validateメソッドをカスタムフックから剥がせれば...
+    useReceiptSpy.mockReturnValue({ ...mockResponse, cannotRegistReceipt: true, validate: () => ({ isOk: false }) });
+    const { container } = render(<ClickRegistWithDefect onClickRegist={mockOnClick} />);
+    await ClickRegistWithDefect.play({ canvasElement: container });
+    expect(mockOnClick).not.toHaveBeenCalled();
+  });
+  it('レシートが1枚もない場合、「食費を登録」をクリックしてもメソッドは呼ばれない', async () => {
+    const mockOnClick = jest.fn();
+    // TODO validateメソッドをカスタムフックから剥がせれば...
+    useReceiptSpy.mockReturnValue({ ...mockResponse, cannotRegistReceipt: true, validate: () => ({ isOk: false }) });
+    const { container } = render(<ClickRegistDisabled onClickRegist={mockOnClick} />);
+    await ClickRegistDisabled.play({ canvasElement: container });
+    expect(mockOnClick).not.toHaveBeenCalled();
+  });
+  it('レシートが1枚もない場合、「Noマネーデイとして登録」をクリックするとメソッドが呼ばれる', async () => {
+    const mockOnClick = jest.fn();
+    useReceiptSpy.mockReturnValue({ ...mockResponse, cannotRegistNoMoney: false });
+    const { container } = render(<ClickNoMoney onClickNoMoney={mockOnClick} />);
+    await ClickNoMoney.play({ canvasElement: container });
+    expect(mockOnClick).toHaveBeenCalled();
+  });
+  it('レシートが1枚でも存在する場合、「Noマネーデイとして登録」をクリックしてもメソッドは呼ばれない', async () => {
+    const mockOnClick = jest.fn();
+    // TODO validateメソッドをカスタムフックから剥がせれば...
+    useReceiptSpy.mockReturnValue({ ...mockResponse, cannotRegistNoMoney: true });
+    const { container } = render(<ClickNoMoneyDisabled onClickNoMoney={mockOnClick} />);
+    await ClickNoMoneyDisabled.play({ canvasElement: container });
+    expect(mockOnClick).not.toHaveBeenCalled();
+  });
   afterEach(() => {
     useReceiptSpy.mockClear();
   });
