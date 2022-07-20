@@ -31,6 +31,33 @@ export const HouseholdBookView = () => {
     setIsPost(isNoPersistenceReceipt());
   }, [isNoPersistenceReceipt]);
 
+  useEffect(() => {
+    // 日付が変わったらその月の食費を取得し直す
+    // TODO ほんとうは日付変更時に月が変わった時だけ発火させるべき
+    const fetch = async () => {
+      await dispatch(fetchMonthlyExpenses());
+    };
+    void fetch();
+  }, [targetDate, dispatch]);
+
+  // TODO useCallback化
+  const handleRegist = async (_receipts: ReceiptDef[] | [] | null) => {
+    if (isPost) {
+      await dispatch(postDailyExpenses(_receipts));
+    } else {
+      await dispatch(updateDailyExpenses(_receipts));
+    }
+  };
+
+  // TODO useCallback化
+  // TODO 結局dispatchの中身は一緒なので↑と統一できる？
+  const handleNoMoney = async () => {
+    if (isPost) {
+      await dispatch(postDailyExpenses([]));
+    } else {
+      await dispatch(updateDailyExpenses([]));
+    }
+  };
   return (
     <>
       <div css={drawer}>
@@ -41,7 +68,12 @@ export const HouseholdBookView = () => {
           <Calendar />
         </div>
         <div css={receiptContainer}>
-          <Receipt receipts={receipts} targetDate={targetDate} isPost={isPost} />
+          <Receipt
+            receipts={receipts}
+            targetDate={targetDate}
+            onClickRegist={handleRegist}
+            onClickNoMoney={handleNoMoney}
+          />
         </div>
       </div>
     </>

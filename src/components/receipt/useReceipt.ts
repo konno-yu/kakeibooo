@@ -1,16 +1,22 @@
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SnackbarProps } from '../common/snackbar/Snackbar';
 import { Receipt } from '../../reducer/householdBookSlice';
 
-export const useReceipt = (receipts: Receipt[] | [] | null): UseReceiptReturnType => {
+export const useReceipt = (initReceipts: Receipt[] | [] | null): UseReceiptReturnType => {
   const { t } = useTranslation();
-  const [dailyReceipt, setDailyReceipt] = useState<Receipt[] | [] | null>(receipts);
+  const [dailyReceipt, setDailyReceipt] = useState<Receipt[] | [] | null>(initReceipts);
+  // TODO Receiptコンポーネントとは分離した方がよい、ぜったい
   const [snackbarStatus, setSnackbarStatus] = useState<SnackbarProps>({
     open: false,
     type: 'success',
     text: '',
   });
+
+  useEffect(() => {
+    // useStateの初期値にpropsを指定しても初回描画時しか効かないのでuseEffectで変更させる
+    setDailyReceipt(initReceipts);
+  }, [initReceipts, setDailyReceipt]);
 
   const onReceiptAdd = useCallback(() => {
     setDailyReceipt((prev) =>

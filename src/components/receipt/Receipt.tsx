@@ -1,28 +1,28 @@
 import { css, Theme, useTheme } from '@emotion/react';
-import { getDate, getDay, getMonth, getWeekOfMonth, getYear, isEqual } from 'date-fns';
-import { useCallback, useEffect } from 'react';
+import { getDate, getMonth, getYear } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { HiPlusSm } from 'react-icons/hi';
-import { postDailyExpenses, Receipt as ReceiptDef, updateDailyExpenses } from '../../reducer/householdBookSlice';
-import { useAppDispatch, useAppSelector } from '../../store';
+import { Receipt as ReceiptDef } from '../../reducer/householdBookSlice';
 import { Button } from '../common/button/Button';
 import { Divider } from '../common/divider/Divider';
-import { Snackbar } from '../common/snackbar/Snackbar';
 import { Typography } from '../common/typography/Typography';
 import { Tag } from './tag/Tag';
 import { useReceipt } from './useReceipt';
 
 interface ReceiptProps {
+  /** 選択した日付のレシート */
   receipts: ReceiptDef[] | [] | null;
+  /** 編集対象の日付 */
   targetDate: Date;
-  isPost: boolean;
+  /** 「食費を登録」をクリックしたときの動作 */
+  onClickRegist: (receipts: ReceiptDef[] | [] | null) => void;
+  /** 「Noマネーデイとして登録」をクリックしたときの動作 */
+  onClickNoMoney: () => void;
 }
 
-export const Receipt = ({ receipts, targetDate, isPost }: ReceiptProps) => {
-  const dispatch = useAppDispatch();
+export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }: ReceiptProps) => {
   const theme = useTheme();
   const { t } = useTranslation();
-
   const {
     dailyReceipt,
     snackbarStatus,
@@ -90,32 +90,21 @@ export const Receipt = ({ receipts, targetDate, isPost }: ReceiptProps) => {
    * 編集日のデータが登録済みかに応じてPOST/PUTを投げ分ける
    *
    */
-  const handleClickRegist = async () => {
+  const handleClickRegist = () => {
     if (!validate().isOk) {
       showErrorSnackbar(validate().text, validate().subText);
       return;
     }
-    if (isPost) {
-      await dispatch(postDailyExpenses(dailyReceipt));
-      showSuccessSnackbar(t('calendar.registration_complete'));
-    } else {
-      await dispatch(updateDailyExpenses(dailyReceipt));
-      showSuccessSnackbar(t('calendar.registration_complete'));
-    }
+    onClickRegist(dailyReceipt);
   };
 
   /**
    * [Noマネーデイとして登録]が押された場合の動作 <br/>
    * 編集日のデータが登録済みかに応じてPOST/PUTを投げ分ける
    */
-  const handleClickNoMoney = async () => {
-    if (isPost) {
-      await dispatch(postDailyExpenses([]));
-      showSuccessSnackbar(t('calendar.registration_complete'));
-    } else {
-      await dispatch(updateDailyExpenses([]));
-      showSuccessSnackbar(t('calendar.registration_complete'));
-    }
+  const handleClickNoMoney = () => {
+    // TODO テストできればこれ要らないか？
+    onClickNoMoney();
   };
 
   return (
