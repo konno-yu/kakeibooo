@@ -1,29 +1,25 @@
 import { css, Theme } from '@emotion/react';
 import { getDate, isEqual } from 'date-fns';
-import { useEffect } from 'react';
-import {
-  selectEdittingDate,
-  shiftPreviousMonth,
-  shiftNextMonth,
-  fetchMonthlyExpenses,
-} from '../../reducer/householdBookSlice';
-import { useAppDispatch, useAppSelector } from '../../store';
+import { Expenses } from '../../reducer/householdBookSlice';
 import { MonthSelector } from '../common/month_selector/MonthSelector';
 import { DayPanel } from './day_panel/DayPanel';
 import { Header } from './header/Header';
 
-export const Calendar = () => {
-  const dispatch = useAppDispatch();
-  const today = new Date(new Date().setHours(9, 0, 0, 0));
-  const expenses = useAppSelector((state) => state.householdBook.expenses);
-  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
+interface CalendarProps {
+  /** 編集対象の日付 */
+  targetDate: Date;
+  /** 編集対象月の食費 */
+  expenses: Expenses;
+  /** セルをクリックしたときの動作 */
+  onClick: (index: number) => void;
+  /** 「←」をクリックしたときの動作 */
+  onClickPrev: () => void;
+  /** 「→」をクリックしたときの動作 */
+  onClickNext: () => void;
+}
 
-  useEffect(() => {
-    const fetch = async () => {
-      await dispatch(fetchMonthlyExpenses());
-    };
-    void fetch();
-  }, [targetDate, dispatch]);
+export const Calendar = ({ targetDate, expenses, onClick, onClickPrev, onClickNext }: CalendarProps) => {
+  const today = new Date(new Date().setHours(9, 0, 0, 0));
 
   const getPanelType = (cost: number) => {
     if (cost === 0) return 'zero';
@@ -40,15 +36,15 @@ export const Calendar = () => {
   };
 
   const handleOnClick = (dateIndex: number) => {
-    dispatch(selectEdittingDate(dateIndex));
+    onClick(dateIndex);
   };
 
   const handleOnPrev = () => {
-    dispatch(shiftPreviousMonth());
+    onClickPrev();
   };
 
   const handleOnNext = () => {
-    dispatch(shiftNextMonth());
+    onClickNext();
   };
 
   return (

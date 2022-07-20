@@ -4,11 +4,21 @@ import { useCallback, useEffect, useState } from 'react';
 import { Calendar } from '../components/calendar/Calendar';
 import { Drawer } from '../components/drawer/Drawer';
 import { Receipt } from '../components/receipt/Receipt';
-import { useAppSelector } from '../store';
+import {
+  fetchMonthlyExpenses,
+  postDailyExpenses,
+  Receipt as ReceiptDef,
+  selectEdittingDate,
+  shiftNextMonth,
+  shiftPreviousMonth,
+  updateDailyExpenses,
+} from '../reducer/householdBookSlice';
+import { useAppDispatch, useAppSelector } from '../store';
 
 export const HouseholdBookView = () => {
   const expenses = useAppSelector((state) => state.householdBook.expenses);
   const targetDate = useAppSelector((state) => state.householdBook.targetDate);
+  const dispatch = useAppDispatch();
 
   const extractTargetDateReceipts = useCallback(() => {
     const weeklyReceipts = expenses[getWeekOfMonth(targetDate)].filter((r) => r);
@@ -58,6 +68,22 @@ export const HouseholdBookView = () => {
       await dispatch(updateDailyExpenses([]));
     }
   };
+
+  const handleClick = useCallback(
+    (index: number) => {
+      dispatch(selectEdittingDate(index));
+    },
+    [dispatch]
+  );
+
+  const handleClickOnPrev = useCallback(() => {
+    dispatch(shiftPreviousMonth());
+  }, [dispatch]);
+
+  const handleClickOnNext = useCallback(() => {
+    dispatch(shiftNextMonth());
+  }, [dispatch]);
+
   return (
     <>
       <div css={drawer}>
@@ -65,7 +91,13 @@ export const HouseholdBookView = () => {
       </div>
       <div css={householdBookContainer}>
         <div css={calendarContainer}>
-          <Calendar />
+          <Calendar
+            expenses={expenses}
+            targetDate={targetDate}
+            onClick={handleClick}
+            onClickPrev={handleClickOnPrev}
+            onClickNext={handleClickOnNext}
+          />
         </div>
         <div css={receiptContainer}>
           <Receipt
