@@ -58,6 +58,15 @@ export const ClickRegist: ComponentStoryObj<typeof Receipt> = {
   },
 };
 
+export const ClickRegistWithDefect: ComponentStoryObj<typeof Receipt> = {
+  args: {
+    ...Pure.args,
+    receipts: [{ index: 1, storeName: '', cost: 100 }],
+  },
+  decorators: Pure.decorators,
+  play: ClickRegist.play,
+};
+
 export const ClickRegistDisabled: ComponentStoryObj<typeof Receipt> = {
   args: Pure.args,
   decorators: Pure.decorators,
