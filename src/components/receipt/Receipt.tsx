@@ -108,8 +108,8 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
   };
 
   return (
-    <div css={container}>
-      <div css={header}>
+    <div css={container(theme)}>
+      <div css={header(theme)}>
         <Typography type="header" variant="normal">
           {t('common.application_title')}
         </Typography>
@@ -122,8 +122,8 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
         </Typography>
       </div>
       <Divider width={2} type="dashed" color={theme.colors.gray_200} />
-      <div css={body}>
-        <div css={tag}>
+      <div css={body(theme)}>
+        <div css={tag(theme)}>
           {dailyReceipt &&
             dailyReceipt.map((tag) => (
               <Tag
