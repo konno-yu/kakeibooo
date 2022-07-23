@@ -3,9 +3,8 @@ import { composeStories } from '@storybook/testing-react';
 import * as ButtonStories from './Button.stories';
 import { render } from '../../../test-utils';
 
-const { ClickFilled, ClickDisabled } = composeStories(ButtonStories);
-
 describe('Buttonコンポーネント', () => {
+  const { ClickFilled, ClickDisabled } = composeStories(ButtonStories);
   it('クリックしたらonClickが呼ばれる', async () => {
     const mockOnClick = jest.fn();
     const { container } = render(<ClickFilled onClick={mockOnClick} />);

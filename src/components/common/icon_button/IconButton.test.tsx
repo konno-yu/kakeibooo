@@ -3,9 +3,8 @@ import { composeStories } from '@storybook/testing-react';
 import * as IconButtonStories from './IconButton.stories';
 import { render } from '../../../test-utils';
 
-const { ClickPure, ClickDisabled } = composeStories(IconButtonStories);
-
 describe('IconButtonコンポーネント', () => {
+  const { ClickPure, ClickDisabled } = composeStories(IconButtonStories);
   it('クリックしたらonClickが呼ばれる', async () => {
     const mockOnClick = jest.fn();
     const { container } = render(<ClickPure onClick={mockOnClick} />);

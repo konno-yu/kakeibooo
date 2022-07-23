@@ -1,7 +1,6 @@
 /** @jest-environment jsdom */
-import { within } from '@storybook/testing-library';
 import { composeStories } from '@storybook/testing-react';
-import { render } from '../../../test-utils';
+import { render, within } from '../../../test-utils';
 import * as InputStories from './Input.stories';
 
 const { TypePure, TypeLimited } = composeStories(InputStories);

@@ -5,35 +5,33 @@ import { useReceipt, UseReceiptReturnType } from './useReceipt';
 import { render } from '../../test-utils';
 import * as ReceiptStories from './Receipt.stories';
 
-const {
-  ClickAddReceipt,
-  ClickAddReceiptDisabled,
-  ClickRegist,
-  ClickRegistWithDefect,
-  ClickRegistDisabled,
-  ClickNoMoney,
-  ClickNoMoneyDisabled,
-} = composeStories(ReceiptStories);
-
 jest.mock('./useReceipt');
 
-// TODO もっとよいやり方がある...？
-const mockResponse: UseReceiptReturnType = {
-  dailyReceipt: [],
-  snackbarStatus: { open: false, text: '', type: 'error' },
-  calcSummartion: jest.fn(),
-  onReceiptAdd: jest.fn(),
-  onChangeStoreName: jest.fn(),
-  onChangeCost: jest.fn(),
-  onReceiptDelete: jest.fn(),
-  showSnackbar: jest.fn(),
-  cannotAddReceipt: false,
-  cannotRegistReceipt: false,
-  cannotRegistNoMoney: false,
-  validate: jest.fn(),
-};
-
 describe('Receiptコンポーネント', () => {
+  const {
+    ClickAddReceipt,
+    ClickAddReceiptDisabled,
+    ClickRegist,
+    ClickRegistWithDefect,
+    ClickRegistDisabled,
+    ClickNoMoney,
+    ClickNoMoneyDisabled,
+  } = composeStories(ReceiptStories);
+  // TODO もっとよいやり方がある...？
+  const mockResponse: UseReceiptReturnType = {
+    dailyReceipt: [],
+    snackbarStatus: { open: false, text: '', type: 'error' },
+    calcSummartion: jest.fn(),
+    onReceiptAdd: jest.fn(),
+    onChangeStoreName: jest.fn(),
+    onChangeCost: jest.fn(),
+    onReceiptDelete: jest.fn(),
+    showSnackbar: jest.fn(),
+    cannotAddReceipt: false,
+    cannotRegistReceipt: false,
+    cannotRegistNoMoney: false,
+    validate: jest.fn(),
+  };
   const useReceiptSpy = jest.spyOn({ useReceipt }, 'useReceipt');
   it('レシートが3枚以下の場合、「レシートを追加」をクリックするとメソッドが呼ばれる', async () => {
     const clickListener = jest.fn();

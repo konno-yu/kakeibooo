@@ -3,9 +3,8 @@ import { composeStories } from '@storybook/testing-react';
 import * as MonthSelectorStories from './MonthSelector.stories';
 import { render } from '../../../test-utils';
 
-const { TypePrev, TypeNext } = composeStories(MonthSelectorStories);
-
 describe('MonthSelectorコンポーネント', () => {
+  const { TypePrev, TypeNext } = composeStories(MonthSelectorStories);
   it('クリックしたらonPrevが呼ばれる', async () => {
     const mockOnPrev = jest.fn();
     const { container } = render(<TypePrev onPrev={mockOnPrev} />);
