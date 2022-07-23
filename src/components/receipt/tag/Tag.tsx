@@ -38,11 +38,11 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
   };
 
   return (
-    <div css={container} {...props}>
-      <div css={label}>
+    <div css={container(theme)} {...props}>
+      <div css={label(theme)}>
         <FaCircle color={theme.colors.white} size={12} />
       </div>
-      <div css={input}>
+      <div css={input(theme)}>
         <Input
           onChange={handleStoreNameChange}
           width={150}
