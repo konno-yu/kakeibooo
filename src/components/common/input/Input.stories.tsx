@@ -35,7 +35,7 @@ export const TypeLimited: ComponentStoryObj<typeof Input> = {
   args: Limited.args,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.type(canvas.getByTestId('input'), 'sample', { delay: 700 });
+    await userEvent.type(canvas.getByRole('textbox'), 'sample', { delay: 700 });
   },
 };
 
