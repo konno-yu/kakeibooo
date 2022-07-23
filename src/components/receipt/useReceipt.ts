@@ -16,7 +16,8 @@ export const useReceipt = (initReceipts: Receipt[] | [] | null): UseReceiptRetur
   useEffect(() => {
     // useStateの初期値にpropsを指定しても初回描画時しか効かないのでuseEffectで変更させる
     setDailyReceipt(initReceipts);
-  }, [initReceipts, setDailyReceipt]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onReceiptAdd = useCallback(() => {
     setDailyReceipt((prev) =>
