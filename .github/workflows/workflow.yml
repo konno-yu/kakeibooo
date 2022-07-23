@@ -22,8 +22,26 @@ jobs:
         run: npm ci
       - name: ESLint
         run: npm run lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: enable node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: npm install
+        run: npm ci
+      - name: run unit test
+        run: npm run test
   vrt:
-    needs: [lint]
+    needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
