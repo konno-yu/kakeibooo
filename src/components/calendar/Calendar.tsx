@@ -1,38 +1,25 @@
 import { css, Theme } from '@emotion/react';
 import { getDate, isEqual } from 'date-fns';
-import { useEffect } from 'react';
-import {
-  selectEdittingDate,
-  shiftPreviousMonth,
-  shiftNextMonth,
-  fetchMonthlyExpenses,
-} from '../../reducer/householdBookSlice';
-import { useAppDispatch, useAppSelector } from '../../store';
+import { Expenses } from '../../reducer/householdBookSlice';
 import { MonthSelector } from '../common/month_selector/MonthSelector';
 import { DayPanel } from './day_panel/DayPanel';
 import { Header } from './header/Header';
 
-export interface CalendarProps {
-  /** カレンダーに表示するデータを指定します */
-  datas: {
-    // TODO 型もっとキレイに書けるはず
-    [key: number]: (null | { date: Date; receipts: { storeName: string; cost: number }[] | [] | null })[];
-  };
-  /** 今日の日付を指定します */
-  // TODO 明示的に指定する必要はないかも
-  today: Date;
+interface CalendarProps {
+  /** 編集対象の日付 */
+  targetDate: Date;
+  /** 編集対象月の食費 */
+  expenses: Expenses;
+  /** セルをクリックしたときの動作 */
+  onClick: (index: number) => void;
+  /** 「←」をクリックしたときの動作 */
+  onClickPrev: () => void;
+  /** 「→」をクリックしたときの動作 */
+  onClickNext: () => void;
 }
 
-export const Calendar: React.FC<CalendarProps> = ({ datas, today }: CalendarProps) => {
-  const dispatch = useAppDispatch();
-  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
-
-  useEffect(() => {
-    const fetch = async () => {
-      await dispatch(fetchMonthlyExpenses());
-    };
-    void fetch();
-  }, [targetDate, dispatch]);
+export const Calendar = ({ targetDate, expenses, onClick, onClickPrev, onClickNext }: CalendarProps) => {
+  const today = new Date(new Date().setHours(9, 0, 0, 0));
 
   const getPanelType = (cost: number) => {
     if (cost === 0) return 'zero';
@@ -49,15 +36,15 @@ export const Calendar: React.FC<CalendarProps> = ({ datas, today }: CalendarProp
   };
 
   const handleOnClick = (dateIndex: number) => {
-    dispatch(selectEdittingDate(dateIndex));
+    onClick(dateIndex);
   };
 
   const handleOnPrev = () => {
-    dispatch(shiftPreviousMonth());
+    onClickPrev();
   };
 
   const handleOnNext = () => {
-    dispatch(shiftNextMonth());
+    onClickNext();
   };
 
   return (
@@ -69,7 +56,7 @@ export const Calendar: React.FC<CalendarProps> = ({ datas, today }: CalendarProp
         <Header />
       </div>
       <div css={monthContainer}>
-        {Object.values(datas).map((week) => (
+        {Object.values(expenses).map((week) => (
           <div css={weekContainer}>
             {week.map((day) => {
               if (day === null) {

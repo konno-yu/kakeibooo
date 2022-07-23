@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "jsxImportSource": "@emotion/react",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   }
 }

@@ -40,7 +40,7 @@ export const Input = ({
     return <input css={base(theme, width)} type="text" placeholder={placeholder} maxLength={maxLength} disabled />;
   }
   return (
-    <div css={container}>
+    <div css={container(theme)}>
       {icon}
       <input
         css={[base(theme, width), normal(theme)]}

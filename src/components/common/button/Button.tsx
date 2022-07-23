@@ -21,11 +21,11 @@ export interface Props {
   onClick: () => void;
 }
 
-export const Button = ({ variant, label, color, disabled, icon, width = '100%', onClick }: Props) => {
+export const Button = ({ variant, label, color, disabled, icon, width = '100%', onClick, ...props }: Props) => {
   const theme = useTheme();
   if (disabled) {
     return (
-      <button css={[base(width, theme), disable(variant, theme)]} type="button">
+      <button css={[base(width, theme), disable(variant, theme)]} type="button" {...props}>
         {icon}
         {label}
       </button>
@@ -46,7 +46,7 @@ export const Button = ({ variant, label, color, disabled, icon, width = '100%', 
       break;
   }
   return (
-    <button css={buttonStyle} onClick={onClick} type="button">
+    <button css={buttonStyle} onClick={onClick} type="button" {...props}>
       {icon}
       {label}
     </button>

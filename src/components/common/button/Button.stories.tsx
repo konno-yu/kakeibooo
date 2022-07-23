@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 import { FaSmileWink } from 'react-icons/fa';
 import { Button } from './Button';
 
@@ -10,6 +11,14 @@ export const Filled: ComponentStoryObj<typeof Button> = {
     variant: 'filled',
     color: 'primary',
     width: 200,
+  },
+};
+
+export const ClickFilled: ComponentStoryObj<typeof Button> = {
+  args: Filled.args,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button'));
   },
 };
 
@@ -46,5 +55,13 @@ export const Disabled: ComponentStoryObj<typeof Button> = {
     label: 'これはボタンです',
     disabled: true,
     width: 200,
+  },
+};
+
+export const ClickDisabled: ComponentStoryObj<typeof Button> = {
+  args: Disabled.args,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button'));
   },
 };

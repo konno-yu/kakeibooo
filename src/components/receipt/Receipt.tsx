@@ -1,43 +1,48 @@
 import { css, Theme, useTheme } from '@emotion/react';
-import { getDate, getDay, getMonth, getWeekOfMonth, getYear } from 'date-fns';
-import React, { useEffect } from 'react';
+import { getDate, getMonth, getYear } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { HiPlusSm } from 'react-icons/hi';
-import { postDailyExpenses, Receipt as ReceiptDef, updateDailyExpenses } from '../../reducer/householdBookSlice';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { extractTargetDayReceipt } from '../../view/HouseholdBookView';
+import { Receipt as ReceiptDef } from '../../reducer/householdBookSlice';
 import { Button } from '../common/button/Button';
 import { Divider } from '../common/divider/Divider';
-import { Snackbar, SnackbarProps } from '../common/snackbar/Snackbar';
 import { Typography } from '../common/typography/Typography';
 import { Tag } from './tag/Tag';
+import { useReceipt } from './useReceipt';
 
-export interface ReceiptProps {
+interface ReceiptProps {
+  /** 選択した日付のレシート */
   receipts: ReceiptDef[] | [] | null;
+  /** 編集対象の日付 */
+  targetDate: Date;
+  /** 「食費を登録」をクリックしたときの動作 */
+  onClickRegist: (receipts: ReceiptDef[] | [] | null) => void;
+  /** 「Noマネーデイとして登録」をクリックしたときの動作 */
+  onClickNoMoney: () => void;
 }
 
-// TODO カスタムフック切り出し
-export const Receipt = ({ receipts }: ReceiptProps) => {
-  const [dayReceipts, setDayReceipts] = React.useState<ReceiptDef[] | [] | null>(receipts);
-  const expenses = useAppSelector((state) => state.householdBook.expenses);
-  const targetDate = useAppSelector((state) => state.householdBook.targetDate);
-  const [snackbarStatus, setSnackbarStatus] = React.useState<SnackbarProps>({ open: false, type: 'success', text: '' });
-  const dispatch = useAppDispatch();
+export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }: ReceiptProps) => {
   const theme = useTheme();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    setDayReceipts(extractTargetDayReceipt(expenses, targetDate));
-  }, [expenses, targetDate]);
+  const {
+    dailyReceipt,
+    snackbarStatus,
+    calcSummartion,
+    onReceiptAdd,
+    onChangeStoreName,
+    onChangeCost,
+    onReceiptDelete,
+    showSnackbar,
+    cannotAddReceipt,
+    cannotRegistReceipt,
+    cannotRegistNoMoney,
+    validate,
+  } = useReceipt(receipts);
 
   /**
    * レシートを追加する
    */
   const handleClickAdd = () => {
-    if (dayReceipts === null) {
-      setDayReceipts([{ index: 0, storeName: '', cost: null }]);
-    }
-    setDayReceipts([...dayReceipts, { index: dayReceipts.length, storeName: '', cost: null }]);
+    onReceiptAdd();
   };
 
   /**
@@ -46,7 +51,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
    * @param storeName 更新後の店舗名
    */
   const handleChangeStoreName = (index: number, storeName: string) => {
-    setDayReceipts(dayReceipts.map((receipt) => (receipt.index === index ? { ...receipt, storeName } : receipt)));
+    onChangeStoreName(index, storeName);
   };
 
   /**
@@ -55,7 +60,7 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
    * @param cost 更新後の金額
    */
   const handleChangeCost = (index: number, cost: number) => {
-    setDayReceipts(dayReceipts.map((receipt) => (receipt.index === index ? { ...receipt, cost } : receipt)));
+    onChangeCost(index, cost);
   };
 
   /**
@@ -63,65 +68,21 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
    * @param index 対象となるレシート
    */
   const handleClickDelete = (index: number) => {
-    const remainReceipts = (dayReceipts as ReceiptDef[]).filter((receipt) => receipt.index !== index);
-    // indexを振り直してステートを更新する
-    setDayReceipts(remainReceipts.map((receipt, i) => ({ ...receipt, index: i })));
-  };
-
-  /**
-   * 選択中の日付における合計金額を計算する
-   * @returns 合計金額に￥マークをつけつつカンマ区切りにして返す
-   */
-  const calcDailySummartion = () => {
-    if (dayReceipts) {
-      const totalCost: number =
-        dayReceipts?.length === 0
-          ? 0
-          : dayReceipts?.map((receipt) => receipt.cost).reduce((pre, current) => pre + current, 0);
-      return `¥${totalCost.toLocaleString()}`;
-    }
-    return '¥0';
+    onReceiptDelete(index);
   };
 
   /**
    * 処理が成功した時のスナックバーを表示する
    */
   const showSuccessSnackbar = (text: string, subText?: string) => {
-    setSnackbarStatus({ open: true, type: 'success', text, subText });
-    setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
+    showSnackbar({ open: true, type: 'success', text, subText });
   };
 
   /**
    * 処理が失敗した時のスナックバーを表示する
    */
   const showErrorSnackbar = (text: string, subText?: string) => {
-    setSnackbarStatus({ open: true, type: 'error', text, subText });
-    setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
-  };
-
-  /**
-   * レシートをDBに登録する前の入力バリデーションを行う
-   * @returns バリデーションの成否
-   */
-  const validate = () => {
-    if (dayReceipts?.filter((receipt) => receipt.cost === null).length > 0) {
-      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.expense_is_not_entered'));
-      return false;
-    }
-    if (dayReceipts?.filter((receipt) => receipt.storeName === '').length > 0) {
-      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.store_name_is_not_entered'));
-      return false;
-    }
-    if (dayReceipts.filter((receipt) => Number.isNaN(receipt.cost)).length > 0) {
-      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.expense_is_not_number'));
-      return false;
-    }
-    const storeNames = dayReceipts?.map((receipt) => receipt.storeName);
-    if ([...new Set(storeNames)].length !== storeNames.length) {
-      showErrorSnackbar(t('calendar.registration_imcomplete'), t('calendar.exists_duplicate_receipts'));
-      return false;
-    }
-    return true;
+    showSnackbar({ open: true, type: 'error', text, subText });
   };
 
   /**
@@ -129,55 +90,44 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
    * 編集日のデータが登録済みかに応じてPOST/PUTを投げ分ける
    *
    */
-  const handleClickRegist = async () => {
-    if (!validate()) {
+  const handleClickRegist = () => {
+    if (!validate().isOk) {
+      showErrorSnackbar(validate().text, validate().subText);
       return;
     }
-    const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
-    if (isPost) {
-      await dispatch(postDailyExpenses(dayReceipts));
-      showSuccessSnackbar(t('calendar.registration_complete'));
-    } else {
-      await dispatch(updateDailyExpenses(dayReceipts));
-      showSuccessSnackbar(t('calendar.registration_complete'));
-    }
+    onClickRegist(dailyReceipt);
   };
 
   /**
    * [Noマネーデイとして登録]が押された場合の動作 <br/>
    * 編集日のデータが登録済みかに応じてPOST/PUTを投げ分ける
    */
-  const handleClickNoMoney = async () => {
-    const isPost = expenses[getWeekOfMonth(targetDate)][getDay(targetDate)].receipts === null;
-    if (isPost) {
-      await dispatch(postDailyExpenses([]));
-      showSuccessSnackbar(t('calendar.registration_complete'));
-    } else {
-      await dispatch(updateDailyExpenses([]));
-      showSuccessSnackbar(t('calendar.registration_complete'));
-    }
+  const handleClickNoMoney = () => {
+    // TODO テストできればこれ要らないか？
+    onClickNoMoney();
   };
 
   return (
-    <div css={container}>
-      <div css={header}>
+    <div css={container(theme)}>
+      <div css={header(theme)}>
         <Typography type="header" variant="normal">
-          Kakeibooo
+          {t('common.application_title')}
         </Typography>
         <Typography type="subHeader" variant="accent">
           {t('common.format_year_month_day', {
-            year: getYear(targetDate),
+            year: getYear(targetDate).toString(),
             month: (getMonth(targetDate) + 1).toString().padStart(2, '0'),
             day: getDate(targetDate).toString().padStart(2, '0'),
           })}
         </Typography>
       </div>
       <Divider width={2} type="dashed" color={theme.colors.gray_200} />
-      <div css={body}>
-        <div css={tag}>
-          {dayReceipts &&
-            dayReceipts.map((tag) => (
+      <div css={body(theme)}>
+        <div css={tag(theme)}>
+          {dailyReceipt &&
+            dailyReceipt.map((tag) => (
               <Tag
+                key={tag.index}
                 index={tag.index}
                 storeName={tag.storeName}
                 cost={tag.cost}
@@ -187,13 +137,14 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
               />
             ))}
           <Button
-            disabled={dayReceipts && dayReceipts.length >= 4}
+            disabled={cannotAddReceipt}
             onClick={handleClickAdd}
             width="80%"
             variant="text"
             color="primary"
             label={t('calendar.add_receipts')}
             icon={<HiPlusSm />}
+            data-testid="btn-add"
           />
         </div>
         <div css={summartion}>
@@ -201,19 +152,20 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
             {t('calendar.summartion')}
           </Typography>
           <Typography type="header" variant="normal">
-            {calcDailySummartion()}
+            {calcSummartion()}
           </Typography>
         </div>
       </div>
       <Divider width={2} type="dashed" color={theme.colors.gray_200} />
       <div css={footer}>
         <Button
-          disabled={!dayReceipts || dayReceipts.length === 0}
+          disabled={cannotRegistReceipt}
           onClick={handleClickRegist}
           width="80%"
           variant="filled"
           color="normal"
           label={t('calendar.register_expense')}
+          data-testid="btn-regist"
         />
         <Button
           onClick={handleClickNoMoney}
@@ -221,15 +173,11 @@ export const Receipt = ({ receipts }: ReceiptProps) => {
           variant="filled"
           color="primary"
           label={t('calendar.register_for_no_money_day')}
-          disabled={dayReceipts && dayReceipts.length > 0}
+          disabled={cannotRegistNoMoney}
+          data-testid="btn-no-money"
         />
       </div>
-      <Snackbar
-        open={snackbarStatus.open}
-        type={snackbarStatus.type}
-        text={snackbarStatus.text}
-        subText={snackbarStatus.subText}
-      />
+      {/* <Snackbar {...snackbarStatus} /> */}
     </div>
   );
 };

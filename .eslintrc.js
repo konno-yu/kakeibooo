@@ -30,6 +30,8 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     'import/prefer-default-export': 'off',
     'react/require-default-props': 'off',
+    '@typescript-eslint/await-thenable': 'off',
+    'react/jsx-props-no-spreading': 'off',
     'react/function-component-definition': [
       2,
       {

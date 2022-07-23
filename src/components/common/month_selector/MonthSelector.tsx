@@ -1,4 +1,4 @@
-import { css, Theme, useTheme } from '@emotion/react';
+import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
 import { getMonth, getYear } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
@@ -20,13 +20,13 @@ export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPr
       : `${targetDate.toLocaleDateString('en-US', { month: 'long' })} ${getYear(targetDate)}`;
 
   return (
-    <div css={container}>
+    <div css={container(theme)}>
       <span>{displayFormat}</span>
       <div css={monthTransition}>
-        <IconButton onClick={onPrev}>
+        <IconButton data-testid="button-prev" onClick={onPrev}>
           <HiArrowCircleLeft size={28} color={theme.colors.black_400} />
         </IconButton>
-        <IconButton onClick={onNext}>
+        <IconButton data-testid="button-next" onClick={onNext}>
           <HiArrowCircleRight size={28} color={theme.colors.black_400} />
         </IconButton>
       </div>

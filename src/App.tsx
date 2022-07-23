@@ -4,6 +4,7 @@ import { RiEmotionSadLine } from 'react-icons/ri';
 import { Provider, useDispatch } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
+import { I18nextProvider } from 'react-i18next';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { RootRoute } from './routes/RootRoute';
 import { store } from './store';
@@ -16,6 +17,7 @@ import { UtilityCostView } from './view/UtilityCostView';
 import { setSession } from './reducer/authSlice';
 import { supabase } from './supabaseClient';
 import { light } from './theme/theme';
+import i18n from './i18n';
 
 type Props = {
   children: React.ReactNode;
@@ -37,57 +39,59 @@ export const AuthListener: React.VFC<Props> = ({ children }: Props) => {
 
 export const App: React.FC = () => (
   <ThemeProvider theme={light}>
-    <Provider store={store}>
-      <AuthListener>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<RootRoute />} />
-            <Route path="/signin" element={<LoginView />} />
-            <Route
-              path="/home"
-              element={
-                <PrivateRoute>
-                  <HomeView />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/householdbook"
-              element={
-                <PrivateRoute>
-                  <HouseholdBookView />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/utility-cost"
-              element={
-                <PrivateRoute>
-                  <UtilityCostView />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/fridge"
-              element={
-                <PrivateRoute>
-                  <FridgeView />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <PrivateRoute>
-                  <SettingsView />
-                </PrivateRoute>
-              }
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthListener>
-    </Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>
+        <AuthListener>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<RootRoute />} />
+              <Route path="/signin" element={<LoginView />} />
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute>
+                    <HomeView />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/householdbook"
+                element={
+                  <PrivateRoute>
+                    <HouseholdBookView />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/utility-cost"
+                element={
+                  <PrivateRoute>
+                    <UtilityCostView />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/fridge"
+                element={
+                  <PrivateRoute>
+                    <FridgeView />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <PrivateRoute>
+                    <SettingsView />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthListener>
+      </Provider>
+    </I18nextProvider>
   </ThemeProvider>
 );
 
