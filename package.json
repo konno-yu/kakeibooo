@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "client": "npx webpack-cli serve --config webpack.config.js --open --mode development",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs-build",
