@@ -1,17 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SnackbarProps } from '../common/snackbar/Snackbar';
 import { Receipt } from '../../reducer/householdBookSlice';
 
 export const useReceipt = (initReceipts: Receipt[] | [] | null): UseReceiptReturnType => {
   const { t } = useTranslation();
   const [dailyReceipt, setDailyReceipt] = useState<Receipt[] | [] | null>(initReceipts);
-  // TODO Receiptコンポーネントとは分離した方がよい、ぜったい
-  const [snackbarStatus, setSnackbarStatus] = useState<SnackbarProps>({
-    open: false,
-    type: 'success',
-    text: '',
-  });
 
   useEffect(() => {
     // useStateの初期値にpropsを指定しても初回描画時しか効かないのでuseEffectで変更させる
@@ -48,11 +41,6 @@ export const useReceipt = (initReceipts: Receipt[] | [] | null): UseReceiptRetur
     [dailyReceipt]
   );
 
-  const showSnackbar = useCallback((status: SnackbarProps) => {
-    setSnackbarStatus({ ...status });
-    setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
-  }, []);
-
   /**
    * 選択中の日付における合計金額を計算する
    * @returns 合計金額に￥マークをつけつつカンマ区切りにして返す
@@ -77,48 +65,33 @@ export const useReceipt = (initReceipts: Receipt[] | [] | null): UseReceiptRetur
    * @returns バリデーションの成否
    */
   const validate = () => {
-    const text = t('calendar.registration_imcomplete');
+    const invalidTemplate = {
+      isOk: false,
+      text: t('calendar.registration_imcomplete'),
+    };
     if (dailyReceipt?.filter((r) => r.cost === null).length > 0) {
-      return {
-        isOk: false,
-        text,
-        subText: t('calendar.expense_is_not_entered'),
-      };
+      return { ...invalidTemplate, subText: t('calendar.expense_is_not_entered') };
     }
     if (dailyReceipt?.filter((r) => r.storeName === '').length > 0) {
-      return {
-        isOk: false,
-        text,
-        subText: t('calendar.store_name_is_not_entered'),
-      };
+      return { ...invalidTemplate, subText: t('calendar.store_name_is_not_entered') };
     }
     if (dailyReceipt.filter((receipt) => Number.isNaN(receipt.cost)).length > 0) {
-      return {
-        isOk: false,
-        text,
-        subText: t('calendar.expense_is_not_number'),
-      };
+      return { ...invalidTemplate, subText: t('calendar.expense_is_not_number') };
     }
     const storeNames = dailyReceipt?.map((receipt) => receipt.storeName);
     if ([...new Set(storeNames)].length !== storeNames.length) {
-      return {
-        isOk: false,
-        text,
-        subText: t('calendar.exists_duplicate_receipts'),
-      };
+      return { ...invalidTemplate, subText: t('calendar.exists_duplicate_receipts') };
     }
-    return { isOk: true };
+    return { isOk: true, text: t('calendar.registration_complete'), subText: '' };
   };
 
   return {
     dailyReceipt,
-    snackbarStatus,
     calcSummartion,
     onReceiptAdd,
     onChangeStoreName,
     onChangeCost,
     onReceiptDelete,
-    showSnackbar,
     cannotAddReceipt,
     cannotRegistReceipt,
     cannotRegistNoMoney,
@@ -128,15 +101,13 @@ export const useReceipt = (initReceipts: Receipt[] | [] | null): UseReceiptRetur
 
 export type UseReceiptReturnType = {
   dailyReceipt: Receipt[] | [];
-  snackbarStatus: SnackbarProps;
   calcSummartion: () => string;
   onReceiptAdd: () => void;
   onChangeStoreName: (index: number, storeName: string) => void;
   onChangeCost: (index: number, cost: number) => void;
   onReceiptDelete: (ordinary: number) => void;
-  showSnackbar: (status: SnackbarProps) => void;
   cannotAddReceipt: boolean;
   cannotRegistReceipt: boolean;
   cannotRegistNoMoney: boolean;
-  validate: () => { isOk: boolean; text: string; subText: string } | { isOk: boolean; text?: string; subText?: string };
+  validate: () => { isOk: boolean; text: string; subText: string };
 };

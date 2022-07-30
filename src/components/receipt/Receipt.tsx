@@ -5,6 +5,8 @@ import { HiPlusSm } from 'react-icons/hi';
 import { Receipt as ReceiptDef } from '../../reducer/householdBookSlice';
 import { Button } from '../common/button/Button';
 import { Divider } from '../common/divider/Divider';
+import { Snackbar } from '../common/snackbar/Snackbar';
+import { useSnackbar } from '../common/snackbar/useSnackbar';
 import { Typography } from '../common/typography/Typography';
 import { Tag } from './tag/Tag';
 import { useReceipt } from './useReceipt';
@@ -25,18 +27,17 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
   const { t } = useTranslation();
   const {
     dailyReceipt,
-    snackbarStatus,
     calcSummartion,
     onReceiptAdd,
     onChangeStoreName,
     onChangeCost,
     onReceiptDelete,
-    showSnackbar,
     cannotAddReceipt,
     cannotRegistReceipt,
     cannotRegistNoMoney,
     validate,
   } = useReceipt(receipts);
+  const { isOpen, type, text, subText, showSnackbar, setSnackbarDetails } = useSnackbar();
 
   /**
    * レシートを追加する
@@ -72,30 +73,20 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
   };
 
   /**
-   * 処理が成功した時のスナックバーを表示する
-   */
-  const showSuccessSnackbar = (text: string, subText?: string) => {
-    showSnackbar({ open: true, type: 'success', text, subText });
-  };
-
-  /**
-   * 処理が失敗した時のスナックバーを表示する
-   */
-  const showErrorSnackbar = (text: string, subText?: string) => {
-    showSnackbar({ open: true, type: 'error', text, subText });
-  };
-
-  /**
    * [食費を登録]ボタンが押された場合の動作 <br/>
    * 編集日のデータが登録済みかに応じてPOST/PUTを投げ分ける
    *
    */
   const handleClickRegist = () => {
-    if (!validate().isOk) {
-      showErrorSnackbar(validate().text, validate().subText);
+    const validateResult = validate();
+    if (!validateResult.isOk) {
+      setSnackbarDetails('error', validateResult.text, validateResult.subText);
+      showSnackbar();
       return;
     }
     onClickRegist(dailyReceipt);
+    setSnackbarDetails('success', validateResult.text, validateResult.subText);
+    showSnackbar();
   };
 
   /**
@@ -105,6 +96,8 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
   const handleClickNoMoney = () => {
     // TODO テストできればこれ要らないか？
     onClickNoMoney();
+    setSnackbarDetails('success', t('calendar.registration_complete'), '');
+    showSnackbar();
   };
 
   return (
@@ -177,7 +170,7 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
           data-testid="btn-no-money"
         />
       </div>
-      {/* <Snackbar {...snackbarStatus} /> */}
+      {isOpen && <Snackbar open={isOpen} type={type} text={text} subText={subText} />}
     </div>
   );
 };

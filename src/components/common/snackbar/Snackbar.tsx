@@ -58,16 +58,16 @@ const snackbarBase = (color: string, theme: Theme) => css`
   gap: ${theme.units.px8};
   position: absolute;
   box-shadow: 3px 3px 3px #9e9e9e;
-  top: ${theme.units.px8};
+  bottom: ${theme.units.px8};
   right: ${theme.units.px16};
   animation: fadein 1s forwards;
   @keyframes fadein {
     0% {
-      transform: translateX(300px);
+      transform: translateY(300px);
     }
 
     100% {
-      transform: translateX(0px);
+      transform: translateY(0px);
     }
   }
 `;
