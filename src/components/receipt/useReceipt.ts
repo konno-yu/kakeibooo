@@ -106,13 +106,11 @@ export const useReceipt = (initReceipts: Receipt[] | [] | null): UseReceiptRetur
 
 export type UseReceiptReturnType = {
   dailyReceipt: Receipt[] | [];
-  // snackbarStatus: SnackbarProps;
   calcSummartion: () => string;
   onReceiptAdd: () => void;
   onChangeStoreName: (index: number, storeName: string) => void;
   onChangeCost: (index: number, cost: number) => void;
   onReceiptDelete: (ordinary: number) => void;
-  // showSnackbar: (status: SnackbarProps) => void;
   cannotAddReceipt: boolean;
   cannotRegistReceipt: boolean;
   cannotRegistNoMoney: boolean;
