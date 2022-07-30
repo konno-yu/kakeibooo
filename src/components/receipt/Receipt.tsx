@@ -168,7 +168,7 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
           data-testid="btn-no-money"
         />
       </div>
-      <Snackbar open={isOpen} type={type} text={text} subText={subText} />
+      {isOpen && <Snackbar open={isOpen} type={type} text={text} subText={subText} />}
     </div>
   );
 };
