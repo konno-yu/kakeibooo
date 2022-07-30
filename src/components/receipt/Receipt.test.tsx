@@ -37,7 +37,7 @@ describe('Receiptコンポーネント', () => {
     type: 'success',
     text: '',
     subText: '',
-    setIsOpen: jest.fn(),
+    showSnackbar: jest.fn(),
     setSnackbarDetails: jest.fn(),
   };
   const useReceiptSpy = jest.spyOn({ useReceipt }, 'useReceipt');

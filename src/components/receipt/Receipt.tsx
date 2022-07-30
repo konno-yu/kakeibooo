@@ -37,7 +37,7 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
     cannotRegistNoMoney,
     validate,
   } = useReceipt(receipts);
-  const { isOpen, type, text, subText, setIsOpen, setSnackbarDetails } = useSnackbar();
+  const { isOpen, type, text, subText, showSnackbar, setSnackbarDetails } = useSnackbar();
 
   /**
    * レシートを追加する
@@ -81,12 +81,12 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
     const validateResult = validate();
     if (!validateResult.isOk) {
       setSnackbarDetails('error', validateResult.text, validateResult.subText);
-      setIsOpen(true);
+      showSnackbar();
       return;
     }
-    setSnackbarDetails('success', validateResult.text, validateResult.subText);
     onClickRegist(dailyReceipt);
-    setIsOpen(true);
+    setSnackbarDetails('success', validateResult.text, validateResult.subText);
+    showSnackbar();
   };
 
   /**

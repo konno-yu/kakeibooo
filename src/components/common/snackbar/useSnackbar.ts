@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useSnackbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +12,10 @@ export const useSnackbar = () => {
     setTimeout(() => setIsOpen(false), 3000);
   }, [isOpen]);
 
+  const showSnackbar = useCallback(() => {
+    setIsOpen(true);
+  }, [setIsOpen]);
+
   const setSnackbarDetails = useCallback((newType: 'success' | 'error', newText: string, newSubText: string) => {
     setType(newType);
     setText(newText);
@@ -22,7 +26,7 @@ export const useSnackbar = () => {
     type,
     text,
     subText,
-    setIsOpen,
+    showSnackbar,
     setSnackbarDetails,
   };
 };
@@ -33,6 +37,6 @@ export type UseSnackbarReturnType = {
   type: 'success' | 'error';
   text: string;
   subText: string;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  showSnackbar: () => void;
   setSnackbarDetails: (newType: string, newText: string, newSubText: string) => void;
 };

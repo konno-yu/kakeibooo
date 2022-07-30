@@ -6,7 +6,7 @@ describe('useSnackbar', () => {
   test('Snackbarは3秒間だけ表示される', async () => {
     const { result, waitFor } = renderHook(() => useSnackbar());
     act(() => {
-      result.current.setIsOpen(true);
+      result.current.showSnackbar();
     });
     expect(result.current.isOpen).toBeTruthy();
     await waitFor(
