@@ -69,13 +69,13 @@ export const useReceipt = (initReceipts: Receipt[] | [] | null): UseReceiptRetur
       isOk: false,
       text: t('calendar.registration_imcomplete'),
     };
-    if (dailyReceipt?.filter((r) => r.cost === null).length > 0) {
+    if (dailyReceipt?.filter((r: Receipt) => r.cost === null).length > 0) {
       return { ...invalidTemplate, subText: t('calendar.expense_is_not_entered') };
     }
-    if (dailyReceipt?.filter((r) => r.storeName === '').length > 0) {
+    if (dailyReceipt?.filter((r: Receipt) => r.storeName === '').length > 0) {
       return { ...invalidTemplate, subText: t('calendar.store_name_is_not_entered') };
     }
-    if (dailyReceipt.filter((receipt) => Number.isNaN(receipt.cost)).length > 0) {
+    if (dailyReceipt?.filter((r: Receipt) => Number.isNaN(r.cost)).length > 0) {
       return { ...invalidTemplate, subText: t('calendar.expense_is_not_number') };
     }
     const storeNames = dailyReceipt?.map((receipt) => receipt.storeName);
