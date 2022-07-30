@@ -38,8 +38,14 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       - name: npm install
         run: npm ci
-      - name: run unit test
-        run: npm run test
+      - name: run unit test and report coverage
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: npm run test:coverage
+          debug: true
+
   vrt:
     needs: [lint, test]
     runs-on: ubuntu-latest

@@ -3,6 +3,7 @@ import { css, Theme, useTheme } from '@emotion/react';
 interface Props {
   value: { [key: string]: number };
   range: [number, number];
+  /** ラベルを表示するかどうかを指定します */
   showLabel?: boolean;
   unit?: { type: 'prefix' | 'suffix'; name: string };
 }
