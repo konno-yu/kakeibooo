@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 
 export const useSnackbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,4 +25,14 @@ export const useSnackbar = () => {
     setIsOpen,
     setSnackbarDetails,
   };
+};
+
+// TODO もっと賢いやり方
+export type UseSnackbarReturnType = {
+  isOpen: boolean;
+  type: 'success' | 'error';
+  text: string;
+  subText: string;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setSnackbarDetails: (newType: string, newText: string, newSubText: string) => void;
 };
