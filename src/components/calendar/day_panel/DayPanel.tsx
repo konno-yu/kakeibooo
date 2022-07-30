@@ -94,13 +94,13 @@ const normal = (theme: Theme) => css`
 const low = (theme: Theme) => css`
   cursor: pointer;
   color: ${theme.colors.secondary_400};
-  background: ${theme.colors.white};
+  background: ${theme.colors.secondary_100};
 `;
 
 const high = (theme: Theme) => css`
   cursor: pointer;
   color: ${theme.colors.primary_400};
-  background: ${theme.colors.white};
+  background: ${theme.colors.primary_100};
 `;
 
 const zero = (theme: Theme) => css`
