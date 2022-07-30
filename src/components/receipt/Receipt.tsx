@@ -96,6 +96,8 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
   const handleClickNoMoney = () => {
     // TODO テストできればこれ要らないか？
     onClickNoMoney();
+    setSnackbarDetails('success', t('calendar.registration_complete'), '');
+    showSnackbar();
   };
 
   return (
