@@ -41,11 +41,6 @@ export const useReceipt = (initReceipts: Receipt[] | [] | null): UseReceiptRetur
     [dailyReceipt]
   );
 
-  // const showSnackbar = useCallback((status: SnackbarProps) => {
-  //   setSnackbarStatus({ ...status });
-  //   setTimeout(() => setSnackbarStatus((current) => ({ ...current, open: false })), 2000);
-  // }, []);
-
   /**
    * 選択中の日付における合計金額を計算する
    * @returns 合計金額に￥マークをつけつつカンマ区切りにして返す
