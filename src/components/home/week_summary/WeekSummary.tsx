@@ -1,10 +1,11 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import { useTranslation } from 'react-i18next';
+import { HiOutlineMinus } from 'react-icons/hi';
 import { IoCloudyOutline, IoPartlySunnyOutline, IoSunnyOutline, IoUmbrellaOutline } from 'react-icons/io5';
 
 interface Props {
   /** 1週間における日ごとの食費を指定します */
-  dailyCost: [number, number, number, number, number, number, number];
+  dailyCost: (number | null)[];
 }
 
 export const WeekSummary = ({ dailyCost }: Props) => {
@@ -21,7 +22,10 @@ export const WeekSummary = ({ dailyCost }: Props) => {
   ];
 
   // TODO 食費がかかったかの判定ロジックはUtility的に切り出すべき
-  const getIcon = (cost: number): JSX.Element => {
+  const getIcon = (cost: number | null): JSX.Element => {
+    if (cost === null) {
+      return <HiOutlineMinus size={28} color={theme.colors.gray_300} />;
+    }
     if (cost === 0) {
       // TODO ゴールド直置きはよくない
       return <IoSunnyOutline size={28} color="gold" />;

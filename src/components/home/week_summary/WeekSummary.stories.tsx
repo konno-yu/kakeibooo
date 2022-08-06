@@ -9,3 +9,10 @@ export const Pure: ComponentStoryObj<typeof WeekSummary> = {
   },
   decorators: [(story) => <div style={{ width: '35%' }}>{story()}</div>],
 };
+
+export const WithBlank: ComponentStoryObj<typeof WeekSummary> = {
+  args: {
+    dailyCost: [500, 1000, 3000, null, null, null, null],
+  },
+  decorators: Pure.decorators,
+};
