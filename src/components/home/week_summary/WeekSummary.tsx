@@ -1,65 +1,82 @@
-import { css } from '@emotion/react';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
-import { GiPayMoney } from 'react-icons/gi';
+import { css, Theme, useTheme } from '@emotion/react';
+import { useTranslation } from 'react-i18next';
+import { HiOutlineMinus } from 'react-icons/hi';
+import { IoCloudyOutline, IoPartlySunnyOutline, IoSunnyOutline, IoUmbrellaOutline } from 'react-icons/io5';
 
-export const WeekSummary = () => (
-  <div css={card}>
-    <div css={header}>
-      <div css={headerTitle}>
-        <AiOutlineCheckCircle />
-        Kakeibooo
-      </div>
-      <GiPayMoney size={28} />
-    </div>
-    <div css={body}>
-      <span css={bodyLabel}>
-        <u>PAY THIS WEEK</u>（SHIHARAI）
-      </span>
-      <div css={bodyValueText}>￥10,000</div>
-      <span css={bodyLabel}>
-        <u>DURATION</u>
-      </span>
-      <span>2021/11/11 - 2021/11/18</span>
-    </div>
-  </div>
-);
+interface Props {
+  /** 1週間における日ごとの食費を指定します */
+  dailyCost: (number | null)[];
+}
 
-const card = css`
+export const WeekSummary = ({ dailyCost }: Props) => {
+  const theme = useTheme();
+  const { t } = useTranslation();
+  const DAY_OF_WEEK_LABEL: string[] = [
+    t('calendar.sunday'),
+    t('calendar.monday'),
+    t('calendar.tuesday'),
+    t('calendar.wednesday'),
+    t('calendar.thursday'),
+    t('calendar.friday'),
+    t('calendar.saturday'),
+  ];
+
+  // TODO 食費がかかったかの判定ロジックはUtility的に切り出すべき
+  const getIcon = (cost: number | null): JSX.Element => {
+    if (cost === null) {
+      return <HiOutlineMinus size={28} color={theme.colors.gray_300} />;
+    }
+    if (cost === 0) {
+      // TODO ゴールド直置きはよくない
+      return <IoSunnyOutline size={28} color="gold" />;
+    }
+    if (cost <= 1000) {
+      return <IoPartlySunnyOutline size={28} color={theme.colors.secondary_400} />;
+    }
+    if (cost <= 2500) {
+      return <IoCloudyOutline size={28} color={theme.colors.gray_300} />;
+    }
+    return <IoUmbrellaOutline size={28} color={theme.colors.primary_400} />;
+  };
+
+  return (
+    <div css={container(theme)}>
+      {DAY_OF_WEEK_LABEL.map((label, index) => (
+        <div css={dayStyle(theme)}>
+          <div>
+            <span css={labelStyle(theme)}>{label}</span>
+          </div>
+          {getIcon(dailyCost[index])}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  border: 2px solid #eceff1;
-  border-radius: 8px;
-  background: #333333;
   width: 100%;
-  font-weight: 700;
-  padding: 12px;
-  color: #ffffff;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background: ${theme.colors.white};
+  border-radius: ${theme.units.px4};
+  padding: ${theme.units.px8};
+  border: 1px solid ${theme.colors.gray_200};
+`;
+
+const dayStyle = (theme: Theme) => css`
+  width: calc(100% / 7);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-`;
-
-const header = css`
-  display: flex;
-  font-size: 24px;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const headerTitle = css`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-`;
-
-const body = css`
-  display: flex;
+  justify-content: space-evenly;
   flex-direction: column;
+  align-items: center;
+  gap: ${theme.units.px8};
 `;
 
-const bodyLabel = css`
-  color: #e0e0e0;
-`;
-
-const bodyValueText = css`
-  font-size: 28px; // TODO Typographyで吸収したい
+const labelStyle = (theme: Theme) => css`
+  font-weight: ${theme.fontWeights.semiBold};
+  font-size: ${theme.fontSizes.pt10};
+  color: ${theme.colors.black_300};
 `;
