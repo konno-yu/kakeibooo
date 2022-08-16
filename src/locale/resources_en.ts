@@ -24,6 +24,12 @@ export const resourceEng = {
     log_in: 'login',
     login_failure: 'Mail address or password is invalid.',
   },
+  home: {
+    expense: 'expense',
+    balance: 'balance',
+    expenses_per_day: 'Expense per day',
+    balance_this_month: 'This months balance ',
+  },
   calendar: {
     today: 'Today',
     sunday: 'Sun',
