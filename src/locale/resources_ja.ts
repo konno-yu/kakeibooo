@@ -24,6 +24,12 @@ export const resourceJap = {
     log_in: 'ログイン',
     login_failure: 'メールアドレスかパスワードが間違っています',
   },
+  home: {
+    expense: '食費',
+    balance: '残金',
+    expenses_per_day: '1日の食費',
+    balance_this_month: '今月の残金',
+  },
   calendar: {
     today: '今日',
     sunday: '日',
