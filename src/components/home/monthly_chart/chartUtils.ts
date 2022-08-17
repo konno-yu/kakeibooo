@@ -95,12 +95,13 @@ export const createChartOption = (theme: Theme, t: TFunction<'ns1', undefined>):
       },
       tooltip: {
         callbacks: {
-          // TODO ここでツールチップの内容がきめられる
-          afterBody() {
-            return 'my tittle';
+          label(this, tooltimItem) {
+            return `¥${tooltimItem.formattedValue}`;
           },
         },
         backgroundColor: theme.colors.white,
+        boxPadding: 4,
+        titleAlign: 'center',
         borderColor: theme.colors.gray_200,
         borderWidth: 2,
         bodyColor: theme.colors.black_300,
@@ -111,6 +112,7 @@ export const createChartOption = (theme: Theme, t: TFunction<'ns1', undefined>):
         },
         bodyFont: {
           family: "'M PLUS Rounded 1c', sans-serif",
+          weight: '700',
         },
       },
     },
