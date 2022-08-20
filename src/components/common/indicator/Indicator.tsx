@@ -8,6 +8,7 @@ interface Props {
   unit?: { type: 'prefix' | 'suffix'; name: string };
 }
 
+/** @deprecated SimpleIndicator を使うこと */
 export const Indicator = ({ value, range, showLabel = false, unit }: Props) => {
   const theme = useTheme();
   const displayValue: { [key: string]: number } = {};
