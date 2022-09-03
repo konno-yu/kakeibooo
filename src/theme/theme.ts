@@ -18,6 +18,9 @@ export const light = {
     gray_200: '#DEDEDE',
     gray_100: '#F6F6F6',
     white: '#FFFFFF',
+    gold: '#C9B037',
+    silver: '#D7D7D7',
+    bronze: '#AD8A56',
   },
   fontSizes: {
     pt24: '24pt',
