@@ -12,14 +12,13 @@
 **思わず入力したくなるようなユーザーインタフェース**を追求して開発しています。
 
 <div align="center">
-<img width="1431" alt="スクリーンショット 2022-06-10 0 06 59" src="https://user-images.githubusercontent.com/51043054/172880414-a9498b20-7ee2-460b-8cde-f627622ff32e.png">
+  <img src="https://user-images.githubusercontent.com/51043054/189641766-593e3ae7-3f6a-4421-baea-b1d10ca96412.png" width="500"/>
+  <img src="https://user-images.githubusercontent.com/51043054/189641997-550161ef-f40e-4077-aa5a-c633445121a3.png" width="500"/>
 </div>
-
-
 
 ## Features
 
-#### 🚧 食費グラフ
+#### 食費グラフ
 
 ###### 登録した食費をグラフで表示します。食費の推移を確認するのに便利です。
 
