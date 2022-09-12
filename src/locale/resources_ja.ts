@@ -13,6 +13,7 @@ export const resourceJap = {
     fridge: '冷蔵庫',
     settings: '設定',
     yen: '¥{{money}}',
+    days: '{{count}}日',
     input_placeholder: '文字を入力してください',
     format_year_month: '{{year}}年 {{month}}月',
     format_year_month_day: '{{year}}/{{month}}/{{day}}',
@@ -25,10 +26,12 @@ export const resourceJap = {
     login_failure: 'メールアドレスかパスワードが間違っています',
   },
   home: {
-    expense: '食費',
-    balance: '残金',
-    expenses_per_day: '1日の食費',
+    expenses: '食費',
+    expenses_this_month: '今月の食費',
     balance_this_month: '今月の残金',
+    registered_this_month: '食費の登録日数',
+    per_day: '（1日あたり ¥{{value}}）',
+    register_progress: '（入力率 {{percentage}}%）',
   },
   calendar: {
     today: '今日',

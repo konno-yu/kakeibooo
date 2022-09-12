@@ -40,5 +40,5 @@ export const Pure: ComponentStoryObj<typeof MonthlyChart> = {
       { label: '08/31', value: 400 },
     ],
   },
-  decorators: [(story) => <div style={{ width: '60%' }}>{story()}</div>],
+  decorators: [(story) => <div style={{ width: '50%', height: '50%' }}>{story()}</div>],
 };

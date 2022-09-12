@@ -1,9 +1,15 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import { Reward } from './reward/Reward';
 
+type Reward = {
+  title: string;
+  text: string;
+  rank: 'gold' | 'silver' | 'bronze';
+  isAchieve: boolean;
+};
+
 export interface Props {
-  // TODO 型に切り出したい
-  rewards: { title: string; text: string; rank: 'gold' | 'silver' | 'bronze'; isAchieve: boolean }[];
+  rewards: Reward[];
 }
 
 export const Achievement = ({ rewards }: Props) => {
@@ -17,11 +23,7 @@ export const Achievement = ({ rewards }: Props) => {
           {rewards.filter((r) => r.isAchieve).length}/{rewards.length}
         </div>
       </div>
-      <div css={rewardPart(theme)}>
-        {rewards.map((reward) => (
-          <Reward {...reward} />
-        ))}
-      </div>
+      <div css={rewardPart(theme)}>{rewards.map((reward) => reward.isAchieve && <Reward {...reward} />)}</div>
     </div>
   );
 };
@@ -30,7 +32,7 @@ const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   height: calc(100vh - 24px);
   background: ${theme.colors.white};
-  border: 2px solid ${theme.colors.gray_200};
+  border: 2px solid transparent;
   border-radius: ${theme.units.px8};
   display: flex;
   flex-direction: column;

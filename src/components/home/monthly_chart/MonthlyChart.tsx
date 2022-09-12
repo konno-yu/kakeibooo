@@ -40,23 +40,19 @@ interface Props {
 export const MonthlyChart = ({ datasets, budget }: Props) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const data = createChartData(datasets, budget, theme, t);
-  const aoptions = createChartOption(theme, t);
+  const data = createChartData(datasets, budget, theme);
+  const options = createChartOption(theme, t);
   return (
-    <div css={container(theme)}>
-      <Chart css={graph} options={aoptions} data={data} type="bar" />
+    <div css={container}>
+      <Chart options={options} data={data} type="bar" />
     </div>
   );
 };
 
 const container = (theme: Theme) => css`
-  background-color: ${theme.colors.white};
-  border: 1px solid ${theme.colors.gray_200};
-  border-radius: ${theme.units.px4};
-  padding: ${theme.units.px16};
-`;
-
-const graph = css`
-  width: 100%;
   height: 100%;
+  border: 1px solid ${theme.colors.gray_100};
+  border-radius: ${theme.units.px8};
+  background: ${theme.colors.white};
+  padding: ${theme.units.px16};
 `;

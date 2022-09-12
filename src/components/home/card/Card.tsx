@@ -29,7 +29,7 @@ const container = (theme: Theme) => css`
   width: 100%;
   height: auto;
   background: ${theme.colors.white};
-  border-radius: ${theme.units.px12};
+  border-radius: ${theme.units.px8};
   padding: ${theme.units.px20} ${theme.units.px16};
   border: ${theme.units.px2} solid ${theme.colors.gray_100};
   display: flex;

@@ -55,14 +55,14 @@ export const WeekSummary = ({ dailyCost }: Props) => {
 
 const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
   display: flex;
   justify-content: center;
   background: ${theme.colors.white};
-  border-radius: ${theme.units.px4};
+  border-radius: ${theme.units.px8};
   padding: ${theme.units.px8};
-  border: 1px solid ${theme.colors.gray_200};
+  border: 1px solid ${theme.colors.gray_100};
 `;
 
 const dayStyle = (theme: Theme) => css`

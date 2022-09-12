@@ -13,36 +13,25 @@ const createBalance = (expenses: number[], budget: number) => {
 };
 
 const getBarColor = (expenses: number[], theme: Theme) => {
-  const borders: string[] = [];
-  const backgrounds: string[] = [];
+  const colors: string[] = [];
   expenses.forEach((exp) => {
     if (exp === 0) {
-      borders.push(theme.colors.white);
-      backgrounds.push(theme.colors.white);
+      colors.push(theme.colors.white);
+    } else if (exp <= 1000) {
+      colors.push(theme.colors.secondary_100);
+    } else if (exp <= 2500) {
+      colors.push(theme.colors.gray_400);
+    } else {
+      colors.push(theme.colors.primary_100);
     }
-    if (exp <= 1000) {
-      borders.push(theme.colors.secondary_200);
-      backgrounds.push(theme.colors.secondary_100);
-    }
-    if (exp <= 2500) {
-      borders.push(theme.colors.black_200);
-      backgrounds.push(theme.colors.black_100);
-    }
-    borders.push(theme.colors.primary_200);
-    backgrounds.push(theme.colors.primary_100);
   });
-  return [borders, backgrounds];
+  return colors;
 };
 
-export const createChartData = (
-  datasets: { label: string; value: number }[],
-  budget: number,
-  theme: Theme,
-  t: TFunction<'ns1', undefined>
-) => {
+export const createChartData = (datasets: { label: string; value: number }[], budget: number, theme: Theme) => {
   const labels = datasets.map((d) => d.label);
   const expenses = datasets.map((d) => d.value);
-  const [borderColor, backgroundColor] = getBarColor(expenses, theme);
+  const colors = getBarColor(expenses, theme);
   const balances = createBalance(expenses, budget);
 
   return {
@@ -50,7 +39,6 @@ export const createChartData = (
     datasets: [
       {
         type: 'line' as const,
-        label: t('home.balance'),
         data: balances,
         backgroundColor: theme.colors.black_100,
         borderColor: theme.colors.black_100,
@@ -58,11 +46,10 @@ export const createChartData = (
       },
       {
         type: 'bar' as const,
-        label: t('home.expense'),
         data: expenses,
         borderWidth: 2,
-        backgroundColor,
-        borderColor,
+        backgroundColor: colors,
+        borderColor: colors,
         yAxisID: 'expenses',
       },
     ],
@@ -86,6 +73,7 @@ export const createChartOption = (theme: Theme, t: TFunction<'ns1', undefined>):
 
   return {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false,
@@ -129,7 +117,7 @@ export const createChartOption = (theme: Theme, t: TFunction<'ns1', undefined>):
         type: 'linear',
         position: 'left',
         title: {
-          text: t('home.expenses_per_day'),
+          text: t('home.expenses'),
           font: commonFontSetting,
           display: true,
         },
