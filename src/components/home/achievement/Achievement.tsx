@@ -30,7 +30,7 @@ const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   height: calc(100vh - 24px);
   background: ${theme.colors.white};
-  border: 2px solid ${theme.colors.gray_200};
+  border: 2px solid transparent;
   border-radius: ${theme.units.px8};
   display: flex;
   flex-direction: column;
