@@ -1,11 +1,7 @@
 import { getDate, lastDayOfMonth } from 'date-fns';
+import { Reward } from './Achievement';
 
-export const initAchievements: {
-  title: string;
-  text: string;
-  rank: 'gold' | 'silver' | 'bronze';
-  isAchieve: boolean;
-}[] = [
+export const initAchievements: Reward[] = [
   { title: 'はじめの1歩', text: '1日分の食費を登録した', rank: 'bronze', isAchieve: false },
   { title: 'Kakeiboooビギナー', text: '5日分の食費を登録した', rank: 'bronze', isAchieve: false },
   { title: 'Kakeibooooプロ', text: '15日分の食費を登録した', rank: 'silver', isAchieve: false },

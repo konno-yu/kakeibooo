@@ -1,7 +1,7 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import { Reward } from './reward/Reward';
 
-type Reward = {
+export type Reward = {
   title: string;
   text: string;
   rank: 'gold' | 'silver' | 'bronze';
