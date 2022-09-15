@@ -2,6 +2,7 @@ import { css, Theme, useTheme } from '@emotion/react';
 import { useTranslation } from 'react-i18next';
 import { HiOutlineMinus } from 'react-icons/hi';
 import { IoCloudyOutline, IoPartlySunnyOutline, IoSunnyOutline, IoUmbrellaOutline } from 'react-icons/io5';
+import { FlexBox } from '../../common/flex_box/FlexBox';
 
 interface Props {
   /** 1週間における日ごとの食費を指定します */
@@ -40,39 +41,29 @@ export const WeekSummary = ({ dailyCost }: Props) => {
   };
 
   return (
-    <div css={container(theme)}>
+    <FlexBox direction="row" justifyContent="center" css={container(theme)}>
       {DAY_OF_WEEK_LABEL.map((label, index) => (
-        <div css={dayStyle(theme)}>
+        <FlexBox direction="column" justifyContent="space-evenly" alignItems="center" gap={8} css={dayStyle}>
           <div>
             <span css={labelStyle(theme)}>{label}</span>
           </div>
           {getIcon(dailyCost[index])}
-        </div>
+        </FlexBox>
       ))}
-    </div>
+    </FlexBox>
   );
 };
 
 const container = (theme: Theme) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  /* width: 100%;
-  height: 100%; */
-  display: flex;
-  justify-content: center;
   background: ${theme.colors.white};
   border-radius: ${theme.units.px8};
   padding: ${theme.units.px8};
   border: 1px solid ${theme.colors.gray_100};
 `;
 
-const dayStyle = (theme: Theme) => css`
+const dayStyle = css`
   width: calc(100% / 7);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  flex-direction: column;
-  align-items: center;
-  gap: ${theme.units.px8};
 `;
 
 const labelStyle = (theme: Theme) => css`

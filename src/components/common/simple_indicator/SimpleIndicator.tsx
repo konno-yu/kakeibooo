@@ -1,4 +1,5 @@
 import { css, Theme, useTheme } from '@emotion/react';
+import { FlexBox } from '../flex_box/FlexBox';
 
 interface Props {
   /** バーがとる値の範囲を[最小値, 最大値]で指定します */
@@ -15,9 +16,9 @@ export const SimpleIndicator = ({ range, value, color, height = 10 }: Props) => 
   const theme = useTheme();
   const barWidth = (value / range[1]) * 100;
   return (
-    <div css={indicatorBar(height, theme)}>
+    <FlexBox direction="row" css={indicatorBar(height, theme)}>
       {barWidth > 100 ? <div css={limitOver(theme, color)} /> : <div css={bar(barWidth, theme, color)} />}
-    </div>
+    </FlexBox>
   );
 };
 
@@ -26,7 +27,6 @@ const indicatorBar = (height: number, theme: Theme) => css`
   height: ${height}px;
   background: ${theme.colors.gray_200};
   border-radius: ${theme.units.px16};
-  display: flex;
 `;
 
 // TODO primary だったら primary_400 使う みたいなマッピングを楽にやりたい

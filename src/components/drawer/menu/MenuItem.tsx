@@ -1,6 +1,7 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { FlexBox } from '../../common/flex_box/FlexBox';
 
 export interface AProps {
   selected?: boolean;
@@ -21,8 +22,10 @@ export const MenuItem = ({ selected = false, icon, id, children, onChange }: APr
   return (
     <Link css={link} to={`/${id}`}>
       <button type="button" css={menuItem(theme, selected)} id={id} onClick={handleOnChange}>
-        {icon}
-        {children}
+        <FlexBox direction="row" alignItems="center" gap={8}>
+          {icon}
+          <span>{children}</span>
+        </FlexBox>
       </button>
     </Link>
   );
@@ -36,10 +39,7 @@ const menuItem = (theme: Theme, selected: boolean) => css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   height: 40px;
   width: 160px;
-  display: flex;
   padding: ${theme.units.px0} ${theme.units.px12};
-  align-items: center;
-  gap: ${theme.units.px8};
   font-size: ${theme.fontSizes.pt10};
   font-weight: ${theme.fontWeights.semiBold};
   border-radius: ${theme.units.px4};

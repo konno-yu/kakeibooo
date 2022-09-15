@@ -1,23 +1,20 @@
 import { css, Theme } from '@emotion/react';
 import { useTranslation } from 'react-i18next';
 import Logo from '../../../images/icon.svg';
+import { FlexBox } from '../../common/flex_box/FlexBox';
 
 export const AppTitle = () => {
   const { t } = useTranslation();
   return (
-    <div css={container}>
+    <FlexBox direction="row" justifyContent="center" alignItems="center" gap={8} css={container}>
       <img src={Logo} width={30} alt="logo" />
       <div css={title}>{t('common.application_title')}</div>
-    </div>
+    </FlexBox>
   );
 };
 
-const container = (theme: Theme) => css`
+const container = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: ${theme.units.px8};
 `;
 
 const title = (theme: Theme) => css`

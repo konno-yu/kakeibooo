@@ -4,6 +4,7 @@ import { AiFillShopping } from 'react-icons/ai';
 import { FaCircle } from 'react-icons/fa';
 import { HiCurrencyYen } from 'react-icons/hi';
 import { RiDeleteBack2Fill } from 'react-icons/ri';
+import { FlexBox } from '../../common/flex_box/FlexBox';
 import { IconButton } from '../../common/icon_button/IconButton';
 import { Input } from '../../common/input/Input';
 
@@ -38,11 +39,11 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
   };
 
   return (
-    <div css={container(theme)} {...props}>
-      <div css={label(theme)}>
+    <FlexBox direction='row' justifyContent='space-between' gap={4} css={container(theme)} {...props}>
+      <FlexBox direction='row' justifyContent='center' alignItems='center' css={label(theme)}>
         <FaCircle color={theme.colors.white} size={12} />
-      </div>
-      <div css={input(theme)}>
+      </FlexBox>
+      <FlexBox direction="column" justifyContent='center' alignItems='center' gap={4} css={input(theme)}>
         <Input
           onChange={handleStoreNameChange}
           width={150}
@@ -57,13 +58,13 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
           placeholder={t('calendar.using_expense')}
           icon={<HiCurrencyYen size={16} color={theme.colors.black_400} />}
         />
-      </div>
-      <div css={dustbox}>
+      </FlexBox>
+      <FlexBox direction="row" justifyContent='center' alignItems='center' css={dustbox}>
         <IconButton onClick={handleDelete}>
           <RiDeleteBack2Fill size={20} color={theme.colors.black_400} />
         </IconButton>
       </div>
-    </div>
+    </FlexBox>
   );
 };
 
@@ -71,32 +72,18 @@ const container = (theme: Theme) => css`
   width: 100%;
   height: 18%;
   background: ${theme.colors.white};
-  display: flex;
-  justify-content: space-between;
-  gap: ${theme.units.px4};
 `;
 
 const label = (theme: Theme) => css`
   width: 10%;
   background: ${theme.colors.primary_400};
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const input = (theme: Theme) => css`
   width: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding: ${theme.units.px8};
-  gap: ${theme.units.px4};
 `;
 
 const dustbox = css`
   width: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

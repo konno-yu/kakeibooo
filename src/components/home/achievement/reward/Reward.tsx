@@ -1,5 +1,6 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import { AiFillTrophy } from 'react-icons/ai';
+import { FlexBox } from '../../../common/flex_box/FlexBox';
 
 interface Props {
   /** リワードのタイトルを指定します */
@@ -32,13 +33,13 @@ export const Reward = ({ title, text, rank, isAchieve }: Props) => {
   };
 
   return (
-    <div css={card(theme)}>
+    <FlexBox direction='row' justifyContent='flex-start' alignItems='center' css={card(theme)}>
       <AiFillTrophy size={32} color={getColor()} />
-      <div css={container(theme)}>
+      <FlexBox direction='column' css={container(theme)}>
         <span css={titlePart(theme)}>{title}</span>
         <span css={textPart(theme)}>{text}</span>
       </div>
-    </div>
+    </FlexBox>
   );
 };
 
@@ -47,15 +48,10 @@ const card = (theme: Theme) => css`
   border: 1px solid ${theme.colors.gray_100};
   background: ${theme.colors.gray_100};
   border-radius: ${theme.units.px4};
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   padding: ${theme.units.px8} ${theme.units.px8};
 `;
 
 const container = (theme: Theme) => css`
-  display: flex;
-  flex-direction: column;
   margin-left: ${theme.units.px8};
 `;
 

@@ -9,6 +9,7 @@ import { Input } from '../common/input/Input';
 import ImagePath from '../../images/white_icon.svg';
 import { useAppDispatch } from '../../store';
 import { signIn } from '../../reducer/authSlice';
+import { FlexBox } from '../common/flex_box/FlexBox';
 
 interface FormProps {
   error: ApiError | null | undefined;
@@ -38,9 +39,9 @@ export const Form = ({ error }: FormProps) => {
   };
 
   return (
-    <div css={loginForm}>
-      <div css={icon}>
-        <div css={circle}>
+    <FlexBox direction="column" alignItems="center" css={loginForm}>
+      <FlexBox direction="column" justifyContent="center" alignItems="center" css={icon}>
+        <FlexBox direction="column" justifyContent="center" alignItems="center" css={circle}>
           <img
             src={ImagePath}
             alt="icon_circle"
@@ -49,10 +50,12 @@ export const Form = ({ error }: FormProps) => {
               height: 60%;
             `}
           />
-        </div>
-      </div>
-      <div css={title}>{t('login.welcome_banner')}</div>
-      <div css={input}>
+        </FlexBox>
+      </FlexBox>
+      <FlexBox direction="column" justifyContent="center" alignItems="center" css={title}>
+        <span>{t('login.welcome_banner')}</span>
+      </FlexBox>
+      <FlexBox direction="column" justifyContent="space-evenly" alignItems="center" css={input}>
         <Input
           width={280}
           icon={<HiMail color={theme.colors.black_400} />}
@@ -69,11 +72,11 @@ export const Form = ({ error }: FormProps) => {
           placeholder={t('login.password')}
         />
         <div css={message}>{error && <span>{t('login.login_failure')}</span>}</div>
-      </div>
-      <div css={btn}>
+      </FlexBox>
+      <FlexBox direction="column" alignItems="center" justifyContent="space-evenly" css={btn}>
         <Button width="80%" variant="filled" color="normal" onClick={handleLogin} label={t('login.log_in')} />
-      </div>
-    </div>
+      </FlexBox>
+    </FlexBox>
   );
 };
 
@@ -83,17 +86,11 @@ const loginForm = (theme: Theme) => css`
   border: 1px solid ${theme.colors.gray_200};
   border-radius: ${theme.units.px8};
   padding: ${theme.units.px16};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background: ${theme.colors.white};
 `;
 
 const icon = css`
   height: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const title = (theme: Theme) => css`
@@ -101,17 +98,11 @@ const title = (theme: Theme) => css`
   height: 10%;
   font-weight: ${theme.fontWeights.extraBold};
   font-size: ${theme.fontSizes.pt24};
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: ${theme.colors.black_400};
 `;
 
 const input = css`
   height: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
 `;
 
 const message = (theme: Theme) => css`
@@ -126,10 +117,6 @@ const message = (theme: Theme) => css`
 const btn = css`
   height: 20%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
 `;
 
 const circle = (theme: Theme) => css`
@@ -137,7 +124,4 @@ const circle = (theme: Theme) => css`
   width: 90px;
   height: 90px;
   border-radius: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
