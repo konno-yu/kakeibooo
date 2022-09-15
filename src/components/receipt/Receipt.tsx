@@ -141,7 +141,7 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
             data-testid="btn-add"
           />
         </FlexBox>
-        <FlexBox direction="row" justifyContent="center" alignItems="center" css={summartion}>
+        <FlexBox direction="row" justifyContent="space-between" alignItems="center" css={summartion}>
           <Typography type="subHeader" variant="normal">
             {t('calendar.summartion')}
           </Typography>
