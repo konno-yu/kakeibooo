@@ -10,9 +10,9 @@ export const VerticalFlex: ComponentStoryObj<typeof FlexBox> = {
     alignItems: 'center',
     children: (
       <>
-        <div style={{ background: 'red', width: 100, height: '100%' }} />
-        <div style={{ background: 'orange', width: 100, height: '100%' }} />
-        <div style={{ background: 'yellow', width: 100, height: '100%' }} />
+        <div style={{ background: 'red', width: 100, height: 100 }} />
+        <div style={{ background: 'orange', width: 100, height: 100 }} />
+        <div style={{ background: 'yellow', width: 100, height: 100 }} />
       </>
     ),
   },
@@ -21,7 +21,7 @@ export const VerticalFlex: ComponentStoryObj<typeof FlexBox> = {
       <div
         css={css`
           width: 50%;
-          height: 30%;
+          height: 50%;
           background: #efefef;
         `}
       >

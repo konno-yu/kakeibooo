@@ -1,9 +1,9 @@
-import { css } from '@emotion/react';
+import { css, SerializedStyles } from '@emotion/react';
 import { ReactElement } from 'react';
 
 interface Props {
   /** flexレイアウト内の子要素を指定します */
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
   /** @link https://developer.mozilla.org/ja/docs/Web/CSS/direction */
   direction: 'row' | 'column';
   /** @link https://developer.mozilla.org/ja/docs/Web/CSS/flex-wrap */
@@ -14,6 +14,8 @@ interface Props {
   alignItems?: 'normal' | 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
   /** @link https://developer.mozilla.org/ja/docs/Web/CSS/align-content */
   alignContent?: 'normal' | 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'stretch';
+  /** @link https://developer.mozilla.org/ja/docs/Web/CSS/gap */
+  gap?: number | [number, number];
 }
 
 export const FlexBox = ({
@@ -23,11 +25,17 @@ export const FlexBox = ({
   justifyContent = 'normal',
   alignItems = 'normal',
   alignContent = 'normal',
-}: Props) => <div css={flexBox({ direction, wrap, justifyContent, alignItems, alignContent })}>{children}</div>;
+  gap = 0,
+  ...props
+}: Props) => (
+  <div css={[flexBox({ direction, wrap, justifyContent, alignItems, alignContent }), calcGap(gap)]} {...props}>
+    {children}
+  </div>
+);
 
 const flexBox = (styles: Omit<Props, 'children'>) => css`
-  height: 100%;
-  width: 100%;
+  height: auto;
+  width: auto;
   display: flex;
   flex-direction: row;
   flex-direction: ${styles.direction};
@@ -35,4 +43,19 @@ const flexBox = (styles: Omit<Props, 'children'>) => css`
   justify-content: ${styles.justifyContent};
   align-items: ${styles.alignItems};
   align-content: ${styles.alignContent};
+  gap: ${styles.gap};
 `;
+
+// TODO 型が当たらない...
+const calcGap = (gap: number | [number, number]): SerializedStyles => {
+  if (typeof gap === 'number')
+    return css`
+      gap: ${gap}px;
+    `;
+  if (Array.isArray(gap) && gap.length === 2) {
+    return css`
+      gap: ${gap[0]}px ${gap[1]}px;
+    `;
+  }
+  return css``;
+};
