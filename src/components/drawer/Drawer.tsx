@@ -18,7 +18,6 @@ import { Button } from '../common/button/Button';
 import { FlexBox } from '../common/flex_box/FlexBox';
 
 export const Drawer = () => {
-  const theme = useTheme();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

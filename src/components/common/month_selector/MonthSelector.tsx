@@ -1,4 +1,4 @@
-import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import { getMonth, getYear } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';

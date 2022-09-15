@@ -39,11 +39,11 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
   };
 
   return (
-    <FlexBox direction='row' justifyContent='space-between' gap={4} css={container(theme)} {...props}>
-      <FlexBox direction='row' justifyContent='center' alignItems='center' css={label(theme)}>
+    <FlexBox direction="row" justifyContent="space-between" gap={4} css={container(theme)} {...props}>
+      <FlexBox direction="row" justifyContent="center" alignItems="center" css={label(theme)}>
         <FaCircle color={theme.colors.white} size={12} />
       </FlexBox>
-      <FlexBox direction="column" justifyContent='center' alignItems='center' gap={4} css={input(theme)}>
+      <FlexBox direction="column" justifyContent="center" alignItems="center" gap={4} css={input(theme)}>
         <Input
           onChange={handleStoreNameChange}
           width={150}
@@ -59,11 +59,11 @@ export const Tag = ({ index, storeName, cost, onChangeStoreName, onChangeCost, o
           icon={<HiCurrencyYen size={16} color={theme.colors.black_400} />}
         />
       </FlexBox>
-      <FlexBox direction="row" justifyContent='center' alignItems='center' css={dustbox}>
+      <FlexBox direction="row" justifyContent="center" alignItems="center" css={dustbox}>
         <IconButton onClick={handleDelete}>
           <RiDeleteBack2Fill size={20} color={theme.colors.black_400} />
         </IconButton>
-      </div>
+      </FlexBox>
     </FlexBox>
   );
 };

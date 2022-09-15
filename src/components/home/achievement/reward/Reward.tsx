@@ -33,12 +33,12 @@ export const Reward = ({ title, text, rank, isAchieve }: Props) => {
   };
 
   return (
-    <FlexBox direction='row' justifyContent='flex-start' alignItems='center' css={card(theme)}>
+    <FlexBox direction="row" justifyContent="flex-start" alignItems="center" css={card(theme)}>
       <AiFillTrophy size={32} color={getColor()} />
-      <FlexBox direction='column' css={container(theme)}>
+      <FlexBox direction="column" css={container(theme)}>
         <span css={titlePart(theme)}>{title}</span>
         <span css={textPart(theme)}>{text}</span>
-      </div>
+      </FlexBox>
     </FlexBox>
   );
 };
