@@ -1,6 +1,7 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import ReactDOM from 'react-dom';
 import { RiEmotionSadFill, RiEmotionFill } from 'react-icons/ri';
+import { FlexBox } from '../flex_box/FlexBox';
 
 export interface SnackbarProps {
   /**
@@ -28,19 +29,14 @@ export const Snackbar = ({ open, type, text, subText }: SnackbarProps) => {
     error: theme.colors.primary_400,
   };
   return ReactDOM.createPortal(
-    <div css={open ? snackbarBase(COLOR_SET[type], theme) : none}>
+    <FlexBox direction="row" alignItems="center" gap={8} css={open ? snackbarBase(COLOR_SET[type], theme) : none}>
       {type === 'error' && <RiEmotionSadFill color={theme.colors.white} size={24} />}
       {type === 'success' && <RiEmotionFill color={theme.colors.white} size={24} />}
-      <div
-        css={css`
-          display: flex;
-          flex-direction: column;
-        `}
-      >
+      <FlexBox direction="column">
         <span css={textStyle}>{text}</span>
         <span css={subTextStyle}>{subText}</span>
-      </div>
-    </div>,
+      </FlexBox>
+    </FlexBox>,
     document.getElementById('root')
   );
 };
@@ -52,10 +48,6 @@ const snackbarBase = (color: string, theme: Theme) => css`
   background: ${color};
   padding: ${theme.units.px0} ${theme.units.px8};
   border-radius: ${theme.units.px4};
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: ${theme.units.px8};
   position: absolute;
   box-shadow: 3px 3px 3px #9e9e9e;
   bottom: ${theme.units.px8};

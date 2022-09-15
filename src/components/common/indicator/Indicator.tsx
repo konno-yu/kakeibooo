@@ -1,4 +1,5 @@
 import { css, Theme, useTheme } from '@emotion/react';
+import { FlexBox } from '../flex_box/FlexBox';
 
 interface Props {
   value: { [key: string]: number };
@@ -40,22 +41,20 @@ export const Indicator = ({ value, range, showLabel = false, unit }: Props) => {
     u.type === 'prefix' ? `${u.name}${text}` : `${text}${u.name}`;
 
   return (
-    <div css={container}>
+    <FlexBox direction="row" alignItems="center" justifyContent="center" gap={4} css={container}>
       {showLabel && <span css={scaleLabel}>{createLabelText(range[0], unit)}</span>}
-      <div css={indicator}>{barElement}</div>
+      <FlexBox direction="row" css={indicator}>
+        {barElement}
+      </FlexBox>
       {showLabel && <span css={scaleLabel}>{createLabelText(range[1], unit)}</span>}
-    </div>
+    </FlexBox>
   );
 };
 
-const container = (theme: Theme) => css`
+const container = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
   width: 100%;
   height: 50px;
-  display: flex;
-  align-items: center;
-  gap: ${theme.units.px4};
-  justify-content: center;
 `;
 
 const scaleLabel = (theme: Theme) => css`
@@ -71,7 +70,6 @@ const indicator = (theme: Theme) => css`
   height: 30%;
   background: ${theme.colors.gray_100};
   border-radius: ${theme.units.px12};
-  display: flex;
 `;
 
 const limitOver = (theme: Theme) => css`

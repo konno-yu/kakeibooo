@@ -2,6 +2,7 @@ import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
 import { useTranslation } from 'react-i18next';
 import { FaUserEdit } from 'react-icons/fa';
 import ImgPath from '../../../images/medal.svg';
+import { FlexBox } from '../../common/flex_box/FlexBox';
 
 interface Props {
   /** 日付を指定します */
@@ -23,7 +24,7 @@ export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = fal
   const { t } = useTranslation();
   const panelStyle: SerializedStyles[] = [panelBase(theme)];
   if (dayIndex === null) {
-    return <div css={[...panelStyle, blank(theme)]} />;
+    return <FlexBox direction="column" css={[...panelStyle, blank(theme)]} />;
   }
 
   const handleOnClick = () => {
@@ -32,14 +33,21 @@ export const DayPanel = ({ dayIndex, children, isToday = false, isSelected = fal
 
   const PanelBody = (
     <>
-      <div css={dayLabel} key={dayIndex}>
-        {String(dayIndex).padStart(2, '0')}
+      <FlexBox
+        direction="row"
+        justifyContent="space-between"
+        alignItems="flex-start"
+        gap={10}
+        css={dayLabel}
+        key={dayIndex}
+      >
+        <span>{String(dayIndex).padStart(2, '0')}</span>
         {isToday && !isSelected && <span css={todayLabel}>{t('calendar.today')}</span>}
         {isSelected && <FaUserEdit size={24} />}
-      </div>
-      <div css={dayValueText}>
-        {children === null ? '' : `${t('common.yen', { money: children.toLocaleString() })}`}
-      </div>
+      </FlexBox>
+      <FlexBox direction="row" justifyContent="center" alignItems="center" css={dayValueText}>
+        {children === null ? <span /> : <span>{t('common.yen', { money: children.toLocaleString() })}</span>}
+      </FlexBox>
     </>
   );
 
@@ -75,6 +83,7 @@ const panelBase = (theme: Theme) => css`
   border-radius: ${theme.units.px8};
   color: ${theme.colors.black_400};
   font-weight: ${theme.fontWeights.bold};
+  // TODO これをFlexBoxで代用するとスタイルが崩れるので要調査
   display: flex;
   flex-direction: column;
   border: none;
@@ -115,10 +124,6 @@ const zero = (theme: Theme) => css`
 const dayLabel = (theme: Theme) => css`
   width: calc(100% - 16px);
   padding: ${theme.units.px4} ${theme.units.px8} ${theme.units.px0} ${theme.units.px8};
-  display: flex;
-  justify-content: space-between;
-  gap: ${theme.units.px10};
-  align-items: flex-start;
   font-size: ${theme.fontSizes.pt12};
   color: ${theme.colors.black_200};
 `;
@@ -127,9 +132,6 @@ const dayValueText = (theme: Theme) => css`
   width: 100%;
   font-size: ${theme.fontSizes.pt16};
   font-weight: ${theme.fontWeights.extraBold};
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-grow: 1;
 `;
 

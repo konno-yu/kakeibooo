@@ -4,10 +4,10 @@ import { Achievement } from './Achievement';
 import { initAchievements } from './AchievementUtils';
 
 export default { component: Achievement } as ComponentMeta<typeof Achievement>;
-
+const rewards = initAchievements.map((a) => ({ ...a, isAchieve: true }));
 export const Pure: ComponentStoryObj<typeof Achievement> = {
   args: {
-    rewards: initAchievements.map((a) => ({ ...a, isAchieve: true })),
+    rewards,
   },
   decorators: [
     (story) => (

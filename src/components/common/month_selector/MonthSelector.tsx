@@ -1,7 +1,8 @@
-import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import { getMonth, getYear } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
+import { FlexBox } from '../flex_box/FlexBox';
 import { IconButton } from '../icon_button/IconButton';
 
 interface Props {
@@ -20,17 +21,17 @@ export const MonthSelector: React.FC<Props> = ({ targetDate, locale = 'ja', onPr
       : `${targetDate.toLocaleDateString('en-US', { month: 'long' })} ${getYear(targetDate)}`;
 
   return (
-    <div css={container(theme)}>
+    <FlexBox direction="row" justifyContent="space-between" alignItems="center" css={container(theme)}>
       <span>{displayFormat}</span>
-      <div css={monthTransition}>
+      <FlexBox direction="row">
         <IconButton data-testid="button-prev" onClick={onPrev}>
           <HiArrowCircleLeft size={28} color={theme.colors.black_400} />
         </IconButton>
         <IconButton data-testid="button-next" onClick={onNext}>
           <HiArrowCircleRight size={28} color={theme.colors.black_400} />
         </IconButton>
-      </div>
-    </div>
+      </FlexBox>
+    </FlexBox>
   );
 };
 
@@ -39,11 +40,4 @@ const container = (theme: Theme) => css`
   font-size: ${theme.fontSizes.pt24};
   color: ${theme.colors.black_400};
   font-weight: ${theme.fontWeights.extraBold};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const monthTransition = css`
-  display: flex;
 `;

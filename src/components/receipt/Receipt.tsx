@@ -5,6 +5,7 @@ import { HiPlusSm } from 'react-icons/hi';
 import { Receipt as ReceiptDef } from '../../reducer/householdBookSlice';
 import { Button } from '../common/button/Button';
 import { Divider } from '../common/divider/Divider';
+import { FlexBox } from '../common/flex_box/FlexBox';
 import { Snackbar } from '../common/snackbar/Snackbar';
 import { useSnackbar } from '../common/snackbar/useSnackbar';
 import { Typography } from '../common/typography/Typography';
@@ -101,8 +102,8 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
   };
 
   return (
-    <div css={container(theme)}>
-      <div css={header(theme)}>
+    <FlexBox direction="column" justifyContent="center" css={container(theme)}>
+      <FlexBox direction="column" justifyContent="center" css={header(theme)}>
         <Typography type="header" variant="normal">
           {t('common.application_title')}
         </Typography>
@@ -113,10 +114,10 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
             day: getDate(targetDate).toString().padStart(2, '0'),
           })}
         </Typography>
-      </div>
+      </FlexBox>
       <Divider width={2} type="dashed" color={theme.colors.gray_200} />
-      <div css={body(theme)}>
-        <div css={tag(theme)}>
+      <FlexBox direction="column" justifyContent="center" alignItems="center" css={body(theme)}>
+        <FlexBox direction="column" alignItems="center" gap={8} css={tag}>
           {dailyReceipt &&
             dailyReceipt.map((tag) => (
               <Tag
@@ -139,18 +140,18 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
             icon={<HiPlusSm />}
             data-testid="btn-add"
           />
-        </div>
-        <div css={summartion}>
+        </FlexBox>
+        <FlexBox direction="row" justifyContent="space-between" alignItems="center" css={summartion}>
           <Typography type="subHeader" variant="normal">
             {t('calendar.summartion')}
           </Typography>
           <Typography type="header" variant="normal">
             {calcSummartion()}
           </Typography>
-        </div>
-      </div>
+        </FlexBox>
+      </FlexBox>
       <Divider width={2} type="dashed" color={theme.colors.gray_200} />
-      <div css={footer}>
+      <FlexBox direction="column" justifyContent="space-evenly" alignItems="center" css={footer}>
         <Button
           disabled={cannotRegistReceipt}
           onClick={handleClickRegist}
@@ -169,9 +170,9 @@ export const Receipt = ({ receipts, targetDate, onClickRegist, onClickNoMoney }:
           disabled={cannotRegistNoMoney}
           data-testid="btn-no-money"
         />
-      </div>
+      </FlexBox>
       {isOpen && <Snackbar open={isOpen} type={type} text={text} subText={subText} />}
-    </div>
+    </FlexBox>
   );
 };
 
@@ -180,50 +181,29 @@ const container = (theme: Theme) => css`
   background: ${theme.colors.white};
   border: 2px solid ${theme.colors.gray_200};
   border-radius: ${theme.units.px8};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 `;
 
 const header = (theme: Theme) => css`
   height: 10%;
   padding: ${theme.units.px8};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   text-align: center;
 `;
 
 const body = (theme: Theme) => css`
   height: 70%;
   padding: ${theme.units.px8};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 `;
 
-const tag = (theme: Theme) => css`
+const tag = css`
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: ${theme.units.px8};
 `;
 
 const summartion = css`
   width: calc(100% - 16px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const footer = css`
   height: 20%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
 `;

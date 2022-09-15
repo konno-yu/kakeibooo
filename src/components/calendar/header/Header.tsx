@@ -1,5 +1,6 @@
 import { css, Theme } from '@emotion/react';
 import { useTranslation } from 'react-i18next';
+import { FlexBox } from '../../common/flex_box/FlexBox';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -13,18 +14,16 @@ export const Header = () => {
     t('calendar.saturday'),
   ];
   return (
-    <div css={header}>
+    <FlexBox direction="row" alignItems="flex-end" css={header}>
       {DAY_OF_WEEK_LABEL.map((elm) => (
         <div css={element}>{elm}</div>
       ))}
-    </div>
+    </FlexBox>
   );
 };
 
 const header = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  display: flex;
-  align-items: flex-end;
 `;
 
 const element = (theme: Theme) => css`

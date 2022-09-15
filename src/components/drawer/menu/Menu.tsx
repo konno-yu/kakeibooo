@@ -1,5 +1,5 @@
-import { css, Theme } from '@emotion/react';
 import { cloneElement, ReactElement, useState } from 'react';
+import { FlexBox } from '../../common/flex_box/FlexBox';
 import { AProps } from './MenuItem';
 
 interface Props {
@@ -16,19 +16,13 @@ export const Menu: React.FC<Props> = ({ value, onChange, children }: Props) => {
     }
   };
   return (
-    <div css={container}>
+    <FlexBox direction="column" gap={16}>
       {children.map((child) => {
         if (child.props.id === selected) {
           return cloneElement(child, { selected: true, onChange: handleOnChange });
         }
         return cloneElement(child, { onChange: handleOnChange });
       })}
-    </div>
+    </FlexBox>
   );
 };
-
-const container = (theme: Theme) => css`
-  display: flex;
-  flex-direction: column;
-  gap: ${theme.units.px16};
-`;

@@ -1,6 +1,7 @@
 import { css, Theme } from '@emotion/react';
 import { useTranslation } from 'react-i18next';
 import IconPath from '../../../images/avatar.svg';
+import { FlexBox } from '../../common/flex_box/FlexBox';
 
 interface Props {
   iconOnly?: boolean;
@@ -11,7 +12,7 @@ interface Props {
 export const Account = ({ iconOnly = false, username, userId }: Props) => {
   const { t } = useTranslation();
   return (
-    <div css={container}>
+    <FlexBox direction="column" alignItems="center" css={container}>
       <img css={image} src={IconPath} alt="account" />
       {iconOnly === false && (
         <>
@@ -19,15 +20,12 @@ export const Account = ({ iconOnly = false, username, userId }: Props) => {
           <div css={userIdText}>{t('common.user_id', { userName: userId })}</div>
         </>
       )}
-    </div>
+    </FlexBox>
   );
 };
 
 const container = css`
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 
 const image = (theme: Theme) => css`

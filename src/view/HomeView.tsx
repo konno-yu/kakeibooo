@@ -15,6 +15,7 @@ import { fetchMonthlyExpenses } from '../reducer/householdBookSlice';
 import { useAppDispatch, useAppSelector } from '../store';
 import { drawer } from './HouseholdBookView';
 import { useHome } from './useHome';
+import { FlexBox } from '../components/common/flex_box/FlexBox';
 
 export const HomeView = () => {
   const theme = useTheme();
@@ -56,64 +57,64 @@ export const HomeView = () => {
       <div css={drawer}>
         <Drawer />
       </div>
-      <div css={homeContainer(theme)}>
-        <div css={summaryPart(theme)}>
+      <FlexBox direction="row" justifyContent="space-between" gap={8} css={homeContainer(theme)}>
+        <FlexBox direction="column" alignItems="center" gap={8} css={summaryPart}>
           <div style={{ width: '100%' }}>
             <WeekSummary dailyCost={weekTotal} />
           </div>
-          <div css={cardContainer(theme)}>
-            <div css={card}>
+          <FlexBox direction="row" gap={8} css={cardContainer}>
+            <FlexBox direction="row" justifyContent="space-evenly" css={card}>
               <Card title={t('home.expenses_this_month')} icon={<IoWallet />} color="primary">
-                <div css={cardBodyContainer(theme)}>
-                  <div css={cardBody}>
+                <FlexBox direction="column" alignItems="center" gap={16}>
+                  <FlexBox direction="column" alignItems="center">
                     <span css={cardText(theme)}>{t('common.yen', { money: totalUntilToday.toLocaleString() })}</span>
                     <span css={cardSubText(theme)}>{t('home.per_day', { value: expPerDay.toLocaleString() })}</span>
-                  </div>
+                  </FlexBox>
                   <SimpleIndicator range={[0, 40000]} value={totalUntilToday} color="primary" />
-                </div>
+                </FlexBox>
               </Card>
-            </div>
-            <div css={card}>
+            </FlexBox>
+            <FlexBox direction="row" justifyContent="space-evenly" css={card}>
               <Card title={t('home.balance_this_month')} icon={<BsCalendarWeekFill />} color="primary">
-                <div css={cardBodyContainer(theme)}>
-                  <div css={cardBody}>
+                <FlexBox direction="column" alignItems="center" gap={16}>
+                  <FlexBox direction="column" alignItems="center">
                     <span css={cardText(theme)}>{t('common.yen', { money: remaining.toLocaleString() })}</span>
                     <span css={cardSubText(theme)}>
                       {t('home.per_day', {
                         value: remainingPerDay.toLocaleString(),
                       })}
                     </span>
-                  </div>
+                  </FlexBox>
                   <SimpleIndicator range={[0, 40000]} value={40000 - totalUntilToday} color="primary" />
-                </div>
+                </FlexBox>
               </Card>
-            </div>
-            <div css={card}>
+            </FlexBox>
+            <FlexBox direction="row" justifyContent="space-evenly" css={card}>
               <Card title={t('home.registered_this_month')} icon={<IoReceipt />} color="secondary">
-                <div css={cardBodyContainer(theme)}>
-                  <div css={cardBody}>
+                <FlexBox direction="column" alignItems="center" gap={16}>
+                  <FlexBox direction="column" alignItems="center">
                     <span css={cardText(theme)}>{t('common.days', { count: registeredDayCount })}</span>
                     <span css={cardSubText(theme)}>
                       {t('home.register_progress', { percentage: registerProgress.toFixed(0) })}
                     </span>
-                  </div>
+                  </FlexBox>
                   <SimpleIndicator
                     range={[0, lastDayOfMonth(today).getDate()]}
                     value={registeredDayCount}
                     color="secondary"
                   />
-                </div>
+                </FlexBox>
               </Card>
-            </div>
-          </div>
-          <div css={graphPart}>
+            </FlexBox>
+          </FlexBox>
+          <FlexBox direction="column" css={graphPart}>
             <MonthlyChart budget={40000} datasets={datesets} />
-          </div>
-        </div>
+          </FlexBox>
+        </FlexBox>
         <div style={{ width: '25%' }}>
           <Achievement rewards={achievements} />
         </div>
-      </div>
+      </FlexBox>
     </>
   );
 };
@@ -124,32 +125,20 @@ const homeContainer = (theme: Theme) => css`
   height: calc(100vh - 24px);
   width: calc(85% - 24px);
   padding: ${theme.units.px12};
-  display: flex;
-  justify-content: space-between;
-  gap: ${theme.units.px8};
 `;
 
-const summaryPart = (theme: Theme) => css`
+const summaryPart = css`
   width: 75%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: ${theme.units.px8};
   background: 'red';
 `;
 
-const cardContainer = (theme: Theme) => css`
+const cardContainer = css`
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  gap: ${theme.units.px8};
 `;
 
 const card = css`
-  display: flex;
   width: calc(100% / 3);
-  justify-content: space-evenly;
 `;
 
 const cardText = (theme: Theme) => css`
@@ -164,22 +153,7 @@ const cardSubText = (theme: Theme) => css`
   color: ${theme.colors.black_100};
 `;
 
-const cardBodyContainer = (theme: Theme) => css`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: ${theme.units.px16};
-`;
-
-const cardBody = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 const graphPart = css`
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
 `;

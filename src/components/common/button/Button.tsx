@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary -- ButtonのスタイルがLint違反しているが良いアイデアがないので一旦無効化 */
 import { css, SerializedStyles, Theme, useTheme } from '@emotion/react';
+import { FlexBox } from '../flex_box/FlexBox';
 
 type ButtonType = 'filled' | 'outlined' | 'text';
 type ColorPattern = 'normal' | 'primary' | 'secondary';
@@ -26,8 +27,10 @@ export const Button = ({ variant, label, color, disabled, icon, width = '100%', 
   if (disabled) {
     return (
       <button css={[base(width, theme), disable(variant, theme)]} type="button" {...props}>
-        {icon}
-        {label}
+        <FlexBox direction="row" alignItems="center" justifyContent="center" gap={4}>
+          {icon}
+          <span>{label}</span>
+        </FlexBox>
       </button>
     );
   }
@@ -47,8 +50,10 @@ export const Button = ({ variant, label, color, disabled, icon, width = '100%', 
   }
   return (
     <button css={buttonStyle} onClick={onClick} type="button" {...props}>
-      {icon}
-      {label}
+      <FlexBox direction="row" alignItems="center" justifyContent="center" gap={4}>
+        {icon}
+        <span>{label}</span>
+      </FlexBox>
     </button>
   );
 };
@@ -60,10 +65,6 @@ const base = (width: string | number, theme: Theme) => css`
   border-radius: 100px;
   font-weight: ${theme.fontWeights.semiBold};
   cursor: pointer;
-  display: flex;
-  gap: ${theme.units.px4};
-  align-items: center;
-  justify-content: center;
 `;
 
 const disable = (variant: ButtonType, theme: Theme) => css`

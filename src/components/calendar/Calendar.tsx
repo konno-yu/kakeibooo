@@ -1,6 +1,7 @@
-import { css, Theme } from '@emotion/react';
+import { css } from '@emotion/react';
 import { getDate, isEqual } from 'date-fns';
 import { Expenses } from '../../reducer/householdBookSlice';
+import { FlexBox } from '../common/flex_box/FlexBox';
 import { MonthSelector } from '../common/month_selector/MonthSelector';
 import { DayPanel } from './day_panel/DayPanel';
 import { Header } from './header/Header';
@@ -48,16 +49,16 @@ export const Calendar = ({ targetDate, expenses, onClick, onClickPrev, onClickNe
   };
 
   return (
-    <div css={container}>
+    <FlexBox direction="column" gap={8} css={container}>
       <div>
         <MonthSelector targetDate={targetDate} locale="en" onPrev={handleOnPrev} onNext={handleOnNext} />
       </div>
       <div>
         <Header />
       </div>
-      <div css={monthContainer}>
+      <FlexBox direction="column" gap={8} css={monthContainer}>
         {Object.values(expenses).map((week) => (
-          <div css={weekContainer}>
+          <FlexBox direction="row" gap={8} css={weekContainer}>
             {week.map((day) => {
               if (day === null) {
                 return <DayPanel type="normal" dayIndex={null} isSelected={false} isToday={false} />;
@@ -88,31 +89,23 @@ export const Calendar = ({ targetDate, expenses, onClick, onClickPrev, onClickNe
                 </DayPanel>
               );
             })}
-          </div>
+          </FlexBox>
         ))}
-      </div>
-    </div>
+      </FlexBox>
+    </FlexBox>
   );
 };
 
-const container = (theme: Theme) => css`
+const container = css`
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: ${theme.units.px8};
 `;
 
-const weekContainer = (theme: Theme) => css`
+const weekContainer = css`
   width: 100%;
   height: calc(100% / 6);
-  display: flex;
-  gap: ${theme.units.px8};
 `;
 
-const monthContainer = (theme: Theme) => css`
+const monthContainer = css`
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: ${theme.units.px8};
 `;

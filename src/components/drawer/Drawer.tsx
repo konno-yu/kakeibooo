@@ -15,9 +15,9 @@ import { signOut } from '../../reducer/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { appAction, Tabs } from '../../reducer/appSlice';
 import { Button } from '../common/button/Button';
+import { FlexBox } from '../common/flex_box/FlexBox';
 
 export const Drawer = () => {
-  const theme = useTheme();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -37,13 +37,12 @@ export const Drawer = () => {
   };
 
   return (
-    <div css={drawerContainer}>
-      <div
+    <FlexBox direction="column" alignItems="center" gap={20} css={drawerContainer}>
+      <FlexBox
+        direction="column"
+        gap={20}
         css={css`
           height: 100%;
-          display: flex;
-          flex-direction: column;
-          gap: ${theme.units.px20};
         `}
       >
         <AppTitle />
@@ -65,18 +64,14 @@ export const Drawer = () => {
             {t('common.settings')}
           </MenuItem>
         </Menu>
-      </div>
+      </FlexBox>
       <Button onClick={logout} variant="text" color="normal" icon={<GoSignOut />} label={t('common.log_out')} />
-    </div>
+    </FlexBox>
   );
 };
 
 const drawerContainer = (theme: Theme) => css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: calc(100% - 24px);
   height: calc(100% - 48px);
-  gap: ${theme.units.px20};
   padding: ${theme.units.px24} ${theme.units.px12};
 `;

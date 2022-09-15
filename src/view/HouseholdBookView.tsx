@@ -2,6 +2,7 @@ import { css, Theme } from '@emotion/react';
 import { getDay, getWeekOfMonth, isEqual } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
 import { Calendar } from '../components/calendar/Calendar';
+import { FlexBox } from '../components/common/flex_box/FlexBox';
 import { Drawer } from '../components/drawer/Drawer';
 import { Receipt } from '../components/receipt/Receipt';
 import {
@@ -89,7 +90,7 @@ export const HouseholdBookView = () => {
       <div css={drawer}>
         <Drawer />
       </div>
-      <div css={householdBookContainer}>
+      <FlexBox direction="row" justifyContent="space-between" gap={8} css={householdBookContainer}>
         <div css={calendarContainer}>
           <Calendar
             expenses={expenses}
@@ -107,7 +108,7 @@ export const HouseholdBookView = () => {
             onClickNoMoney={handleNoMoney}
           />
         </div>
-      </div>
+      </FlexBox>
     </>
   );
 };
@@ -124,9 +125,6 @@ const householdBookContainer = (theme: Theme) => css`
   height: calc(100vh - 24px);
   width: calc(85% - 24px);
   padding: ${theme.units.px12};
-  display: flex;
-  justify-content: space-between;
-  gap: ${theme.units.px8};
 `;
 
 const calendarContainer = css`

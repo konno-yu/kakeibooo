@@ -1,5 +1,6 @@
 import { css, Theme, useTheme } from '@emotion/react';
 import { useTranslation } from 'react-i18next';
+import { FlexBox } from '../flex_box/FlexBox';
 
 interface Props {
   /** 入力欄の幅を指定します */
@@ -40,7 +41,7 @@ export const Input = ({
     return <input css={base(theme, width)} type="text" placeholder={placeholder} maxLength={maxLength} disabled />;
   }
   return (
-    <div css={container(theme)}>
+    <FlexBox direction="row" alignItems="center" gap={4}>
       {icon}
       <input
         css={[base(theme, width), normal(theme)]}
@@ -50,15 +51,9 @@ export const Input = ({
         value={value}
         onChange={onChange}
       />
-    </div>
+    </FlexBox>
   );
 };
-
-const container = (theme: Theme) => css`
-  display: flex;
-  gap: ${theme.units.px4};
-  align-items: center;
-`;
 
 const base = (theme: Theme, width: number) => css`
   width: ${width}px;
